@@ -1,4 +1,4 @@
-import { defineNuxtConfig } from 'nuxt'
+import { defineNuxtConfig } from 'nuxt';
 
 export default defineNuxtConfig({
     modules: [
@@ -8,11 +8,10 @@ export default defineNuxtConfig({
         // https://content.nuxtjs.org/api/configuration
     },
     css: [
-        '@fortawesome/fontawesome-free/css/all.min.css',
-        'mdb-ui-kit/css/mdb.min.css',
-        '~/assets/main.scss'
+        'vuetify/lib/styles/main.sass',
+        'mdi/css/materialdesignicons.min.css',
     ],
-    plugins: [
-        { src: 'mdb-ui-kit/js/mdb.min.js', mode: 'client' }
-    ]
+    build: {
+        transpile: ['vuetify'],
+    },
 })
