@@ -1,0 +1,61 @@
+<script setup lang="ts">
+import { ref } from 'vue';
+
+import { IFormField } from '@/core/form/field/field.interface';
+import { IS_DEFINED } from '@/core/utils/check.functions';
+
+const props = defineProps<{
+	config: IFormField;
+}>();
+
+const el = ref();
+const value = ref();
+const rule = ref();
+
+onMounted(() => {
+	// inicializuje regex
+	if (props.config?.validation?.pattern) {
+		rule.value = new RegExp(props.config.validation.pattern);
+	}
+	// nastavi defaultni hodnotu
+	if (IS_DEFINED(props.config.value)) {
+		value.value = props.config.value;
+	}
+});
+</script>
+
+<template>
+	<v-text-field
+		ref="el"
+		v-model="value"
+		:type="config.type || 'text'"
+		:id="config.name"
+		:name="config.name"
+		:label="$t(config.label || 'empty') + ' *'"
+		:placeholder="$t(config.placeholder || 'empty')"
+		:disabled="config.disabled"
+		:readonly="config.readonly"
+		:autofocus="config.autofocus"
+		:counter="config.maxlength"
+		:hint="$t(config.hint || 'empty')"
+		:density="((config.density || 'comfortable') as any)"
+		:variant="((config.variant || 'outlined') as any)"
+		:prepend-icon="
+			config.icon?.variant !== 'inner' && config.icon?.position !== 'append' ? config.icon?.value : undefined
+		"
+		:append-icon="
+			config.icon?.variant !== 'inner' && config.icon?.position === 'append' ? config.icon.value : undefined
+		"
+		:prepend-inner-icon="
+			config.icon?.variant === 'inner' && config.icon?.position !== 'append' ? config.icon?.value : undefined
+		"
+		:append-inner-icon="
+			config.icon?.variant === 'inner' && config.icon?.position === 'append' ? config.icon.value : undefined
+		"
+		:rules="[
+			(value) => (!value && config.required ? '' : true),
+			(value) => (rule ? rule.test(value) || $t(config.validation.msg || 'empty') : true),
+		]"
+		:clearable="config.clearable"
+	/>
+</template>

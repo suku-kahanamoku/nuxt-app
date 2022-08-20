@@ -1,0 +1,330 @@
+{
+	"login": {
+		"title": "route.login",
+		"fields": [
+			{
+				"type": "email",
+				"name": "email",
+				"label": "form.email",
+				"required": true,
+				"autocomplete": "email",
+				"autofocus": true,
+				"validation": {
+					"pattern": "^\\w+([\\.-]?\\w+)*@\\w+([\\.-]?\\w+)*(\\.\\w{2,3})+$",
+					"msg": "form.msg.wrong_email"
+				}
+			},
+			{
+				"type": "password",
+				"name": "password",
+				"label": "form.password",
+				"required": true,
+				"autocomplete": "current-password"
+			}
+		]
+	},
+	"reset_pass": {
+		"title": "route.reset_pass",
+		"fields": [
+			{
+				"type": "email",
+				"name": "email",
+				"label": "form.email",
+				"required": true,
+				"autocomplete": "email",
+				"autofocus": true,
+				"validation": {
+					"pattern": "^\\w+([\\.-]?\\w+)*@\\w+([\\.-]?\\w+)*(\\.\\w{2,3})+$",
+					"msg": "form.msg.wrong_email"
+				}
+			}
+		]
+	},
+	"contact": {
+		"title": "write_us",
+		"fields": [
+			{
+				"name": "category",
+				"label": "form.category"
+			},
+			{
+				"type": "tel",
+				"name": "phone",
+				"label": "form.phone",
+				"required": true,
+				"autocomplete": "tel"
+			},
+			{
+				"type": "email",
+				"name": "email",
+				"label": "form.email",
+				"required": true,
+				"autocomplete": "email",
+				"validation": {
+					"pattern": "^\\w+([\\.-]?\\w+)*@\\w+([\\.-]?\\w+)*(\\.\\w{2,3})+$",
+					"msg": "form.msg.wrong_email"
+				}
+			},
+			{
+				"type": "textarea",
+				"name": "message",
+				"label": "form.message",
+				"rows": 4,
+				"required": true
+			}
+		]
+	},
+	"signup": {
+		"title": "route.signup",
+		"fields": [
+			{
+				"name": "firstname",
+				"label": "form.firstname",
+				"required": true,
+				"autocomplete": "given-name",
+				"autofocus": true
+			},
+			{
+				"name": "lastname",
+				"label": "form.lastname",
+				"required": true,
+				"autocomplete": "family-name"
+			},
+			{
+				"type": "email",
+				"name": "email",
+				"label": "form.email",
+				"required": true,
+				"autocomplete": "email",
+				"validation": {
+					"pattern": "^\\w+([\\.-]?\\w+)*@\\w+([\\.-]?\\w+)*(\\.\\w{2,3})+$",
+					"msg": "form.msg.wrong_email"
+				}
+			},
+			{
+				"type": "tel",
+				"name": "phone",
+				"label": "form.phone",
+				"autocomplete": "tel"
+			},
+			{
+				"type": "password",
+				"name": "password",
+				"label": "form.password",
+				"required": true,
+				"autocomplete": "new-password"
+			},
+			{
+				"type": "password",
+				"name": "repeat_pass",
+				"label": "form.repeat_pass",
+				"required": true,
+				"autocomplete": "off"
+			}
+		]
+	},
+	"profile": {
+		"title": "route.profile",
+		"fields": [
+			{
+				"name": "_id",
+				"label": "id",
+				"required": true,
+				"readonly": true,
+				"autocomplete": "off"
+			},
+			{
+				"name": "eid",
+				"label": "form.eid",
+				"autocomplete": "off"
+			},
+			{
+				"name": "firstname",
+				"label": "form.firstname",
+				"required": true,
+				"autocomplete": "given-name",
+				"autofocus": true
+			},
+			{
+				"name": "lastname",
+				"label": "form.lastname",
+				"required": true,
+				"autocomplete": "family-name"
+			},
+			{
+				"type": "email",
+				"name": "email",
+				"label": "form.email",
+				"required": true,
+				"autocomplete": "email",
+				"validation": {
+					"pattern": "^\\w+([\\.-]?\\w+)*@\\w+([\\.-]?\\w+)*(\\.\\w{2,3})+$",
+					"msg": "form.msg.wrong_email"
+				}
+			},
+			{
+				"type": "tel",
+				"name": "phone",
+				"label": "form.phone",
+				"autocomplete": "tel"
+			},
+			{
+				"type": "date",
+				"required": true,
+				"name": "birth_date",
+				"label": "form.birth_date",
+				"autocomplete": "bday"
+			},
+			{
+				"type": "select",
+				"name": "gender",
+				"label": "form.gender",
+				"autocomplete": "sex",
+				"value": "male",
+				"options": [
+					{
+						"label": "form.male",
+						"value": "male"
+					},
+					{
+						"label": "form.female",
+						"value": "female"
+					},
+					{
+						"label": "form.trans",
+						"value": "trans"
+					}
+				]
+			},
+			{
+				"type": "password",
+				"name": "password",
+				"label": "form.password",
+				"autocomplete": "new-password"
+			},
+			{
+				"type": "password",
+				"name": "repeat_pass",
+				"label": "form.repeat_pass",
+				"autocomplete": "off"
+			},
+			{
+				"type": "search",
+				"name": "role",
+				"label": "route.role",
+				"autocomplete": "off",
+				"multiple": true
+			},
+			{
+				"type": "search",
+				"name": "address",
+				"label": "route.address",
+				"autocomplete": "off",
+				"multiple": true
+			},
+			{
+				"type": "group",
+				"name": "files",
+				"options": [
+					{
+						"type": "file",
+						"name": "image",
+						"label": "form.image",
+						"autocomplete": "off"
+					}
+				]
+			}
+		]
+	},
+	"role": {
+		"title": "route.role",
+		"fields": [
+			{
+				"name": "_id",
+				"label": "id",
+				"required": true,
+				"readonly": true,
+				"autocomplete": "off"
+			},
+			{
+				"name": "_syscode",
+				"label": "syscode",
+				"autocomplete": "off"
+			},
+			{
+				"name": "name",
+				"label": "form.name",
+				"autocomplete": "off"
+			},
+			{
+				"type": "textarea",
+				"name": "description",
+				"label": "form.description",
+				"autocomplete": "off"
+			},
+			{
+				"type": "search",
+				"name": "auth",
+				"label": "route.auth",
+				"multiple": true
+			}
+		]
+	},
+	"auth": {
+		"title": "route.auth",
+		"fields": [
+			{
+				"name": "_id",
+				"label": "id",
+				"required": true,
+				"readonly": true,
+				"autocomplete": "off"
+			},
+			{
+				"name": "_syscode",
+				"label": "syscode",
+				"autocomplete": "off"
+			},
+			{
+				"name": "name",
+				"label": "form.name",
+				"autocomplete": "off"
+			},
+			{
+				"type": "textarea",
+				"name": "description",
+				"label": "form.description",
+				"autocomplete": "off"
+			},
+			{
+				"name": "value",
+				"label": "form.url",
+				"autocomplete": "off"
+			},
+			{
+				"type": "select",
+				"name": "operation",
+				"label": "form.operation",
+				"autocomplete": "off",
+				"options": [
+					{
+						"label": "method.get",
+						"value": "GET"
+					},
+					{
+						"label": "method.post",
+						"value": "POST"
+					},
+					{
+						"label": "method.patch",
+						"value": "PATCH"
+					},
+					{
+						"label": "method.delete",
+						"value": "DELETE"
+					}
+				]
+			}
+		]
+	}
+}

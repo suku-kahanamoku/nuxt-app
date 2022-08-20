@@ -1,0 +1,81 @@
+{
+	"empty": "",
+	"id": "ID",
+	"syscode": "Syscode",
+	"reset_pass": "Forgot password?",
+	"not_account": "Don't have an account?",
+	"success_logout": "You have successfully logged out of the system.",
+	"write_us": "Write us",
+	"route": {
+		"home": "",
+		"radar": "Radar",
+		"contact": "Contact",
+		"login": "Sign in",
+		"logout": "Log out",
+		"signup": "Sign up",
+		"reset_pass": "Forgot password",
+		"admin": "Admin",
+		"dashboard": "Dashboard",
+		"profile": "Profile",
+		"profile_detail": "Profile detail",
+		"role": "Role",
+		"auth": "Authorization",
+		"address": "Address"
+	},
+	"btn": {
+		"login": "Login",
+		"google_login": "Sign in with google",
+		"fb_login": "Sign in with facebook",
+		"send": "Submit",
+		"create": "Create",
+		"search": "Search",
+		"back_to_login": "Back to login"
+	},
+	"form": {
+		"email": "E-mail",
+		"password": "Password",
+		"repeat_pass": "Repeat password",
+		"firstname": "First name",
+		"lastname": "Last name",
+		"phone": "Phone",
+		"msg": {
+			"wrong_email": "Wrong E-mail format!"
+		},
+		"category": "Category",
+		"message": "Message",
+		"eid": "Ext. ID",
+		"birth_date": "Birth date",
+		"gender": "Gender",
+		"image": "Image",
+		"male": "Male",
+		"female": "Female",
+		"trans": "Transgender",
+		"description": "Description",
+		"name": "Name",
+		"url": "URL path",
+		"operation": "Operation"
+	},
+	"settings": {
+		"cwp_setup": "CWP setup",
+		"maps": "Maps",
+		"areas": "Areas",
+		"brigthness": "Brigthness",
+		"schemes": "Schemes",
+		"sec_window": "Secondary window",
+		"fpl_window": "FPL window",
+		"errors": "Errors",
+		"warn": "Warn",
+		"strip_setup": "Strip setup",
+		"stats": "Statistic",
+		"all_plans": "All plans",
+		"del_plans": "Del plans",
+		"lost": "Lost",
+		"primary_track": "Primary track"
+	},
+	"method": {
+		"get": "Read",
+		"post": "Create",
+		"patch": "Update",
+		"delete": "Delete"
+	}
+}

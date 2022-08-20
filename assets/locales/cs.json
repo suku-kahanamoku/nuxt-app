@@ -1,0 +1,81 @@
+{
+	"empty": "",
+	"id": "ID",
+	"syscode": "Systémový kód",
+	"reset_pass": "Zapomenuté heslo?",
+	"not_account": "Nemáte účet?",
+	"success_logout": "Odhlášení ze systému proběhlo úspěšně.",
+	"write_us": "Napište nám",
+	"route": {
+		"home": "",
+		"radar": "Radar",
+		"contact": "Kontakt",
+		"login": "Přihlášení",
+		"logout": "Odhlášení",
+		"signup": "Registrace",
+		"reset_pass": "Zapomenuté heslo",
+		"admin": "Administrace",
+		"dashboard": "Dashboard",
+		"profile": "Profil",
+		"profile_detail": "Profil detail",
+		"role": "Role",
+		"auth": "Oprávnění",
+		"address": "Adresař"
+	},
+	"btn": {
+		"login": "Přihlásit",
+		"google_login": "Přihlášení google účtem",
+		"fb_login": "Přihlášení facebook účtem",
+		"send": "Odeslat",
+		"create": "Vytvořit",
+		"search": "Hledat",
+		"back_to_login": "Zpět na přihlášení"
+	},
+	"form": {
+		"email": "E-mail",
+		"password": "Heslo",
+		"repeat_pass": "Opakovat heslo",
+		"firstname": "Křestní jméno",
+		"lastname": "Přijmení",
+		"phone": "Telefon",
+		"msg": {
+			"wrong_email": "Špatně zadaný E-mail!"
+		},
+		"category": "Oblast",
+		"message": "Zpráva",
+		"eid": "Ext. ID",
+		"birth_date": "Datum narození",
+		"gender": "Pohlaví",
+		"image": "Obrázek",
+		"male": "Muž",
+		"female": "Žena",
+		"trans": "Transgender",
+		"description": "Popis",
+		"name": "Název",
+		"url": "URL",
+		"operation": "Operace"
+	},
+	"settings": {
+		"cwp_setup": "CWP setup",
+		"maps": "Maps",
+		"areas": "Areas",
+		"brigthness": "Brigthness",
+		"schemes": "Schemes",
+		"sec_window": "Secondary window",
+		"fpl_window": "FPL window",
+		"errors": "Errors",
+		"warn": "Warn",
+		"strip_setup": "Strip setup",
+		"stats": "Statistic",
+		"all_plans": "All plans",
+		"del_plans": "Del plans",
+		"lost": "Lost",
+		"primary_track": "Primary track"
+	},
+	"method": {
+		"get": "Zobrazit",
+		"post": "Vytvořit",
+		"patch": "Upravit",
+		"delete": "Smazat"
+	}
+}
