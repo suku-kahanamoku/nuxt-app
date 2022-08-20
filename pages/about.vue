@@ -1,8 +1,8 @@
 <template>
-  <div>This is about page <NuxtLink to="/">Home page</NuxtLink></div>
+	<div>This is about page <NuxtLink to="/">Home page</NuxtLink></div>
 </template>
 
-<!-- <script setup>
+<!-- <script setup lang="ts">
 definePageMeta({
   layout: "blank",
 });

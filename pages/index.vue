@@ -12,9 +12,7 @@ const config: any = useState('config_auth');
 			<v-card-text>
 				<v-form>
 					<v-row>
-						<v-col v-for="field in config.fields" cols="12" sm="6">
-							<Field :config="field" />
-						</v-col>
+						<v-select :label="'fsda *'" />
 					</v-row>
 				</v-form>
 			</v-card-text>

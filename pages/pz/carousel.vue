@@ -1,4 +1,4 @@
-<script setup>
+<script setup lang="ts">
 const model = ref(0);
 const colors = ref([
   "primary",

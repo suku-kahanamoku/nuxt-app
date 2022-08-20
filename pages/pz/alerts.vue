@@ -74,6 +74,6 @@
   </v-card>
 </template>
 
-<script setup>
+<script setup lang="ts">
 const alert = ref(true);
 </script>
