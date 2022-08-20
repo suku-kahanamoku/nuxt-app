@@ -1,6 +1,10 @@
 <script setup lang="ts">
 import Field from '@/core/form/field/Field.vue';
 
+definePageMeta({
+	icon: 'mdi-key',
+});
+
 const config: any = useState('config_reset_pass');
 </script>
 <template>

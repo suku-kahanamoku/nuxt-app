@@ -28,13 +28,16 @@ const props = defineProps<{
 </script>
 
 <template>
-	<TextareaField v-if="config.type === 'textarea'" :config="(config as IFormFieldTextarea)" />
-	<SelectField v-else-if="config.type === 'select'" :config="(config as IFormFieldSelect)" />
-	<SearchField v-else-if="config.type === 'search'" :config="(config as IFormFieldSelect)" />
-	<CheckboxField v-else-if="config.type === 'checkbox'" :config="(config as IFormFieldRadio)" />
-	<RadioField v-else-if="config.type === 'radio'" :config="(config as IFormFieldRadio)" />
-	<template v-else-if="config.type === 'group'">
-		<Field v-for="childConfig in (config as any).options" :config="childConfig" />
-	</template>
-	<TextField v-else :config="config" />
+	<!-- todo - je to urcene jen pro frontend, pac select field dela neplechu pri navigaci -->
+	<client-only>
+		<TextareaField v-if="config.type === 'textarea'" :config="(config as IFormFieldTextarea)" />
+		<SelectField v-else-if="config.type === 'select'" :config="(config as IFormFieldSelect)" />
+		<SearchField v-else-if="config.type === 'search'" :config="(config as IFormFieldSelect)" />
+		<CheckboxField v-else-if="config.type === 'checkbox'" :config="(config as IFormFieldRadio)" />
+		<RadioField v-else-if="config.type === 'radio'" :config="(config as IFormFieldRadio)" />
+		<template v-else-if="config.type === 'group'">
+			<Field v-for="childConfig in (config as any).options" :config="childConfig" />
+		</template>
+		<TextField v-else :config="config" />
+	</client-only>
 </template>

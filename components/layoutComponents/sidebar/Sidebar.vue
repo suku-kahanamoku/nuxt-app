@@ -32,7 +32,7 @@ const routes: any = useState('routes');
 						v-else
 						:value="route.name"
 						:title="(route.name as string)"
-						:prepend-icon="'mdi-account-circle'"
+						:prepend-icon="route.meta?.icon"
 					></v-list-item>
 				</template>
 			</v-list>

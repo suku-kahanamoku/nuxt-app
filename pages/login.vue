@@ -1,6 +1,10 @@
 <script setup lang="ts">
 import Field from '@/core/form/field/Field.vue';
 
+definePageMeta({
+	icon: 'mdi-login',
+});
+
 const config: any = useState('config_login');
 </script>
 <template>

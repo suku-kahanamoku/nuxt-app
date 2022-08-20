@@ -1,6 +1,10 @@
 <script setup lang="ts">
 import Field from '@/core/form/field/Field.vue';
 
+definePageMeta({
+	icon: 'mdi-home',
+});
+
 const config: any = useState('config_auth');
 </script>
 <template>
@@ -12,7 +16,9 @@ const config: any = useState('config_auth');
 			<v-card-text>
 				<v-form>
 					<v-row>
-						<v-select :label="'fsda *'" />
+						<v-col v-for="field in config.fields" cols="12" sm="6">
+							<Field :config="field" />
+						</v-col>
 					</v-row>
 				</v-form>
 			</v-card-text>

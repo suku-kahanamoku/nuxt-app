@@ -11,7 +11,6 @@ const routes = useRouter()
 		meta: route.meta,
 		name: route.name.toString(),
 		path: route.path,
-		props: route.props,
 		children: [],
 	}));
 
@@ -27,11 +26,11 @@ useState('routes', () =>
 			return route;
 		})
 		.map((route: any) => {
-			route.props.parentId = routes.find((parent) => parent.children.indexOf(route) >= 0)?.name;
+			route.meta.parentId = routes.find((parent) => parent.children.indexOf(route) >= 0)?.name;
 			route.meta.title = route.meta.title || route.name;
 			return route;
 		})
-		.filter((route) => !route.props.parentId)
+		.filter((route) => !route.meta.parentId)
 );
 
 ITERATE(configs, (config: any, name: string) => useState(`config_${name}`, () => config));

@@ -12,7 +12,7 @@ const props = defineProps<{
 				v-bind="props"
 				rounded="lg"
 				class="mb-1"
-				prepend-icon="mdi-account-circle"
+				:prepend-icon="(data.meta?.icon as string)"
 				:title="(data.name as string)"
 			></v-list-item>
 		</template>
@@ -26,7 +26,7 @@ const props = defineProps<{
 				class="mb-1 pl-1"
 				:value="child.name"
 				:title="(child.name as string)"
-				:prepend-icon="'mdi-account-circle'"
+				:prepend-icon="(child.meta?.icon as string)"
 			></v-list-item>
 		</template>
 	</v-list-group>

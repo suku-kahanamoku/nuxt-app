@@ -1,6 +1,10 @@
 <script setup lang="ts">
 import Field from '@/core/form/field/Field.vue';
 
+definePageMeta({
+	icon: 'mdi-filter-multiple',
+});
+
 const config: any = useState('config_role');
 </script>
 <template>
