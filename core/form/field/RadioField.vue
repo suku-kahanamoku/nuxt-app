@@ -27,7 +27,7 @@ onMounted(() => {
 	<v-radio-group
 		v-model="value"
 		:name="config.name"
-		:label="$t(config.label || 'empty') + ' *'"
+		:label="$t(config.label || 'empty') + (config.required ? ' *' : '')"
 		:disabled="config.disabled"
 		:readonly="config.readonly"
 		:density="((config.density || 'comfortable') as any)"

@@ -126,13 +126,7 @@
 	"profile": {
 		"title": "route.profile",
 		"fields": [
-			{
-				"name": "_id",
-				"label": "id",
-				"required": true,
-				"readonly": true,
-				"autocomplete": "off"
-			},
+			
 			{
 				"name": "eid",
 				"label": "form.eid",
