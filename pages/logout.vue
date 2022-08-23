@@ -1,5 +1,4 @@
 <script setup lang="ts">
-import { IS_DEFINED } from '~~/core/utils/check.functions';
 
 definePageMeta({
 	icon: 'mdi-logout',
@@ -7,7 +6,7 @@ definePageMeta({
 
 onMounted(() => {
 	$fetch('/api/signout');
-	setStore('isLogged', false);
+	setStore('profile', false);
 });
 </script>
 <template>odhlaseni</template>

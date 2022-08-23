@@ -11,9 +11,9 @@ const loading = ref(false);
 
 async function onSubmit(e) {
 	const loggedUser = await useSubmit('/api/signin', form, loading);
-	if (loggedUser[0]?.uid) {
-		setStore('isLogged', true);
-		navigateTo(useState('redirect')?.value || '/');
+	if (loggedUser?.uid) {
+		setStore('profile', loggedUser);
+		navigateTo(useState('redirect')?.value || '/pz');
 	}
 }
 </script>

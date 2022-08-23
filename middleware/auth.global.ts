@@ -3,14 +3,14 @@ export default async function (to, from) {
         // zkontroluje, zda je uzivatel prihlaseny
         return await $fetch('/api/check')
             // je prihlaseny
-            .then(() => {
-                setStore('isLogged', true);
+            .then((data) => {
+                setStore('profile', data);
                 setStore('redirect', null);
                 return true;
             })
             // neni prihlaseny
             .catch((error): any => {
-                setStore('isLogged', false);
+                setStore('profile', null);
                 // pokud je cilove url zabezpecena stranka, nastavi se redirect page a presmeruje na login
                 if (to.path.indexOf('/pz') >= 0) {
                     setStore('redirect', to.path);

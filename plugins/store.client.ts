@@ -33,5 +33,5 @@ function getRoutes(routes) {
 
 export default function () {
     setStore('isClient', true);
-    watch(useState('isLogged'), (event: boolean) => initRoutes(event))
+    watch(useState('profile'), (event: boolean) => initRoutes(event))
 }

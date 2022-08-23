@@ -1,6 +1,5 @@
 <script setup lang="ts">
 import Field from '@/core/form/field/Field.vue';
-import { ITERATE } from '@/core/utils/modify-object.function';
 
 definePageMeta({
 	icon: 'mdi-account-circle',
@@ -30,7 +29,7 @@ async function onSubmit(e) {
 				</v-card-text>
 				<v-card-actions>
 					<v-spacer></v-spacer>
-					<v-btn color="primary" type="submit" :loading="loading">Login</v-btn>
+					<v-btn color="primary" type="submit" :loading="loading">Send</v-btn>
 				</v-card-actions>
 			</v-card>
 		</v-form>
