@@ -2,6 +2,7 @@
 
 definePageMeta({
 	icon: 'mdi-logout',
+	visible: false
 });
 
 onMounted(() => {

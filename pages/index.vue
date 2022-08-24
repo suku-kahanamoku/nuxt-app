@@ -3,6 +3,7 @@ import Field from '@/core/form/field/Field.vue';
 
 definePageMeta({
 	icon: 'mdi-home',
+	pos: 0
 });
 
 const config: any = useState('config_auth');

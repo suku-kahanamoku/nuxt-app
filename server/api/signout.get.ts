@@ -1,4 +1,3 @@
-import { getAuth } from "firebase/auth";
 import { LOGOUT } from "../lib/firestore";
 
 export default defineEventHandler(async (event) => {

@@ -3,6 +3,7 @@ import Field from '@/core/form/field/Field.vue';
 
 definePageMeta({
 	icon: 'mdi-email',
+	pos: 2
 });
 
 const config: any = useState('config_contact');

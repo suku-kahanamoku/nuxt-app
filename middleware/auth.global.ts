@@ -14,7 +14,8 @@ export default async function (to, from) {
                 // pokud je cilove url zabezpecena stranka, nastavi se redirect page a presmeruje na login
                 if (to.path.indexOf('/pz') >= 0) {
                     setStore('redirect', to.path);
-                    return navigateTo('/login');
+                    const pages: any = useState('pages').value;
+                    return navigateTo(pages?.login?.path);
                 }
                 return true;
             });
