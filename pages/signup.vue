@@ -2,7 +2,9 @@
 import Field from '@/core/form/field/Field.vue';
 
 definePageMeta({
-	icon: 'mdi-logout',
+	icon: {
+		value: 'mdi-account',
+	},
 });
 
 const config: any = useState('config_signup');

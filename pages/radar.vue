@@ -1,7 +1,9 @@
 <script setup lang="ts">
 definePageMeta({
-	icon: 'mdi-radar',
-	pos: 1
+	icon: {
+		value: 'mdi-radar',
+	},
+	pos: 1,
 });
 </script>
 <template>

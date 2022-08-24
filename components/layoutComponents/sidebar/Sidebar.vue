@@ -32,7 +32,8 @@ const routes: any = useState('routes');
 						v-else
 						:value="route.name"
 						:title="(route.name as string)"
-						:prepend-icon="route.meta?.icon"
+						:prepend-icon="route.meta?.icon?.pos !== 'after' && route.meta?.icon?.value"
+						:after-icon="route.meta?.icon?.pos === 'after' && route.meta?.icon?.value"
 					></v-list-item>
 				</template>
 			</v-list>

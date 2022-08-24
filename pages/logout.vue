@@ -1,8 +1,9 @@
 <script setup lang="ts">
-
 definePageMeta({
-	icon: 'mdi-logout',
-	visible: false
+	icon: {
+		value: 'mdi-logout',
+	},
+	visible: false,
 });
 
 onMounted(() => {

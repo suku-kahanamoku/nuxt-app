@@ -2,8 +2,10 @@
 import Field from '@/core/form/field/Field.vue';
 
 definePageMeta({
-	icon: 'mdi-login',
-	visible: false
+	icon: {
+		value: 'mdi-login',
+	},
+	visible: false,
 });
 
 const config: any = useState('config_login');

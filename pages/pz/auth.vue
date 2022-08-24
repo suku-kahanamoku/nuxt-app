@@ -2,7 +2,9 @@
 import Field from '@/core/form/field/Field.vue';
 
 definePageMeta({
-	icon: 'mdi-filter-cog',
+	icon: {
+		value: 'mdi-filter-cog',
+	},
 });
 
 const config: any = useState('config_auth');

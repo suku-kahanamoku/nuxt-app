@@ -12,7 +12,8 @@ const props = defineProps<{
 				v-bind="props"
 				rounded="lg"
 				class="mb-1"
-				:prepend-icon="(data.meta?.icon as string)"
+				:prepend-icon="(data.meta?.icon as any)?.pos !== 'after' && (data.meta?.icon as any)?.value"
+				:after-icon="(data.meta?.icon as any)?.pos === 'after' && (data.meta?.icon as any)?.value"
 				:title="(data.name as string)"
 			></v-list-item>
 		</template>
@@ -26,7 +27,8 @@ const props = defineProps<{
 				class="mb-1 pl-1"
 				:value="child.name"
 				:title="(child.name as string)"
-				:prepend-icon="(child.meta?.icon as string)"
+				:prepend-icon="(child.meta?.icon as any)?.pos !== 'after' && (child.meta?.icon as any)?.value"
+				:after-icon="(child.meta?.icon as any)?.pos === 'after' && (child.meta?.icon as any)?.value"
 			></v-list-item>
 		</template>
 	</v-list-group>

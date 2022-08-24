@@ -6,7 +6,9 @@ import Timeline from '@/components/dashboard/timeline/Timeline.vue';
 import Blog from '@/components/dashboard/blog/Blog.vue';
 
 definePageMeta({
-	icon: 'mdi-cog',
+	icon: {
+		value: 'mdi-cog',
+	},
 });
 </script>
 

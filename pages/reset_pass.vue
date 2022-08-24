@@ -2,8 +2,10 @@
 import Field from '@/core/form/field/Field.vue';
 
 definePageMeta({
-	icon: 'mdi-key',
-	visible: false
+	icon: {
+		value: 'mdi-key',
+	},
+	visible: false,
 });
 
 const config: any = useState('config_reset_pass');
@@ -12,7 +14,6 @@ const loading = ref(false);
 
 async function onSubmit(e) {
 	const loggedUser = await useSubmit('/api/signreset', form, loading);
-	
 }
 </script>
 <template>

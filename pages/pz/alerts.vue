@@ -1,6 +1,8 @@
 <script setup lang="ts">
 definePageMeta({
-	icon: 'mdi-cog',
+	icon: {
+		value: 'mdi-cog',
+	},
 });
 
 const alert = ref(true);

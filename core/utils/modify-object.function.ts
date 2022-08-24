@@ -142,7 +142,6 @@ export function SORT(
             });
         }
     }
-    console.log(sortable)
 
     return sortable;
 }

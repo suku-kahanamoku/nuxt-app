@@ -2,7 +2,9 @@
 import Field from '@/core/form/field/Field.vue';
 
 definePageMeta({
-	icon: 'mdi-filter-multiple',
+	icon: {
+		value: 'mdi-filter-multiple',
+	},
 });
 
 const config: any = useState('config_role');
