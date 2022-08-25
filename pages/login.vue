@@ -2,6 +2,7 @@
 import Field from '@/core/form/field/Field.vue';
 
 definePageMeta({
+	title: 'route.login',
 	icon: {
 		value: 'mdi-login',
 	},
@@ -29,7 +30,7 @@ async function onSubmit(e) {
 			<v-card-text>
 				<v-row>
 					<v-col v-for="field in config.fields" cols="12">
-						<Field :config="field" />
+						<Field :config="field" :value="field.value" />
 					</v-col>
 				</v-row>
 			</v-card-text>

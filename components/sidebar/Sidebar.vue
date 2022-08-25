@@ -30,8 +30,8 @@ const routes: any = useState('routes');
 						rounded="lg"
 						class="mb-1"
 						v-else
-						:value="route.name"
-						:title="(route.name as string)"
+						:value="route.meta?.title"
+						:title="$t(route.meta?.title || 'empty')"
 						:prepend-icon="route.meta?.icon?.pos !== 'after' && route.meta?.icon?.value"
 						:after-icon="route.meta?.icon?.pos === 'after' && route.meta?.icon?.value"
 					></v-list-item>

@@ -1,11 +1,20 @@
-import { addDoc, collection, getDoc, getDocs, orderBy, query, setDoc, startAt, where, WhereFilterOp } from 'firebase/firestore';
+import { addDoc, collection, getDoc, getDocs, query, where, documentId } from 'firebase/firestore';
 import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword } from 'firebase/auth';
+import { getDownloadURL, getStorage, listAll, ref } from 'firebase/storage';
 
 import { db } from './firebase';
+import { ITERATE } from '~~/core/utils/modify-object.function';
+import { IS_OBJECT } from '~~/core/utils/check.functions';
 
-export async function GET_DOC(table: string, property?: string, value?: string, operator: WhereFilterOp = '>=') {
+export async function GET_DOC(table: string, filter: any) {
     const colRef = collection(db, table);
-    const col = property && value ? query(colRef, where(property, operator, value)) : colRef;
+    const filterArr = [];
+    ITERATE(filter, (item, key) => {
+        const name = key === 'id' ? documentId() : key;
+        const value = IS_OBJECT(item) ? item.value : item;
+        filterArr.push(where(name, '==', value));
+    });
+    const col = filter ? query(colRef, ...filterArr) : colRef;
     const snapshot = await getDocs(col);
     const docs = snapshot.docs.map(doc => {
         return {
@@ -43,4 +52,11 @@ export async function LOGOUT() {
 
 export async function CURRENT_USER() {
     return getAuth().currentUser?.providerData[0];
+}
+
+export async function GET_STORAGE() {
+    const storage = getStorage();
+    const storageRef = ref(storage, 'img');
+    const snapshot = await listAll(storageRef);
+    return await Promise.all(snapshot.items.map(item => getDownloadURL(item)));
 }

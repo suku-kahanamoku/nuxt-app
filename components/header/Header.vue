@@ -1,4 +1,6 @@
 <script setup lang="ts">
+const profile = useState('profile');
+
 const userprofile = ref([
 	{
 		title: 'My Profile',
@@ -19,7 +21,7 @@ const userprofile = ref([
 	<v-menu anchor="bottom end" origin="auto" min-width="300">
 		<template v-slot:activator="{ props }">
 			<v-btn v-bind="props" class="pa-0 px-1" elevation="0" color="transparent" plain :ripple="false">
-				<v-avatar tag="span" size="35">
+				<v-avatar v-if="profile" tag="span" size="35">
 					<img src="@/assets/images/users/user2.jpg" width="35" alt="Julia" />
 				</v-avatar>
 			</v-btn>

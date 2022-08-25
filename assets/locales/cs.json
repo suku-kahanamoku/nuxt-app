@@ -20,7 +20,8 @@
 		"profile_detail": "Profil detail",
 		"role": "Role",
 		"auth": "Oprávnění",
-		"address": "Adresař"
+		"address": "Adresař",
+		"pz": "Partnerská zóna"
 	},
 	"btn": {
 		"login": "Přihlásit",

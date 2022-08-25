@@ -2,6 +2,7 @@
 import Field from '@/core/form/field/Field.vue';
 
 definePageMeta({
+	title: 'route.signup',
 	icon: {
 		value: 'mdi-account',
 	},
@@ -29,7 +30,7 @@ async function onSubmit(e) {
 				<v-card-text>
 					<v-row>
 						<v-col v-for="(field, i) in config.fields" cols="12" sm="6">
-							<Field :config="field" />
+							<Field :config="field" :value="field.value" />
 						</v-col>
 					</v-row>
 				</v-card-text>

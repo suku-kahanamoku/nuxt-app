@@ -126,7 +126,6 @@
 	"profile": {
 		"title": "route.profile",
 		"fields": [
-			
 			{
 				"name": "eid",
 				"label": "form.eid",
@@ -135,21 +134,18 @@
 			{
 				"name": "firstname",
 				"label": "form.firstname",
-				"required": true,
 				"autocomplete": "given-name",
 				"autofocus": true
 			},
 			{
 				"name": "lastname",
 				"label": "form.lastname",
-				"required": true,
 				"autocomplete": "family-name"
 			},
 			{
 				"type": "email",
 				"name": "email",
 				"label": "form.email",
-				"required": true,
 				"autocomplete": "email",
 				"validation": {
 					"pattern": "^\\w+([\\.-]?\\w+)*@\\w+([\\.-]?\\w+)*(\\.\\w{2,3})+$",
@@ -164,7 +160,6 @@
 			},
 			{
 				"type": "date",
-				"required": true,
 				"name": "birth_date",
 				"label": "form.birth_date",
 				"autocomplete": "bday"

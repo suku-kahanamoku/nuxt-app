@@ -1,5 +1,6 @@
 <script setup lang="ts">
 definePageMeta({
+	title: 'route.logout',
 	icon: {
 		value: 'mdi-logout',
 	},

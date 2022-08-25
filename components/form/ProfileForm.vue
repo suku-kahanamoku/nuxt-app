@@ -1,20 +1,28 @@
 <script setup lang="ts">
 import Field from '@/core/form/field/Field.vue';
 
-definePageMeta({
-	title: 'route.reset_pass',
-	icon: {
-		value: 'mdi-key',
-	},
-	visible: false,
-});
+const props = defineProps<{
+	config: any;
+}>();
 
-const config: any = useState('config_reset_pass');
 const form = ref();
 const loading = ref(false);
+const data = ref();
+
+onMounted(async () => {
+	load(props.config.restUrl);
+});
 
 async function onSubmit(e) {
-	const loggedUser = await useSubmit('/api/signreset', form, loading);
+	const method = data.value ? (data.value.id ? 'PATCH' : 'POST') : 'GET';
+	useSubmit(props.config.submitUrl, form, loading, method);
+}
+
+async function load(restUrl: string) {
+	if (restUrl) {
+		data.value = (await $fetch(restUrl))[0];
+		props.config.fields.forEach((field) => (field.value = data.value[field.name]));
+	}
 }
 </script>
 <template>
@@ -25,7 +33,7 @@ async function onSubmit(e) {
 			</v-toolbar>
 			<v-card-text>
 				<v-row>
-					<v-col v-for="field in config.fields" cols="12">
+					<v-col v-for="field in config.fields" cols="12" sm="6">
 						<Field :config="field" :value="field.value" />
 					</v-col>
 				</v-row>
@@ -36,4 +44,10 @@ async function onSubmit(e) {
 			</v-card-actions>
 		</v-card>
 	</v-form>
+
+	<v-row>
+		<v-col v-for="user in data" cols="12" sm="6" md="4" lg="3">
+			<ProfileCard :data="user" />
+		</v-col>
+	</v-row>
 </template>

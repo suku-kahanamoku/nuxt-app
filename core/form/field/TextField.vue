@@ -2,24 +2,19 @@
 import { ref } from 'vue';
 
 import { IFormField } from '@/core/form/field/field.interface';
-import { IS_DEFINED } from '@/core/utils/check.functions';
 
 const props = defineProps<{
 	config: IFormField;
+	value?: any;
 }>();
 
 const el = ref();
-const value = ref();
 const rule = ref();
 
 onMounted(() => {
 	// inicializuje regex
 	if (props.config?.validation?.pattern) {
 		rule.value = new RegExp(props.config.validation.pattern);
-	}
-	// nastavi defaultni hodnotu
-	if (IS_DEFINED(props.config.value)) {
-		value.value = props.config.value;
 	}
 });
 </script>

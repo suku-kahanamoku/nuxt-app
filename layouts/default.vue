@@ -1,8 +1,8 @@
 <script setup lang="ts">
 import { ref, onMounted } from 'vue';
 import { useDisplay } from 'vuetify';
-import Sidebar from '@/components/layoutComponents/sidebar/Sidebar.vue';
-import Header from '@/components/layoutComponents/header/Header.vue';
+import Sidebar from '@/components/sidebar/Sidebar.vue';
+import Header from '@/components/header/Header.vue';
 
 const drawer = ref(undefined || true);
 /* const innerW = window.innerWidth; */

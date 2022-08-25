@@ -1,3 +1,1 @@
-export default function () {
-    setStore('isClient', true);
-}
+export default defineNuxtPlugin(nuxtApp => setStore('isClient', true))

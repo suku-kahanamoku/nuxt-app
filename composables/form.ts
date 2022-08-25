@@ -12,7 +12,13 @@ export async function useSubmit(url, vForm, loading, method = 'POST') {
                     payload[key] = input.value;
                 }
             });
-            result = await $fetch(url, { method: method, body: payload });
+            const options: any = { method: method };
+            if (method.toUpperCase() === 'GET') {
+                options.params = payload;
+            } else {
+                options.body = payload;
+            }
+            result = await $fetch(url, options);
         }
     } catch (error) {
         result = error;

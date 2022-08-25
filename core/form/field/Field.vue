@@ -24,20 +24,21 @@ const props = defineProps<{
 		| IFormFieldSelect
 		| IFormFieldRadio
 		| IFormFieldDatetime;
+	value?: any;
 }>();
 </script>
 
 <template>
 	<!-- todo - je to urcene jen pro frontend, pac select field dela neplechu pri navigaci -->
 	<client-only>
-		<TextareaField v-if="config.type === 'textarea'" :config="(config as IFormFieldTextarea)" />
-		<SelectField v-else-if="config.type === 'select'" :config="(config as IFormFieldSelect)" />
-		<SearchField v-else-if="config.type === 'search'" :config="(config as IFormFieldSelect)" />
-		<CheckboxField v-else-if="config.type === 'checkbox'" :config="(config as IFormFieldRadio)" />
-		<RadioField v-else-if="config.type === 'radio'" :config="(config as IFormFieldRadio)" />
+		<TextareaField v-if="config.type === 'textarea'" :config="(config as IFormFieldTextarea)" :value="value" />
+		<SelectField v-else-if="config.type === 'select'" :config="(config as IFormFieldSelect)" :value="value" />
+		<SearchField v-else-if="config.type === 'search'" :config="(config as IFormFieldSelect)" :value="value" />
+		<CheckboxField v-else-if="config.type === 'checkbox'" :config="(config as IFormFieldRadio)" :value="value" />
+		<RadioField v-else-if="config.type === 'radio'" :config="(config as IFormFieldRadio)" :value="value" />
 		<template v-else-if="config.type === 'group'">
-			<Field v-for="childConfig in (config as any).options" :config="childConfig" />
+			<Field v-for="childConfig in (config as any).options" :config="childConfig" :value="value" />
 		</template>
-		<TextField v-else :config="config" />
+		<TextField v-else :config="config" :value="value" />
 	</client-only>
 </template>

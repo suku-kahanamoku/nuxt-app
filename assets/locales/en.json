@@ -20,7 +20,8 @@
 		"profile_detail": "Profile detail",
 		"role": "Role",
 		"auth": "Authorization",
-		"address": "Address"
+		"address": "Address",
+		"pz": "Partner zone"
 	},
 	"btn": {
 		"login": "Login",

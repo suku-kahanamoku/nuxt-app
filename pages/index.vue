@@ -2,10 +2,11 @@
 import Field from '@/core/form/field/Field.vue';
 
 definePageMeta({
+	title: 'route.home',
 	icon: {
 		value: 'mdi-home',
 	},
-	pos: 0,
+	visible: false,
 });
 
 const config: any = useState('config_auth');
@@ -20,7 +21,7 @@ const config: any = useState('config_auth');
 				<v-form>
 					<v-row>
 						<v-col v-for="field in config.fields" cols="12" sm="6">
-							<Field :config="field" />
+							<Field :config="field" :value="field.value" />
 						</v-col>
 					</v-row>
 				</v-form>

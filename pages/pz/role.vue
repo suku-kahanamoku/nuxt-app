@@ -2,6 +2,7 @@
 import Field from '@/core/form/field/Field.vue';
 
 definePageMeta({
+	title: 'route.role',
 	icon: {
 		value: 'mdi-filter-multiple',
 	},
@@ -19,7 +20,7 @@ const config: any = useState('config_role');
 				<v-form>
 					<v-row>
 						<v-col v-for="field in config.fields" cols="12" sm="6">
-							<Field :config="field" />
+							<Field :config="field" :value="field.value" />
 						</v-col>
 					</v-row>
 				</v-form>

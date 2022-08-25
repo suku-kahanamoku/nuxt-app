@@ -2,6 +2,7 @@
 import Field from '@/core/form/field/Field.vue';
 
 definePageMeta({
+	title: 'route.contact',
 	icon: {
 		value: 'mdi-email',
 	},
@@ -20,7 +21,7 @@ const config: any = useState('config_contact');
 				<v-form>
 					<v-row>
 						<v-col v-for="field in config.fields" cols="12">
-							<Field :config="field" />
+							<Field :config="field" :value="field.value" />
 						</v-col>
 					</v-row>
 				</v-form>
