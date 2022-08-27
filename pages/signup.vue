@@ -10,9 +10,12 @@ definePageMeta({
 });
 
 const config: any = useState('config_signup');
-onMounted(() => {
+const data = ref();
+
+onMounted(async () => {
 	config.value.submitUrl = `/api/profile`;
 	config.value.method = 'POST';
+	data.value = (await $fetch(`/api/profile?where={"id":"${useRoute().params.id}"}`))[0];
 });
 
 async function onSubmit(event) {
@@ -24,6 +27,6 @@ async function onSubmit(event) {
 </script>
 <template>
 	<div>
-		<ProfileForm :config="config" @submit="onSubmit" />
+		<ProfileForm v-if="config" :config="config" :data="data" @submit="onSubmit" />
 	</div>
 </template>

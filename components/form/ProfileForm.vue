@@ -13,7 +13,10 @@ const loading = ref(false);
 const panels = ref([0]);
 
 // kdyz se nastavi data, nastavi se automaticky do fields
-watch(props.data, (data) => props.config.fields.forEach((field) => (field.value = data[field.name])));
+watch(
+	() => props.data,
+	(data) => props.config.fields.forEach((field) => (field.value = data[field.name]))
+);
 
 async function onSubmit(e) {
 	emit('submit', await useSubmit(props.config.submitUrl, form, loading, props.config.method));

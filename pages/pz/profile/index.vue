@@ -8,10 +8,11 @@ definePageMeta({
 	},
 });
 
-const config: any = ref((await $fetch('/api/component?where={"syscode":"profile"}'))[0]);
+const config: any = ref();
 const data = ref();
 
-onMounted(() => {
+onMounted(async () => {
+	config.value = (await $fetch('/api/component?where={"syscode":"profile"}'))[0];
 	config.value.submitUrl = `/api/profile`;
 	config.value.method = 'GET';
 	config.value.theme = 'accordion';
@@ -23,7 +24,7 @@ async function del(event) {
 </script>
 <template>
 	<div>
-		<ProfileForm :config="config" @submit="data = $event" />
+		<ProfileForm v-if="config" :config="config" @submit="data = $event" />
 
 		<v-row v-if="data?.length" class="mt-5">
 			<v-col v-for="user in data" cols="12" sm="6" md="4" lg="3">
