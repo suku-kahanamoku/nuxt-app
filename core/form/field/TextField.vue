@@ -2,6 +2,7 @@
 import { ref } from 'vue';
 
 import { IFormField } from '@/core/form/field/field.interface';
+import { IS_DEFINED } from '~~/core/utils/check.functions';
 
 const props = defineProps<{
 	config: IFormField;
@@ -10,19 +11,29 @@ const props = defineProps<{
 
 const el = ref();
 const rule = ref();
+const fieldValue = ref();
 
 onMounted(() => {
 	// inicializuje regex
 	if (props.config?.validation?.pattern) {
 		rule.value = new RegExp(props.config.validation.pattern);
 	}
+	// nastavi defaultni hodnotu
+	if (IS_DEFINED(props.config.value)) {
+		fieldValue.value = props.config.value;
+	}
 });
+
+watch(
+	() => props.value,
+	(value) => (fieldValue.value = value)
+);
 </script>
 
 <template>
 	<v-text-field
 		ref="el"
-		v-model="value"
+		v-model="fieldValue"
 		:type="config.type || 'text'"
 		:id="config.name"
 		:name="config.name"

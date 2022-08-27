@@ -6,11 +6,12 @@ import { IS_DEFINED } from '@/core/utils/check.functions';
 
 const props = defineProps<{
 	config: IFormFieldSelect;
+	value?: any;
 }>();
 
 const el = ref();
-const value = ref();
 const rule = ref();
+const fieldValue = ref();
 
 onMounted(() => {
 	// inicializuje regex
@@ -19,15 +20,20 @@ onMounted(() => {
 	}
 	// nastavi defaultni hodnotu
 	if (IS_DEFINED(props.config.value)) {
-		value.value = props.config.value;
+		fieldValue.value = props.config.value;
 	}
 });
+
+watch(
+	() => props.value,
+	(value) => fieldValue.value = value
+);
 </script>
 
 <template>
 	<v-select
 		ref="el"
-		v-model="value"
+		v-model="fieldValue"
 		:id="config.name"
 		:name="config.name"
 		:label="$t(config.label || 'empty') + (config.required ? ' *' : '')"

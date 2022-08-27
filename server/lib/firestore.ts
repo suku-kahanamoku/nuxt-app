@@ -1,4 +1,4 @@
-import { addDoc, collection, getDoc, getDocs, query, where, documentId } from 'firebase/firestore';
+import { addDoc, collection, getDoc, getDocs, query, where, documentId, deleteDoc, doc } from 'firebase/firestore';
 import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 import { getDownloadURL, getStorage, listAll, ref } from 'firebase/storage';
 
@@ -28,6 +28,11 @@ export async function GET_DOC(table: string, filter: any) {
 export async function CREATE_DOC(table, data) {
     const doc = await addDoc(collection(db, table), data);
     return (await getDoc(doc)).data();
+}
+
+export async function DELETE_DOC(table, id) {
+    const colRef = doc(collection(db, table), id);
+    await deleteDoc(colRef);
 }
 
 export async function CREATE_PROFILE(data) {

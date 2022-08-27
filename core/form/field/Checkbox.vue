@@ -6,10 +6,12 @@ import { IS_DEFINED } from '@/core/utils/check.functions';
 
 const props = defineProps<{
 	config: IFormFieldRadio;
+	value?: any;
 }>();
 
-const value = ref();
+const el = ref();
 const rule = ref();
+const fieldValue = ref();
 
 onMounted(() => {
 	// inicializuje regex
@@ -18,14 +20,20 @@ onMounted(() => {
 	}
 	// nastavi defaultni hodnotu
 	if (IS_DEFINED(props.config.value)) {
-		value.value = props.config.value;
+		fieldValue.value = props.config.value;
 	}
 });
+
+watch(
+	() => props.value,
+	(value) => fieldValue.value = value
+);
 </script>
 
 <template>
 	<v-checkbox
-		v-model="value"
+		ref="el"
+		v-model="fieldValue"
 		:name="config.name"
 		:label="$t(config.label || 'empty') + (config.required ? ' *' : '')"
 		:disabled="config.disabled"
