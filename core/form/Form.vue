@@ -19,7 +19,7 @@ watch(
 );
 
 async function onSubmit(e) {
-	emit('submit', await useSubmit(props.config.submitUrl, form, loading, props.config.method));
+	emit('submit', await useSubmit(props.config.submitUrl, form, props.config.fields, loading, props.config.method));
 }
 </script>
 <template>

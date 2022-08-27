@@ -14,7 +14,7 @@ const form = ref();
 const loading = ref(false);
 
 async function onSubmit(e) {
-	const loggedUser = await useSubmit('/api/signreset', form, loading);
+	await useSubmit('/api/signreset', form, config.value.fields, loading);
 }
 </script>
 <template>

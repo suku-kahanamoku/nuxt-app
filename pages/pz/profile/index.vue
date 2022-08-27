@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import ProfileForm from '@/components/form/ProfileForm.vue';
+import Form from '@/core/form/Form.vue';
 
 definePageMeta({
 	title: 'route.profile',
@@ -24,7 +24,7 @@ async function del(event) {
 </script>
 <template>
 	<div>
-		<ProfileForm v-if="config" :config="config" @submit="data = $event" />
+		<Form v-if="config" :config="config" @submit="data = $event" />
 
 		<v-row v-if="data?.length" class="mt-5">
 			<v-col v-for="user in data" cols="12" sm="6" md="4" lg="3">

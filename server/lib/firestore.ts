@@ -1,20 +1,20 @@
-import { addDoc, collection, getDoc, getDocs, query, where, documentId, deleteDoc, doc } from 'firebase/firestore';
+import { addDoc, collection, getDoc, getDocs, query, where, documentId, deleteDoc, doc, setDoc, updateDoc } from 'firebase/firestore';
 import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 import { getDownloadURL, getStorage, listAll, ref } from 'firebase/storage';
 
 import { db } from './firebase';
-import { ITERATE } from '~~/core/utils/modify-object.function';
-import { IS_OBJECT } from '~~/core/utils/check.functions';
+import { ITERATE } from '@/core/utils/modify-object.function';
+import { IS_OBJECT } from '@/core/utils/check.functions';
 
-export async function GET_DOC(table: string, filter: any) {
-    const colRef = collection(db, table);
-    const filterArr = [];
-    ITERATE(filter, (item, key) => {
+export async function GET_DOCS(colName: string, params: any) {
+    const colRef = collection(db, colName);
+    const paramsArr = [];
+    ITERATE(params, (item, key) => {
         const name = key === 'id' ? documentId() : key;
         const value = IS_OBJECT(item) ? item.value : item;
-        filterArr.push(where(name, '==', value));
+        paramsArr.push(where(name, '==', value));
     });
-    const col = filter ? query(colRef, ...filterArr) : colRef;
+    const col = params ? query(colRef, ...paramsArr) : colRef;
     const snapshot = await getDocs(col);
     const docs = snapshot.docs.map(doc => {
         return {
@@ -25,24 +25,29 @@ export async function GET_DOC(table: string, filter: any) {
     return docs;
 }
 
-export async function CREATE_DOC(table, data) {
-    const doc = await addDoc(collection(db, table), data);
+export async function CREATE_DOC(colName, params) {
+    const doc = await addDoc(collection(db, colName), params);
     return (await getDoc(doc)).data();
 }
 
-export async function DELETE_DOC(table, id) {
-    const colRef = doc(collection(db, table), id);
-    await deleteDoc(colRef);
+export async function UPDATE_DOC(colName, id, params) {
+    const docRef = doc(collection(db, colName), id);
+    await updateDoc(docRef, params);
+    return (await getDoc(docRef)).data();
 }
 
-export async function CREATE_PROFILE(data) {
+export async function DELETE_DOC(colName, id) {
+    const docRef = doc(collection(db, colName), id);
+    await deleteDoc(docRef);
+}
+
+export async function CREATE_PROFILE(params) {
     const auth = getAuth();
-    const credentials = await createUserWithEmailAndPassword(auth, data.email, data.password);
-    delete data.email;
-    delete data.password;
-    data.uid = credentials.user?.uid;
-    data = await CREATE_DOC('profile', data);
-    return { ...credentials.user?.providerData[0], ...data };
+    const credentials = await createUserWithEmailAndPassword(auth, params.email, params.password);
+    delete params.email;
+    delete params.password;
+    params.uid = credentials.user?.uid;
+    return { ...await CREATE_DOC('profile', params), ...credentials.user?.providerData[0] };
 }
 
 export async function LOGIN(email: string, password: string) {

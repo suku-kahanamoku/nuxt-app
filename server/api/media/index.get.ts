@@ -1,4 +1,4 @@
-import { GET_DOC, GET_STORAGE } from '@/server/lib/firestore';
+import { GET_DOCS, GET_STORAGE } from '@/server/lib/firestore';
 
 export default defineEventHandler(async (event) => {
     try {

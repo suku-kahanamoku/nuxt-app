@@ -2,7 +2,7 @@
 import { ref } from 'vue';
 
 import { IFormField } from '@/core/form/field/field.interface';
-import { IS_DEFINED } from '~~/core/utils/check.functions';
+import { IS_DEFINED } from '@/core/utils/check.functions';
 
 const props = defineProps<{
 	config: IFormField;
@@ -60,8 +60,9 @@ watch(
 		"
 		:rules="[
 			(value) => (!value && config.required ? '' : true),
-			(value) => (rule ? rule.test(value) || $t(config.validation.msg || 'empty') : true),
+			(value) => (value && rule ? rule.test(value) || $t(config.validation.msg || 'empty') : true),
 		]"
 		:clearable="config.clearable"
+		:autocomplete="config.autocomplete"
 	/>
 </template>
