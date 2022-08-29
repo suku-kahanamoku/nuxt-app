@@ -32,7 +32,6 @@ export async function useSubmit(url, vForm, fields, loading, method = 'POST') {
                 url += `${GET_MARK(url)}where={`
                 ITERATE(payload, (value, key) => {
                     if (IS_DEFINED(value) && (value).toString().length) {
-                        console.log(value)
                         url += `"${key}":{"value":"${value}"},`
                     }
                 });

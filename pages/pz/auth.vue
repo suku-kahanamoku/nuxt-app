@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import Field from '@/core/form/field/Field.vue';
+import Form from '@/core/form/Form.vue';
 
 definePageMeta({
 	title: 'route.auth',
@@ -8,27 +8,17 @@ definePageMeta({
 	},
 });
 
-const config: any = useState('config_auth');
+const config: any = ref();
+
+onMounted(async () => {
+	config.value = (await $fetch('/api/component?where={"syscode":"auth"}'))[0];
+	config.value.submitUrl = `/api/auth`;
+});
+
+async function onSubmit(event) {}
 </script>
 <template>
 	<div>
-		<v-card>
-			<v-toolbar dark color="primary">
-				<v-toolbar-title>{{ $t(config.title) }}</v-toolbar-title>
-			</v-toolbar>
-			<v-card-text>
-				<v-form>
-					<v-row>
-						<v-col v-for="field in config.fields" cols="12" sm="6">
-							<Field :config="field" :value="field.value" />
-						</v-col>
-					</v-row>
-				</v-form>
-			</v-card-text>
-			<v-card-actions>
-				<v-spacer></v-spacer>
-				<v-btn color="primary" to="/">Login</v-btn>
-			</v-card-actions>
-		</v-card>
+		<Form v-if="config" :config="config" @submit="onSubmit" />
 	</div>
 </template>

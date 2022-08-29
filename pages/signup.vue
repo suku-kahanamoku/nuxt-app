@@ -9,13 +9,11 @@ definePageMeta({
 	visible: false,
 });
 
-const config: any = useState('config_signup');
-const data = ref();
+const config: any = ref();
 
 onMounted(async () => {
+	config.value = (await $fetch('/api/component?where={"syscode":"signup"}'))[0];
 	config.value.submitUrl = `/api/profile`;
-	config.value.method = 'POST';
-	data.value = (await $fetch(`/api/profile?where={"id":"${useRoute().params.id}"}`))[0];
 });
 
 async function onSubmit(event) {
@@ -27,6 +25,6 @@ async function onSubmit(event) {
 </script>
 <template>
 	<div>
-		<Form v-if="config" :config="config" :data="data" @submit="onSubmit" />
+		<Form v-if="config" :config="config" @submit="onSubmit" />
 	</div>
 </template>

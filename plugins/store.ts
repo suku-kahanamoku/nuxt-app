@@ -1,4 +1,3 @@
-import configs from '@/assets/data/form.json';
 import { ITERATE } from '@/core/utils/modify-object.function';
 
 function getRoutes(routes) {
@@ -43,7 +42,4 @@ export default defineNuxtPlugin(nuxtApp => {
             routes.filter(route => event || route.path.indexOf('/pz') < 0)
         ))
     );
-
-    // todo - zrusit => nastavi konfigurace jednotlivych form komponent
-    ITERATE(configs, (config: any, name: string) => useState(`config_${name}`, () => config));
 })

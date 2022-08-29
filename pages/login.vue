@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import Field from '@/core/form/field/Field.vue';
+import Form from '@/core/form/Form.vue';
 
 definePageMeta({
 	title: 'route.login',
@@ -9,35 +9,23 @@ definePageMeta({
 	visible: false,
 });
 
-const config: any = useState('config_login');
-const form = ref();
-const loading = ref(false);
+const config: any = ref();
 
-async function onSubmit(e) {
-	const loggedUser = await useSubmit('/api/signin', form, config.value.fields, loading);
-	if (loggedUser?.uid) {
-		setStore('profile', loggedUser);
+onMounted(async () => {
+	config.value = (await $fetch('/api/component?where={"syscode":"login"}'))[0];
+	config.value.submitUrl = `/api/signin`;
+});
+
+async function onSubmit(event) {
+	console.log(event);
+	if (event?.uid) {
+		setStore('profile', event);
 		navigateTo(useState('redirect')?.value || '/pz');
 	}
 }
 </script>
 <template>
-	<v-form ref="form" @submit.prevent="onSubmit">
-		<v-card>
-			<v-toolbar dark color="primary">
-				<v-toolbar-title>{{ $t(config.title) }}</v-toolbar-title>
-			</v-toolbar>
-			<v-card-text>
-				<v-row>
-					<v-col v-for="field in config.fields" cols="12">
-						<Field :config="field" :value="field.value" />
-					</v-col>
-				</v-row>
-			</v-card-text>
-			<v-card-actions>
-				<v-spacer></v-spacer>
-				<v-btn color="primary" type="submit" :loading="loading">Login</v-btn>
-			</v-card-actions>
-		</v-card>
-	</v-form>
+	<div>
+		<Form v-if="config" :config="config" @submit="onSubmit" />
+	</div>
 </template>

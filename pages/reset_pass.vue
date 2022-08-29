@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import Field from '@/core/form/field/Field.vue';
+import Form from '@/core/form/Form.vue';
 
 definePageMeta({
 	title: 'route.reset_pass',
@@ -9,31 +9,17 @@ definePageMeta({
 	visible: false,
 });
 
-const config: any = useState('config_reset_pass');
-const form = ref();
-const loading = ref(false);
+const config: any = ref();
 
-async function onSubmit(e) {
-	await useSubmit('/api/signreset', form, config.value.fields, loading);
-}
+onMounted(async () => {
+	config.value = (await $fetch('/api/component?where={"syscode":"reset_pass"}'))[0];
+	config.value.submitUrl = `/api/signreset`;
+});
+
+async function onSubmit(event) {}
 </script>
 <template>
-	<v-form ref="form" @submit.prevent="onSubmit">
-		<v-card>
-			<v-toolbar dark color="primary">
-				<v-toolbar-title>{{ $t(config.title) }}</v-toolbar-title>
-			</v-toolbar>
-			<v-card-text>
-				<v-row>
-					<v-col v-for="field in config.fields" cols="12">
-						<Field :config="field" :value="field.value" />
-					</v-col>
-				</v-row>
-			</v-card-text>
-			<v-card-actions>
-				<v-spacer></v-spacer>
-				<v-btn color="primary" type="submit" :loading="loading">Send</v-btn>
-			</v-card-actions>
-		</v-card>
-	</v-form>
+	<div>
+		<Form v-if="config" :config="config" @submit="onSubmit" />
+	</div>
 </template>
