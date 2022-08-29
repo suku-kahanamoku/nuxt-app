@@ -1,6 +1,6 @@
 import { ITERATE } from "@/core/utils/modify-object.function";
-import { IS_DEFINED } from "~~/core/utils/check.functions";
-import { GET_MARK, TRIM } from "~~/core/utils/modify-string.functions";
+import { IS_DEFINED } from "@/core/utils/check.functions";
+import { GET_MARK, TRIM } from "@/core/utils/modify-string.functions";
 
 export async function useSubmit(url, vForm, fields, loading, method = 'POST') {
     loading.value = true;

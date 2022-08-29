@@ -48,7 +48,7 @@ onMounted(() => {
 			</v-navigation-drawer>
 			<!-- main -->
 			<v-main>
-				<v-container fluid class="page-wrapper">
+				<v-container fluid class="w-100 h-100">
 					<slot />
 				</v-container>
 			</v-main>

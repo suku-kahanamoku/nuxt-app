@@ -1,4 +1,4 @@
-import { UPDATE_DOC } from "~~/server/lib/firestore";
+import { UPDATE_DOC } from "@/server/lib/firestore";
 
 export default defineEventHandler(async (event) => {
     try {
