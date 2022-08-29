@@ -49,6 +49,7 @@ function initAreas(): void {
 		style: feature.getStyle() as Style,
 		config: {
 			w: 400,
+			h: 400
 		},
 	}));
 }

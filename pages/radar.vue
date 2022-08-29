@@ -1,4 +1,5 @@
 <script setup lang="ts">
+import 'vue-draggable-resizable/dist/VueDraggableResizable.css';
 import { OlService } from '@/components/ol/ol.service';
 import TopSettings from '@/components/ol/settings/TopSettings.vue';
 import BottomSettings from '@/components/ol/settings/BottomSettings.vue';

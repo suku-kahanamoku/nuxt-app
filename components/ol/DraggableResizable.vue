@@ -42,12 +42,11 @@ function onResize(x: number, y: number): void {
 		:parent="true"
 		:draggable="config?.draggable"
 		:resizable="config?.resizable"
-		:handles="['tl', 'tr', 'br', 'bl']"
 		@dragstop="onDrag"
 		@resizestop="onResize"
 	>
 		<slot>
-			<v-card width="400">
+			<v-card>
 				<template v-slot:title>
 					<slot name="header">...</slot>
 					<v-btn @click="emits('close')">X</v-btn>
@@ -74,61 +73,5 @@ function onResize(x: number, y: number): void {
 .draggable:active {
 	cursor: grabbing;
 	box-shadow: 0 10px 10px 10px rgb(0 0 0 / 7%);
-}
-</style>
-
-<style>
-.handle {
-	z-index: 10;
-	border: none;
-	background-color: transparent;
-}
-
-.handle-tl {
-	top: 0;
-	left: 0;
-	border-top: 2px solid;
-	border-left: 2px solid;
-}
-
-.handle-tm {
-	top: 0;
-	border-top: 2px solid;
-}
-
-.handle-tr {
-	top: 0;
-	right: 0;
-	border-top: 2px solid;
-	border-right: 2px solid;
-}
-
-.handle-bl {
-	bottom: 0;
-	left: 0;
-	border-bottom: 2px solid;
-	border-left: 2px solid;
-}
-
-.handle-bm {
-	bottom: 0;
-	border-bottom: 2px solid;
-}
-
-.handle-br {
-	bottom: 0;
-	right: 0;
-	border-bottom: 2px solid;
-	border-right: 2px solid;
-}
-
-.handle-ml {
-	left: 0;
-	border-left: 2px solid;
-}
-
-.handle-mr {
-	right: 0;
-	border-right: 2px solid;
 }
 </style>
