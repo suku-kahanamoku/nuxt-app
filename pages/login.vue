@@ -17,7 +17,6 @@ onMounted(async () => {
 });
 
 async function onSubmit(event) {
-	console.log(event);
 	if (event?.uid) {
 		setStore('profile', event);
 		navigateTo(useState('redirect')?.value || '/pz');

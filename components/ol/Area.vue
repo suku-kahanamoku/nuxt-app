@@ -4,8 +4,10 @@ import Fill from 'ol/style/Fill.js';
 import Stroke from 'ol/style/Stroke.js';
 import Style from 'ol/style/Style.js';
 
+import data from '@/assets/data/form.json';
 import DraggableResizable from '@/components/ol/DraggableResizable.vue';
 import Field from '@/core/form/field/Field.vue';
+import area from '@turf/area';
 import { IArea } from './ol.interface';
 
 const props = defineProps<{
@@ -18,11 +20,7 @@ const open: Ref<boolean | undefined> = ref(props.area.config?.open);
 const hover: Ref<boolean | undefined> = ref();
 
 //todo
-const config: any = ref();
-
-onMounted(async () => {
-	/* config.value = (await $fetch('/api/component?where={"syscode":"area"}'))[0]; */
-});
+const config = data.profile as any;
 
 watch(
 	() => props.area.calculate,
@@ -98,10 +96,10 @@ function setStyle(
 </script>
 
 <template>
-	<!-- <Teleport v-if="open" :to="`#${wrapId}`">
+	<Teleport v-if="open" :to="`#${wrapId}`">
 		<DraggableResizable :config="area.config" @change="onChange" @close="open = false">
 			<template v-slot:header>
-				{{ area.feature.getProperties()?.name }}
+				{{ area.feature?.getProperties()?.name }}
 			</template>
 			<template v-slot:body>
 				<form novalidate>
@@ -113,7 +111,7 @@ function setStyle(
 				</form>
 			</template>
 		</DraggableResizable>
-	</Teleport> -->
+	</Teleport>
 </template>
 
 <style></style>

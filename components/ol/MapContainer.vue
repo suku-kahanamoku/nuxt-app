@@ -93,13 +93,15 @@ function getArea(id: string): IArea | undefined {
 </script>
 
 <template>
-	<div id="map" class="w-100 h-100" :class="{ 'cursor-pointer': hoveredArea?.feature }"></div>
-	<Area
-		v-for="area in areas"
-		:wrapId="wrapId"
-		:area="area"
-		@change="area.config = olService.convertToDragResizeConfig($event)"
-	/>
+	<div id="map" class="position-absolute w-100 h-100" :class="{ 'cursor-pointer': hoveredArea?.feature }"></div>
+	<template v-if="areas?.length">
+		<Area
+			v-for="area in areas"
+			:wrapId="wrapId"
+			:area="area"
+			@change="area.config = olService.convertToDragResizeConfig($event)"
+		/>
+	</template>
 </template>
 
 <style scoped></style>

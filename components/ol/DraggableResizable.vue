@@ -47,17 +47,15 @@ function onResize(x: number, y: number): void {
 		@resizestop="onResize"
 	>
 		<slot>
-			<!-- <MDBCard class="w-100 h-100" text="center">
-				<MDBCardHeader class="d-flex justify-content-between pe-0 text-uppercase">
+			<v-card width="400">
+				<template v-slot:title>
 					<slot name="header">...</slot>
-					<button type="button" class="btn-close btn-sm" @click="emits('close')"></button>
-				</MDBCardHeader>
-				<MDBCardBody>
-					<MDBCardText>
-						<slot name="body">...</slot>
-					</MDBCardText>
-				</MDBCardBody>
-			</MDBCard> -->
+					<v-btn @click="emits('close')">X</v-btn>
+				</template>
+				<template v-slot:text>
+					<slot name="body">...</slot>
+				</template>
+			</v-card>
 		</slot>
 	</VueDraggableResizable>
 </template>
