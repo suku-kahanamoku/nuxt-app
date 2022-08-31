@@ -2,7 +2,7 @@
 import Form from '@/core/form/Form.vue';
 
 definePageMeta({
-	title: 'route.cmp',
+	title: 'route.profile',
 	icon: {
 		value: 'mdi-cog',
 	},
@@ -13,7 +13,7 @@ const config: any = ref();
 const data = ref();
 
 onMounted(async () => {
-	config.value = (await $fetch('/api/component?where={"syscode":"cmp"}'))[0];
+	config.value = (await $fetch('/api/component?where={"syscode":"auth"}'))[0];
 	config.value.submitUrl = `${config.value.submitUrl}?where={"id":"${useRoute().params.id}"}`;
 	config.value.method = 'PATCH';
 	data.value = (await $fetch(config.value.submitUrl))[0];

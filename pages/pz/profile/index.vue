@@ -1,5 +1,6 @@
 <script setup lang="ts">
 import Form from '@/core/form/Form.vue';
+import ProfileCard from '@/components/card/ProfileCard.vue';
 
 definePageMeta({
 	title: 'route.profile',
