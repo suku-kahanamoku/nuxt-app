@@ -13,9 +13,7 @@ const data = ref();
 
 onMounted(async () => {
 	config.value = (await $fetch('/api/component?where={"syscode":"profile"}'))[0];
-	config.value.submitUrl = `/api/profile`;
 	config.value.method = 'GET';
-	config.value.theme = 'accordion';
 });
 
 async function del(event) {

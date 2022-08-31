@@ -4,13 +4,13 @@ import Fill from 'ol/style/Fill.js';
 import Stroke from 'ol/style/Stroke.js';
 import Style from 'ol/style/Style.js';
 
-import data from '@/assets/data/form.json';
 import DraggableResizable from '@/components/ol/DraggableResizable.vue';
-import Field from '@/core/form/field/Field.vue';
 import area from '@turf/area';
 import { IArea } from './ol.interface';
+import Form from '@/core/form/Form.vue';
 
 const props = defineProps<{
+	config: any;
 	wrapId: string;
 	area: IArea;
 }>();
@@ -18,9 +18,6 @@ const props = defineProps<{
 const emits = defineEmits(['change']);
 const open: Ref<boolean | undefined> = ref(props.area.config?.open);
 const hover: Ref<boolean | undefined> = ref();
-
-//todo
-const config = data.profile as any;
 
 watch(
 	() => props.area.calculate,
@@ -93,6 +90,8 @@ function setStyle(
 ): void {
 	area.feature?.setStyle(style);
 }
+
+async function onSubmit(event) {}
 </script>
 
 <template>
@@ -102,13 +101,7 @@ function setStyle(
 				{{ area.feature?.getProperties()?.name }}
 			</template>
 			<template v-slot:body>
-				<form novalidate>
-					<div class="row">
-						<div v-for="field in config.fields" class="col-sm-6">
-							<Field :config="field" />
-						</div>
-					</div>
-				</form>
+				<Form v-if="config" :config="config" @submit="onSubmit" />
 			</template>
 		</DraggableResizable>
 	</Teleport>

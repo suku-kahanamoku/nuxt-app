@@ -13,7 +13,6 @@ const config: any = ref();
 
 onMounted(async () => {
 	config.value = (await $fetch('/api/component?where={"syscode":"reset_pass"}'))[0];
-	config.value.submitUrl = `/api/signreset`;
 });
 
 async function onSubmit(event) {}

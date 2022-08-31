@@ -13,7 +13,6 @@ const config: any = ref();
 
 onMounted(async () => {
 	config.value = (await $fetch('/api/component?where={"syscode":"contact"}'))[0];
-	config.value.submitUrl = `/api/contact`;
 });
 
 async function onSubmit(event) {}

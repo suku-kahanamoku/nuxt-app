@@ -12,7 +12,6 @@ const config: any = ref();
 
 onMounted(async () => {
 	config.value = (await $fetch('/api/component?where={"syscode":"role"}'))[0];
-	config.value.submitUrl = `/api/role`;
 });
 
 async function onSubmit(event) {}

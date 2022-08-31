@@ -54,7 +54,9 @@
 		"description": "Description",
 		"name": "Name",
 		"url": "URL path",
-		"operation": "Operation"
+		"operation": "Operation",
+		"altitude": "Altitude",
+		"latitude": "Latitude"
 	},
 	"settings": {
 		"cwp_setup": "CWP setup",

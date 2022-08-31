@@ -18,8 +18,10 @@ const olService = inject('OlService') as OlService;
 const map: Ref<Map | undefined> = ref();
 const areas: Ref<IArea[] | undefined> = ref();
 const hoveredArea: Ref<IArea | undefined> = ref();
+const areaConfig: any = ref();
 
-onMounted(() => {
+onMounted(async () => {
+	areaConfig.value = (await $fetch('/api/component?where={"syscode":"area"}'))[0];
 	initMap();
 	initAreas();
 	listenClick();
@@ -49,7 +51,7 @@ function initAreas(): void {
 		style: feature.getStyle() as Style,
 		config: {
 			w: 400,
-			h: 400
+			h: 400,
 		},
 	}));
 }
@@ -98,6 +100,7 @@ function getArea(id: string): IArea | undefined {
 	<template v-if="areas?.length">
 		<Area
 			v-for="area in areas"
+			:config="areaConfig"
 			:wrapId="wrapId"
 			:area="area"
 			@change="area.config = olService.convertToDragResizeConfig($event)"

@@ -45,7 +45,7 @@ async function onSubmit(e) {
 			</v-expansion-panel>
 		</v-expansion-panels>
 
-		<v-card v-else>
+		<v-card v-else-if="config.theme === 'card'">
 			<v-toolbar dark color="primary">
 				<v-toolbar-title>{{ $t(config.title) }}</v-toolbar-title>
 			</v-toolbar>
@@ -61,5 +61,11 @@ async function onSubmit(e) {
 				<v-btn color="primary" type="submit" :loading="loading" :disabled="!config.submitUrl"> Send </v-btn>
 			</v-card-actions>
 		</v-card>
+
+		<v-row v-else>
+			<v-col v-for="field in config.fields" cols="12" sm="6">
+				<Field :config="field" :value="field.value" />
+			</v-col>
+		</v-row>
 	</v-form>
 </template>
