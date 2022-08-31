@@ -21,7 +21,8 @@
 		"role": "Role",
 		"auth": "Oprávnění",
 		"address": "Adresař",
-		"pz": "Partnerská zóna"
+		"pz": "Partnerská zóna",
+		"cmp": "Komponenty"
 	},
 	"btn": {
 		"login": "Přihlásit",
@@ -56,7 +57,10 @@
 		"url": "URL",
 		"operation": "Operace",
 		"altitude": "Altitude",
-		"latitude": "Latitude"
+		"latitude": "Latitude",
+		"submitUrl": "Submit URL",
+		"theme": "Theme",
+		"title": "Titulek"
 	},
 	"settings": {
 		"cwp_setup": "CWP setup",

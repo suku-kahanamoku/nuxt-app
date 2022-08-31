@@ -21,7 +21,8 @@
 		"role": "Role",
 		"auth": "Authorization",
 		"address": "Address",
-		"pz": "Partner zone"
+		"pz": "Partner zone",
+		"cmp": "Component"
 	},
 	"btn": {
 		"login": "Login",
@@ -56,7 +57,10 @@
 		"url": "URL path",
 		"operation": "Operation",
 		"altitude": "Altitude",
-		"latitude": "Latitude"
+		"latitude": "Latitude",
+		"submitUrl": "Submit URL",
+		"theme": "Theme",
+		"title": "Title"
 	},
 	"settings": {
 		"cwp_setup": "CWP setup",
