@@ -4,7 +4,6 @@
 	"syscode": "Systémový kód",
 	"reset_pass": "Zapomenuté heslo?",
 	"not_account": "Nemáte účet?",
-	"success_logout": "Odhlášení ze systému proběhlo úspěšně.",
 	"write_us": "Napište nám",
 	"route": {
 		"home": "",
@@ -84,5 +83,18 @@
 		"post": "Vytvořit",
 		"patch": "Upravit",
 		"delete": "Smazat"
+	},
+	"message": {
+		"success_logout": "Odhlášení ze systému proběhlo úspěšně.",
+		"success_login": "Byl jste úspěšně přihlášen do systemu.",
+		"profile_success_created": "Uživatel byl úspěšně přidán.",
+		"profile_success_updated": "Uživatel byl úspěšně upraven.",
+		"profile_success_deleted": "Uživatel byl úspěšně odstraněn.",
+		"auth_success_created": "Autorizace byla úspěšně vytvořena.",
+		"auth_success_updated": "Autorizace byla úspěšně upravena.",
+		"auth_success_deleted": "Autorizace byla úspěšně smazána.",
+		"cmp_success_created": "Komponenta byla úspěšně vytvořena.",
+		"cmp_success_updated": "Komponenta byla úspěšně upravena.",
+		"cmp_success_deleted": "Komponenta byla úspěšně smazána."
 	}
 }

@@ -11,7 +11,7 @@ definePageMeta({
 const config: any = ref();
 
 onMounted(async () => {
-	config.value = (await $fetch('/api/component?where={"syscode":"role"}'))[0];
+	config.value = (await useApi('/api/component?where={"syscode":"role"}'))[0];
 });
 
 async function onSubmit(event) {}

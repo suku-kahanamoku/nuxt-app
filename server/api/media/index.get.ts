@@ -4,8 +4,9 @@ export default defineEventHandler(async (event) => {
     try {
         const query = useQuery(event.req);
         const where = query.where ? JSON.parse(query.where as any) : null;
-        const docs = await GET_STORAGE();
-        return docs;
+        return {
+            result: await GET_STORAGE()
+        }
     } catch (error) {
         return error;
     }

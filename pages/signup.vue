@@ -12,7 +12,7 @@ definePageMeta({
 const config: any = ref();
 
 onMounted(async () => {
-	config.value = (await $fetch('/api/component?where={"syscode":"signup"}'))[0];
+	config.value = (await useApi('/api/component?where={"syscode":"signup"}'))[0];
 });
 
 async function onSubmit(event) {

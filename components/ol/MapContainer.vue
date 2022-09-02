@@ -21,7 +21,7 @@ const hoveredArea: Ref<IArea | undefined> = ref();
 const areaConfig: any = ref();
 
 onMounted(async () => {
-	areaConfig.value = (await $fetch('/api/component?where={"syscode":"area"}'))[0];
+	areaConfig.value = (await useApi('/api/component?where={"syscode":"area"}'))[0];
 	initMap();
 	initAreas();
 	listenClick();

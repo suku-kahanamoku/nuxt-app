@@ -4,7 +4,6 @@
 	"syscode": "Syscode",
 	"reset_pass": "Forgot password?",
 	"not_account": "Don't have an account?",
-	"success_logout": "You have successfully logged out of the system.",
 	"write_us": "Write us",
 	"route": {
 		"home": "",
@@ -84,5 +83,18 @@
 		"post": "Create",
 		"patch": "Update",
 		"delete": "Delete"
+	},
+	"message": {
+		"success_logout": "You have successfully logged out of the system.",
+		"success_login": "You have been successfully logged into the system.",
+		"profile_success_created": "The user was successfully created.",
+		"profile_success_updated": "The user was successfully updated.",
+		"profile_success_deleted": "The user was successfully deleted.",
+		"auth_success_created": "The authorization was successfully created.",
+		"auth_success_updated": "The authorization was successfully updated.",
+		"auth_success_deleted": "The authorization was successfully deleted.",
+		"cmp_success_created": "The component was successfully created.",
+		"cmp_success_updated": "The component was successfully updated.",
+		"cmp_success_deleted": "The component was successfully deleted."
 	}
 }

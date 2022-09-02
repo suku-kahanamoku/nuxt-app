@@ -8,7 +8,7 @@ definePageMeta({
 });
 
 onMounted(() => {
-	$fetch('/api/signout');
+	useApi('/api/signout');
 	setStore('profile', false);
 });
 </script>

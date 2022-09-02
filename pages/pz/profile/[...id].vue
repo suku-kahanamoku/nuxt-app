@@ -13,10 +13,10 @@ const config: any = ref();
 const data = ref();
 
 onMounted(async () => {
-	config.value = (await $fetch('/api/component?where={"syscode":"profile"}'))[0];
+	config.value = (await useApi('/api/component?where={"syscode":"profile"}'))[0];
 	config.value.submitUrl = `${config.value.submitUrl}?where={"id":"${useRoute().params.id}"}`;
 	config.value.method = 'PATCH';
-	data.value = (await $fetch(config.value.submitUrl))[0];
+	data.value = (await useApi(config.value.submitUrl))[0];
 });
 </script>
 <template>

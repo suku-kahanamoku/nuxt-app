@@ -13,12 +13,12 @@ const config: any = ref();
 const data = ref();
 
 onMounted(async () => {
-	config.value = (await $fetch('/api/component?where={"syscode":"profile"}'))[0];
+	config.value = (await useApi('/api/component?where={"syscode":"profile"}'))[0];
 	config.value.method = 'GET';
 });
 
 async function del(event) {
-	await $fetch(`/api/profile?where={"id":"${event.id}"}`, { method: 'DELETE' });
+	await useApi(`/api/profile?where={"id":"${event.id}"}`, { method: 'DELETE' });
 }
 </script>
 <template>

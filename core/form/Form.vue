@@ -6,7 +6,7 @@ const props = defineProps<{
 	data?: any;
 }>();
 
-const emit = defineEmits(['submit', 'create']);
+const emit = defineEmits(['submit']);
 
 const form = ref();
 const loading = ref(false);
@@ -14,16 +14,13 @@ const panels = ref([0]);
 
 // kdyz se nastavi data, nastavi se automaticky do fields
 watch(
-	() => props.data,
+() => props.data,
 	(data) => props.config.fields.forEach((field) => (field.value = data[field.name]))
 );
 
-async function onSubmit(e) {
-	emit('submit', await useSubmit(props.config.submitUrl, form, props.config.fields, loading, props.config.method));
-}
-
-async function onCreate(e) {
-	emit('create', await useSubmit(props.config.submitUrl, form, props.config.fields, loading, 'POST'));
+function onSubmit(e) {
+	useSubmit(props.config.submitUrl, form, props.config.fields, loading, props.config.method)
+		.then(data => emit('submit', data));
 }
 </script>
 <template>
@@ -40,16 +37,6 @@ async function onCreate(e) {
 						</v-col>
 					</v-row>
 					<v-row>
-						<v-btn
-							v-if="config.create"
-							color="primary"
-							type="button"
-							:loading="loading"
-							:disabled="!config.submitUrl"
-							@click="onCreate"
-						>
-							Create
-						</v-btn>
 						<v-spacer></v-spacer>
 						<v-btn color="primary" type="submit" :loading="loading" :disabled="!config.submitUrl">
 							Send
@@ -71,16 +58,6 @@ async function onCreate(e) {
 				</v-row>
 			</v-card-text>
 			<v-card-actions>
-				<v-btn
-					v-if="config.create"
-					color="primary"
-					type="button"
-					:loading="loading"
-					:disabled="!config.submitUrl"
-					@click="onCreate"
-				>
-					Create
-				</v-btn>
 				<v-spacer></v-spacer>
 				<v-btn color="primary" type="submit" :loading="loading" :disabled="!config.submitUrl"> Send </v-btn>
 			</v-card-actions>

@@ -1,6 +1,7 @@
 <script setup lang="ts">
 import Form from '@/core/form/Form.vue';
 
+
 definePageMeta({
 	title: 'route.login',
 	icon: {
@@ -12,7 +13,7 @@ definePageMeta({
 const config: any = ref();
 
 onMounted(async () => {
-	config.value = (await $fetch('/api/component?where={"syscode":"login"}'))[0];
+	config.value = (await useApi('/api/component?where={"syscode":"login"}'))[0];
 });
 
 async function onSubmit(event) {

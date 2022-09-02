@@ -13,13 +13,13 @@ const config: any = ref();
 const data = ref();
 
 onMounted(async () => {
-	config.value = (await $fetch('/api/component?where={"syscode":"auth"}'))[0];
+	config.value = (await useApi('/api/component?where={"syscode":"auth"}'))[0];
 	config.value.method = 'GET';
 	config.value.create = true;
 });
 
 async function del(event) {
-	await $fetch(`/api/auth?where={"id":"${event.id}"}`, { method: 'DELETE' });
+	await useApi(`/api/auth?where={"id":"${event.id}"}`, { method: 'DELETE' });
 }
 </script>
 <template>
