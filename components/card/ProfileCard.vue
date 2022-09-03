@@ -5,7 +5,7 @@ const props = defineProps<{
 
 const emit = defineEmits(['delete']);
 
-const pages = useState('pages');
+const pages = useState('pages') as any;
 </script>
 <template>
 	<v-card>
@@ -18,15 +18,9 @@ const pages = useState('pages');
 		<v-card-text>
 			<div class="p-4 text-center justify-center">
 				<h2 class="mb-0 mt-4 font-weight-regular">{{ data?.firstname }} {{ data?.lastname }}</h2>
-				<small>{{ data?.email }}</small
-				><br />
-				<small>{{ data?.phone }}</small
-				><br />
-				<v-btn
-					:to="(pages as any)['pz-profile']?.path + '/' + data?.id"
-					icon="mdi-account-edit"
-					color="primary"
-				/>
+				<small>{{ data?.email }}</small><br />
+				<small>{{ data?.phone }}</small><br />
+				<v-btn :to="pages?.profile?.path + '/' + data?.id" icon="mdi-account-edit" color="primary" />
 				<v-btn icon="mdi-delete" color="error" @click="emit('delete', data)" />
 			</div>
 		</v-card-text>

@@ -1,24 +1,24 @@
 <script setup lang="ts">
 import Form from '@/core/form/Form.vue';
+import { CLONE } from '@/core/utils/modify-object.function';
 
 definePageMeta({
-	title: 'route.reset_pass',
-	icon: {
-		value: 'mdi-key',
-	},
-	visible: false,
+	syscode: 'reset_pass',
 });
 
-const config: any = ref();
+const pageConfig = CLONE((useState('pages').value as any).reset_pass);
+const configs = reactive(pageConfig?.configs);
 
 onMounted(async () => {
-	config.value = (await useApi('/api/component?where={"syscode":"reset_pass"}'))[0];
+	if (pageConfig?.configs?.form) {
+		configs.form = (await useApi(pageConfig?.configs?.form))[0];
+	}
 });
 
-async function onSubmit(event) {}
+async function onSubmit(event) { }
 </script>
 <template>
 	<div>
-		<Form v-if="config" :config="config" @submit="onSubmit" />
+		<Form v-if="configs?.form" :config="configs?.form" @submit="onSubmit" />
 	</div>
 </template>

@@ -1,11 +1,10 @@
 <script setup lang="ts">
 const props = defineProps<{
 	data: any;
+	path: string;
 }>();
 
 const emit = defineEmits(['delete']);
-
-const pages = useState('pages') as any;
 </script>
 <template>
 	<v-card>
@@ -17,9 +16,9 @@ const pages = useState('pages') as any;
 		</div>
 		<v-card-text>
 			<div class="p-4 text-center justify-center">
-				<h2 class="mb-0 mt-4 font-weight-regular">{{ $t(data?.title) }}</h2>
+				<h2 class="mb-0 mt-4 font-weight-regular">{{ data?.name }}</h2>
 				<small>{{ data?.syscode }}</small><br />
-				<v-btn :to="pages?.cmp?.path + '/' + data?.id" icon="mdi-account-edit" color="primary" />
+				<v-btn :to="path + '/' + data?.id" icon="mdi-account-edit" color="primary" />
 				<v-btn icon="mdi-delete" color="error" @click="emit('delete', data)" />
 			</div>
 		</v-card-text>

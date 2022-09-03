@@ -1,24 +1,24 @@
 <script setup lang="ts">
 import Form from '@/core/form/Form.vue';
+import { CLONE } from '@/core/utils/modify-object.function';
 
 definePageMeta({
-	title: 'route.contact',
-	icon: {
-		value: 'mdi-email',
-	},
-	pos: 2,
+	syscode: 'contact',
 });
 
-const config: any = ref();
+const pageConfig = CLONE((useState('pages').value as any).contact);
+const configs = reactive(pageConfig?.configs);
 
 onMounted(async () => {
-	config.value = (await useApi('/api/component?where={"syscode":"contact"}'))[0];
+	if (pageConfig?.configs?.form) {
+		configs.form = (await useApi(pageConfig?.configs?.form))[0];
+	}
 });
 
-async function onSubmit(event) {}
+async function onSubmit(event) { }
 </script>
 <template>
 	<div>
-		<Form v-if="config" :config="config" @submit="onSubmit" />
+		<Form v-if="configs?.form" :config="configs?.form" @submit="onSubmit" />
 	</div>
 </template>

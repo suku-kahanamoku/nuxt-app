@@ -3,23 +3,29 @@ import SalesOverview from '@/components/dashboard/salesOverview/SalesOverview.vu
 import MyContacts from '@/components/dashboard/contacts/MyContacts.vue';
 import Timeline from '@/components/dashboard/timeline/Timeline.vue';
 import Blog from '@/components/dashboard/blog/Blog.vue';
+import { CLONE } from '@/core/utils/modify-object.function';
 
 definePageMeta({
-	title: 'route.pz',
-	icon: {
-		value: 'mdi-cog',
-	},
+	syscode: 'pz',
 });
+
+const pageConfig = CLONE((useState('pages').value as any).pz);
 </script>
 
 <template>
 	<v-row>
-		<v-col cols="12" sm="12" lg="8"> <SalesOverview /></v-col>
-		<v-col cols="12" sm="12" lg="4"><Blog /></v-col>
+		<v-col cols="12" sm="12" lg="8">
+			<SalesOverview />
+		</v-col>
+		<v-col cols="12" sm="12" lg="4">
+			<Blog />
+		</v-col>
 		<v-col cols="12" sm="12" lg="4">
 			<div class="mb-7"></div>
 			<MyContacts />
 		</v-col>
-		<v-col cols="12" sm="12" lg="8"><Timeline /></v-col>
+		<v-col cols="12" sm="12" lg="8">
+			<Timeline />
+		</v-col>
 	</v-row>
 </template>

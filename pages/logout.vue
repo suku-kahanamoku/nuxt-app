@@ -1,15 +1,15 @@
 <script setup lang="ts">
+
 definePageMeta({
-	title: 'route.logout',
-	icon: {
-		value: 'mdi-logout',
-	},
-	visible: false,
+	syscode: 'logout',
 });
 
 onMounted(() => {
 	useApi('/api/signout');
-	setStore('profile', false);
 });
 </script>
-<template>odhlaseni</template>
+<template>
+	<div>
+		odhlaseni
+	</div>
+</template>

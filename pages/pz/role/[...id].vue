@@ -3,10 +3,10 @@ import Form from '@/core/form/Form.vue';
 import { CLONE } from '@/core/utils/modify-object.function';
 
 definePageMeta({
-	syscode: 'profile_detail',
+	syscode: 'role_detail',
 });
 
-const pageConfig = CLONE((useState('pages').value as any).profile_detail);
+const pageConfig = CLONE((useState('pages').value as any).role_detail);
 const configs = reactive(pageConfig?.configs);
 const data = ref();
 
@@ -19,9 +19,8 @@ onMounted(async () => {
 	}
 });
 </script>
-		<template>
+<template>
 	<div>
 		<Form v-if="configs?.form" :config="configs?.form" :data="data" @submit="data = $event" />
 	</div>
 </template>
-		
