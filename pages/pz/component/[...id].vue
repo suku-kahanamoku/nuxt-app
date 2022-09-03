@@ -18,10 +18,20 @@ onMounted(async () => {
 		data.value = (await useApi(configs.form.submitUrl))[0];
 	}
 });
+
+function onSubmit(url, form, fieldConfigs, loading, method) {
+	useSubmit(url, form, fieldConfigs, loading, method).then(
+		items => {
+			if (items?.uid) {
+				data.value = items
+			}
+		}
+	);
+}
 </script>
 	<template>
 	<div>
-		<Form v-if="configs?.form" :config="configs?.form" :data="data" @submit="data = $event" />
+		<Form v-if="configs?.form" :config="configs?.form" :data="data" @submit="onSubmit" />
 	</div>
 </template>
 	

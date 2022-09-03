@@ -15,7 +15,9 @@ onMounted(async () => {
 	}
 });
 
-async function onSubmit(event) { }
+function onSubmit(url, form, fieldConfigs, loading, method) {
+	useSubmit(url, form, fieldConfigs, loading, method);
+}
 </script>
 <template>
 	<div>

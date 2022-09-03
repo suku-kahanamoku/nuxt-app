@@ -15,10 +15,14 @@ onMounted(async () => {
 	}
 });
 
-async function onSubmit(event) {
-	if (event?.uid) {
-		navigateTo(useState('redirect')?.value || '/pz');
-	}
+function onSubmit(url, form, fieldConfigs, loading, method) {
+	useSubmit(url, form, fieldConfigs, loading, method).then(
+		data => {
+			if (data?.uid) {
+				navigateTo(useState('redirect')?.value || '/pz');
+			}
+		}
+	);
 }
 </script>
 <template>

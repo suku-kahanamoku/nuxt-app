@@ -18,17 +18,23 @@ onMounted(async () => {
 	}
 });
 
-async function del(event) {
+function onSubmit(url, form, fieldConfigs, loading, method) {
+	useSubmit(url, form, fieldConfigs, loading, method).then(
+		items => data.value = items
+	);
+}
+
+async function onDelete(event) {
 	await useApi(`/api/profile?where={"id":"${event.id}"}`, { method: 'DELETE' });
 }
 </script>
 <template>
 	<div>
-		<Form v-if="configs?.form" :config="configs?.form" @submit="data = $event" />
+		<Form v-if="configs?.form" :config="configs?.form" @submit="onSubmit" />
 
 		<v-row v-if="data?.length" class="mt-5">
 			<v-col v-for="user in data" cols="12" sm="6" md="4" lg="3">
-				<ProfileCard :data="user" @delete="del" />
+				<ProfileCard :data="user" @delete="onDelete" />
 			</v-col>
 		</v-row>
 	</div>

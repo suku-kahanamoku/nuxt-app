@@ -91,7 +91,9 @@ function setStyle(
 	area.feature?.setStyle(style);
 }
 
-async function onSubmit(event) {}
+function onSubmit(url, form, fieldConfigs, loading, method) {
+	useSubmit(url, form, fieldConfigs, loading, method);
+}
 </script>
 
 <template>
@@ -107,4 +109,5 @@ async function onSubmit(event) {}
 	</Teleport>
 </template>
 
-<style></style>
+<style>
+</style>
