@@ -78,7 +78,7 @@ async function onSubmit(url, form?, fieldConfigs?, loading?, method?: string) {
 				<v-row v-if="data?.length" class="mt-5">
 					<v-col v-for="item in data" cols="12" sm="6" md="4" lg="3">
 						<CmpCard :data="item"
-							@delete="onSubmit(configs?.form?.submitUrl, null, $event, null, 'DELETE')" />
+							@delete="onSubmit(configs?.form?.submitUrl, $event, null, null, 'DELETE')" />
 					</v-col>
 				</v-row>
 			</v-window-item>

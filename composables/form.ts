@@ -47,7 +47,7 @@ export async function useSubmit(url: string, vForm?, fields?, loading?, method =
 		}
 		//
 		else if (method === 'DELETE') {
-			options.body = fields;
+			options.body = vForm;
 			result = await useApi(url, options).catch((error) => console.error(error));
 		}
 	} catch (error) {
