@@ -1,9 +1,11 @@
 import { ITERATE } from '@/core/utils/modify-object.function';
 import { IS_DEFINED } from '@/core/utils/check.functions';
-import { GET_MARK, TRIM } from '@/core/utils/modify-string.functions';
+import { TRIM } from '@/core/utils/modify-string.functions';
 
-export async function useSubmit(url, vForm, fields, loading, method = 'POST') {
-	loading.value = true;
+export async function useSubmit(url: string, vForm, fields, loading?, method = 'POST') {
+	if (loading) {
+		loading.value = true;
+	}
 	let result;
 	try {
 		const validation = await vForm.value.validate();
@@ -29,22 +31,24 @@ export async function useSubmit(url, vForm, fields, loading, method = 'POST') {
 			});
 			const options: any = { method: method };
 			if (method === 'GET') {
-				url += `${GET_MARK(url)}where={`;
+				result = '{';
 				ITERATE(payload, (value, key) => {
 					if (IS_DEFINED(value) && value.toString().length) {
-						url += `"${key}":{"value":"${value}"},`;
+						result += `"${key}":{"value":"${value}"},`;
 					}
 				});
-				url = TRIM(url, ',');
-				url += '}';
+				result = TRIM(result, ',');
+				result += '}';
 			} else {
 				options.body = payload;
+				result = await useApi(url, options).catch((error) => console.error(error));
 			}
-			result = await useApi(url, options).catch((error) => console.error(error));
 		}
 	} catch (error) {
 		console.error(error);
 	}
-	loading.value = false;
+	if (loading) {
+		loading.value = false;
+	}
 	return result;
 }
