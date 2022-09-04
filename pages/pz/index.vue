@@ -13,19 +13,21 @@ const pageConfig = CLONE((useState('pages').value as any).pz);
 </script>
 
 <template>
-	<v-row>
-		<v-col cols="12" sm="12" lg="8">
-			<SalesOverview />
-		</v-col>
-		<v-col cols="12" sm="12" lg="4">
-			<Blog />
-		</v-col>
-		<v-col cols="12" sm="12" lg="4">
-			<div class="mb-7"></div>
-			<MyContacts />
-		</v-col>
-		<v-col cols="12" sm="12" lg="8">
-			<Timeline />
-		</v-col>
-	</v-row>
+	<div>
+		<v-row>
+			<v-col cols="12" sm="12" lg="8">
+				<SalesOverview />
+			</v-col>
+			<v-col cols="12" sm="12" lg="4">
+				<Blog />
+			</v-col>
+			<v-col cols="12" sm="12" lg="4">
+				<div class="mb-7"></div>
+				<MyContacts />
+			</v-col>
+			<v-col cols="12" sm="12" lg="8">
+				<Timeline />
+			</v-col>
+		</v-row>
+	</div>
 </template>

@@ -28,6 +28,7 @@ async function onDelete(event) {
 	await useApi(`/api/auth?where={"id":"${event.id}"}`, { method: 'DELETE' });
 }
 </script>
+
 <template>
 	<div>
 		<Form v-if="configs?.form" :config="configs?.form" @submit="onSubmit" />

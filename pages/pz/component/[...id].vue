@@ -29,7 +29,8 @@ async function onSubmit(url, form?, fieldConfigs?, loading?, method?: string) {
 	);
 }
 </script>
-	<template>
+
+<template>
 	<div>
 		<Form v-if="configs?.form" :config="configs?.form" :data="data" @submit="onSubmit" />
 	</div>

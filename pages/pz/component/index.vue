@@ -64,6 +64,7 @@ async function onSubmit(url, form?, fieldConfigs?, loading?, method?: string) {
 	}
 }
 </script>
+
 <template>
 	<div>
 		<v-tabs v-model="tab" background-color="primary">

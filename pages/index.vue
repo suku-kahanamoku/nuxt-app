@@ -8,5 +8,7 @@ definePageMeta({
 const pageConfig = CLONE((useState('pages').value as any).reset_pass);
 </script>
 <template>
-	<div></div>
+	<div>
+		home
+	</div>
 </template>
