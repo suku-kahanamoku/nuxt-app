@@ -1,6 +1,6 @@
 <script setup lang="ts">
 import Form from '@/core/form/Form.vue';
-import CmpCard from '@/components/card/CmpCard.vue';
+import DefaultCard from '@/components/card/DefaultCard.vue';
 import { CLONE } from '@/core/utils/modify-object.function';
 import { GET_MARK } from '@/core/utils/modify-string.functions';
 
@@ -36,7 +36,7 @@ async function initConfigs() {
 }
 
 async function load() {
-	const params = useRoute().query[pageConfig.syscode] as string;
+	const params = useRoute().query[pageConfig?.syscode] as string;
 	if (params && configs.searchForm.submitUrl) {
 		data.value = await useApi(configs.searchForm.submitUrl + '?where=' + params);
 	} else {
@@ -49,7 +49,7 @@ async function onSubmit(url, form?, fieldConfigs?, loading?, method?: string) {
 		case 'POST':
 		case 'PATCH':
 			const result = await useSubmit(url, form, fieldConfigs, loading, method);
-			navigateTo(`${pageConfig.path}/${result.id}`);
+			navigateTo(`${pageConfig?.path}/${result.id}`);
 			break;
 
 		case 'DELETE':
@@ -59,7 +59,7 @@ async function onSubmit(url, form?, fieldConfigs?, loading?, method?: string) {
 
 		default:
 			const redirUrl = await useSubmit('', form, fieldConfigs, loading, method);
-			navigateTo(pageConfig.path + GET_MARK(pageConfig.path) + pageConfig.syscode + '=' + redirUrl);
+			navigateTo(pageConfig?.path + GET_MARK(pageConfig?.path) + pageConfig?.syscode + '=' + redirUrl);
 			break;
 	}
 }
@@ -78,7 +78,7 @@ async function onSubmit(url, form?, fieldConfigs?, loading?, method?: string) {
 
 				<v-row v-if="data?.length" class="mt-5">
 					<v-col v-for="item in data" cols="12" sm="6" md="4" lg="3">
-						<CmpCard :data="item"
+						<DefaultCard :data="item" :path="pageConfig?.path"
 							@delete="onSubmit(configs?.form?.submitUrl, $event, null, null, 'DELETE')" />
 					</v-col>
 				</v-row>

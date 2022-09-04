@@ -30,7 +30,9 @@
 		"send": "Odeslat",
 		"create": "Vytvořit",
 		"search": "Hledat",
-		"back_to_login": "Zpět na přihlášení"
+		"back_to_login": "Zpět na přihlášení",
+		"yes": "Ano",
+		"no": "Ne"
 	},
 	"form": {
 		"email": "E-mail",
@@ -96,5 +98,8 @@
 		"cmp_success_created": "Komponenta byla úspěšně vytvořena.",
 		"cmp_success_updated": "Komponenta byla úspěšně upravena.",
 		"cmp_success_deleted": "Komponenta byla úspěšně smazána."
+	},
+	"query": {
+		"delete": "Do you really want to delete the \"{name}\"?"
 	}
 }

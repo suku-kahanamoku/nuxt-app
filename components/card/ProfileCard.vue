@@ -1,11 +1,12 @@
 <script setup lang="ts">
+import ConfirmDialog from '@/core/dialog/ConfirmDialog.vue';
+
 const props = defineProps<{
 	data: any;
+	path: string;
 }>();
 
 const emit = defineEmits(['delete']);
-
-const pages = useState('pages') as any;
 </script>
 <template>
 	<v-card>
@@ -20,8 +21,19 @@ const pages = useState('pages') as any;
 				<h2 class="mb-0 mt-4 font-weight-regular">{{ data?.firstname }} {{ data?.lastname }}</h2>
 				<small>{{ data?.email }}</small><br />
 				<small>{{ data?.phone }}</small><br />
-				<v-btn :to="pages?.profile?.path + '/' + data?.id" icon="mdi-account-edit" color="primary" />
-				<v-btn icon="mdi-delete" color="error" @click="emit('delete', data)" />
+				<v-btn :to="path + '/' + data?.id" icon="mdi-account-edit" color="primary" />
+
+				<ConfirmDialog @confirm="$event && emit('delete', data)">
+					<template v-slot:btn>
+						<v-btn icon="mdi-delete" color="error" />
+					</template>
+					<template v-slot:title>
+						{{ $t('method.delete') }}
+					</template>
+					<template v-slot:text>
+						{{ $t('query.delete', { name: data?.firstname + '&nbsp;' + data?.lastname }) }}
+					</template>
+				</ConfirmDialog>
 			</div>
 		</v-card-text>
 	</v-card>

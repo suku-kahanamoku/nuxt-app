@@ -30,7 +30,9 @@
 		"send": "Submit",
 		"create": "Create",
 		"search": "Search",
-		"back_to_login": "Back to login"
+		"back_to_login": "Back to login",
+		"yes": "Yes",
+		"no": "No"
 	},
 	"form": {
 		"email": "E-mail",
@@ -96,5 +98,8 @@
 		"cmp_success_created": "The component was successfully created.",
 		"cmp_success_updated": "The component was successfully updated.",
 		"cmp_success_deleted": "The component was successfully deleted."
+	},
+	"query": {
+		"delete": "Do you really want to delete the \"{name}\"?"
 	}
 }
