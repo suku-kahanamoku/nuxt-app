@@ -19,7 +19,7 @@ onMounted(async () => {
 	}
 });
 
-function onSubmit(url, form, fieldConfigs, loading, method) {
+async function onSubmit(url, form?, fieldConfigs?, loading?, method?: string) {
 	useSubmit(url, form, fieldConfigs, loading, method).then(
 		items => {
 			if (items?.uid) {

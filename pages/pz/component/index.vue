@@ -2,7 +2,7 @@
 import Form from '@/core/form/Form.vue';
 import CmpCard from '@/components/card/CmpCard.vue';
 import { CLONE } from '@/core/utils/modify-object.function';
-import { GET_MARK } from '~~/core/utils/modify-string.functions';
+import { GET_MARK } from '@/core/utils/modify-string.functions';
 
 definePageMeta({
 	syscode: 'cmp',
@@ -14,7 +14,8 @@ const data = ref();
 const tab = ref();
 
 onMounted(async () => {
-	initConfigs();
+	// nacte a inicializuje konfigurace pro vnitrni komponenty
+	await initConfigs();
 	// nacte data
 	load();
 });
@@ -43,7 +44,7 @@ async function load() {
 	}
 }
 
-async function onSubmit(url, form, fieldConfigs, loading, method) {
+async function onSubmit(url, form?, fieldConfigs?, loading?, method?: string) {
 	switch (method) {
 		case 'POST':
 		case 'PATCH':
@@ -51,15 +52,16 @@ async function onSubmit(url, form, fieldConfigs, loading, method) {
 			navigateTo(`${pageConfig.path}/${result.id}`);
 			break;
 
+		case 'DELETE':
+			await useSubmit(url, form, fieldConfigs, loading, method);
+			load();
+			break;
+
 		default:
 			const redirUrl = await useSubmit('', form, fieldConfigs, loading, method);
 			navigateTo(pageConfig.path + GET_MARK(pageConfig.path) + pageConfig.syscode + '=' + redirUrl);
 			break;
 	}
-}
-
-async function onDelete(event) {
-	await useApi(`${configs.form.submitUrl}?where={"id":"${event.id}"}`, { method: 'DELETE' });
 }
 </script>
 <template>
@@ -75,7 +77,8 @@ async function onDelete(event) {
 
 				<v-row v-if="data?.length" class="mt-5">
 					<v-col v-for="item in data" cols="12" sm="6" md="4" lg="3">
-						<CmpCard :data="item" @delete="onDelete" />
+						<CmpCard :data="item"
+							@delete="onSubmit(configs?.form?.submitUrl, null, $event, null, 'DELETE')" />
 					</v-col>
 				</v-row>
 			</v-window-item>

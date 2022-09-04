@@ -2,11 +2,10 @@ import { DELETE_DOC } from '@/server/lib/firestore';
 
 export default defineEventHandler(async (event) => {
 	try {
-		const query = useQuery(event.req);
-		const where = query.where ? JSON.parse(query.where as any) : null;
+		const body = await useBody(event);
 		return {
 			status: 'OK',
-			result: await DELETE_DOC('component', where.id),
+			result: await DELETE_DOC('component', body.id),
 			msgs: [{ type: 'success', message: 'message.cmp_success_deleted' }],
 		};
 	} catch (error) {
