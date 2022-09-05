@@ -34,7 +34,7 @@ export async function useSubmit(url: string, vForm?, fields?, loading?, method =
 	}
 	let result;
 	try {
-		const validation = await vForm?.value?.validate();
+		const validation = vForm?.value?.validate ? await vForm?.value?.validate() : null;
 		const options: any = { method: method };
 		if (validation?.valid) {
 			method = method.toUpperCase();
