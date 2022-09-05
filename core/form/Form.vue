@@ -38,7 +38,7 @@
 					<v-row>
 						<v-spacer></v-spacer>
 						<v-btn color="primary" type="submit" :loading="loading" :disabled="!config.submitUrl">
-							Send
+							{{ $t('btn.send') }}
 						</v-btn>
 					</v-row>
 				</v-expansion-panel-text>
@@ -58,7 +58,9 @@
 			</v-card-text>
 			<v-card-actions>
 				<v-spacer></v-spacer>
-				<v-btn color="primary" type="submit" :loading="loading" :disabled="!config.submitUrl"> Send </v-btn>
+				<v-btn color="primary" type="submit" :loading="loading" :disabled="!config.submitUrl">
+					{{ $t('btn.send') }}
+				</v-btn>
 			</v-card-actions>
 		</v-card>
 

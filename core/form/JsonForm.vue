@@ -54,6 +54,8 @@
 	/>
 	<v-row class="pa-5">
 		<v-spacer></v-spacer>
-		<v-btn color="primary" :loading="loading" :disabled="!config.submitUrl" @click="onSubmit"> Send </v-btn>
+		<v-btn color="primary" :loading="loading" :disabled="!config.submitUrl" @click="onSubmit">
+			{{ $t('btn.send') }}
+		</v-btn>
 	</v-row>
 </template>

@@ -27,6 +27,10 @@
 			// init create form
 			const result = await useApi(pageConfig?.configs?.form);
 			configs.form = result[0];
+			configs.form.fields.forEach((field) => {
+				field.readonly = false;
+				field.disabled = false;
+			});
 			configs.form.method = 'POST';
 			// init search form
 			configs.searchForm = CLONE(configs.form);

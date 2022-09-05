@@ -13,20 +13,29 @@
 	const tab = ref();
 
 	onMounted(async () => {
+		await initConfig();
+		load();
+	});
+
+	async function initConfig() {
 		if (pageConfig?.configs?.form) {
 			configs.form = (await useApi(pageConfig?.configs?.form))[0];
 			configs.form.submitUrl = `${configs.form.submitUrl}?where={"id":"${useRoute().params.id}"}`;
 			configs.form.method = 'PATCH';
-			data.value = (await useApi(configs.form.submitUrl))[0];
 		}
-	});
+	}
+
+	async function load() {
+		if (configs?.form?.submitUrl) {
+			const result = await useApi(configs.form.submitUrl);
+			data.value = result[0];
+		} else {
+			data.value = {};
+		}
+	}
 
 	async function onSubmit(url, form?, fieldConfigs?, loading?, method?: string) {
-		useSubmit(url, form, fieldConfigs, loading, method).then((items) => {
-			if (items?.uid) {
-				data.value = items;
-			}
-		});
+		data.value = await useSubmit(url, form, fieldConfigs, loading, method);
 	}
 </script>
 
