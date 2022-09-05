@@ -1,15 +1,15 @@
 <script setup lang="ts">
-import SalesOverview from '@/components/dashboard/salesOverview/SalesOverview.vue';
-import MyContacts from '@/components/dashboard/contacts/MyContacts.vue';
-import Timeline from '@/components/dashboard/timeline/Timeline.vue';
-import Blog from '@/components/dashboard/blog/Blog.vue';
-import { CLONE } from '@/core/utils/modify-object.function';
+	import SalesOverview from '@/components/dashboard/salesOverview/SalesOverview.vue';
+	import MyContacts from '@/components/dashboard/contacts/MyContacts.vue';
+	import Timeline from '@/components/dashboard/timeline/Timeline.vue';
+	import Blog from '@/components/dashboard/blog/Blog.vue';
+	import { CLONE } from '@/core/utils/modify-object.function';
 
-definePageMeta({
-	syscode: 'pz',
-});
+	definePageMeta({
+		syscode: 'pz',
+	});
 
-const pageConfig = CLONE((useState('pages').value as any).pz);
+	const pageConfig = CLONE((useState('pages').value as any).pz);
 </script>
 
 <template>

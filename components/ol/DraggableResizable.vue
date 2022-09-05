@@ -1,30 +1,30 @@
 <script setup lang="ts">
-import { ref } from 'vue';
-import VueDraggableResizable from 'vue-draggable-resizable/src/components/vue-draggable-resizable.vue';
+	import { ref } from 'vue';
+	import VueDraggableResizable from 'vue-draggable-resizable/src/components/vue-draggable-resizable.vue';
 
-import type { IDraggableResizable } from './ol.interface';
+	import type { IDraggableResizable } from './ol.interface';
 
-const props = defineProps<{
-	config?: IDraggableResizable | any;
-}>();
+	const props = defineProps<{
+		config?: IDraggableResizable | any;
+	}>();
 
-const emits = defineEmits(['change', 'drag', 'resize', 'close']);
+	const emits = defineEmits(['change', 'drag', 'resize', 'close']);
 
-const el = ref();
+	const el = ref();
 
-function onChange(e: any): void {
-	emits('change', e.value.$data);
-}
+	function onChange(e: any): void {
+		emits('change', e.value.$data);
+	}
 
-function onDrag(x: number, y: number): void {
-	emits('drag', x, y);
-	onChange(el);
-}
+	function onDrag(x: number, y: number): void {
+		emits('drag', x, y);
+		onChange(el);
+	}
 
-function onResize(x: number, y: number): void {
-	emits('resize', x, y);
-	onChange(el);
-}
+	function onResize(x: number, y: number): void {
+		emits('resize', x, y);
+		onChange(el);
+	}
 </script>
 
 <template>
@@ -60,18 +60,18 @@ function onResize(x: number, y: number): void {
 </template>
 
 <style scoped>
-.draggable.active {
-	z-index: 9999 !important;
-}
+	.draggable.active {
+		z-index: 9999 !important;
+	}
 
-.draggable {
-	cursor: grab;
-	border: none;
-	transition: box-shadow 0.3s ease;
-}
+	.draggable {
+		cursor: grab;
+		border: none;
+		transition: box-shadow 0.3s ease;
+	}
 
-.draggable:active {
-	cursor: grabbing;
-	box-shadow: 0 10px 10px 10px rgb(0 0 0 / 7%);
-}
+	.draggable:active {
+		cursor: grabbing;
+		box-shadow: 0 10px 10px 10px rgb(0 0 0 / 7%);
+	}
 </style>

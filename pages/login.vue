@@ -1,29 +1,27 @@
 <script setup lang="ts">
-import Form from '@/core/form/Form.vue';
-import { CLONE } from '@/core/utils/modify-object.function';
+	import Form from '@/core/form/Form.vue';
+	import { CLONE } from '@/core/utils/modify-object.function';
 
-definePageMeta({
-	syscode: 'login',
-});
+	definePageMeta({
+		syscode: 'login',
+	});
 
-const pageConfig = CLONE((useState('pages').value as any).login);
-const configs = reactive(pageConfig?.configs);
+	const pageConfig = CLONE((useState('pages').value as any).login);
+	const configs = reactive(pageConfig?.configs);
 
-onMounted(async () => {
-	if (pageConfig?.configs?.form) {
-		configs.form = (await useApi(pageConfig?.configs?.form))[0];
-	}
-});
+	onMounted(async () => {
+		if (pageConfig?.configs?.form) {
+			configs.form = (await useApi(pageConfig?.configs?.form))[0];
+		}
+	});
 
-async function onSubmit(url, form?, fieldConfigs?, loading?, method?: string) {
-	useSubmit(url, form, fieldConfigs, loading, method).then(
-		data => {
+	async function onSubmit(url, form?, fieldConfigs?, loading?, method?: string) {
+		useSubmit(url, form, fieldConfigs, loading, method).then((data) => {
 			if (data?.uid) {
 				navigateTo(useState('redirect')?.value || '/pz');
 			}
-		}
-	);
-}
+		});
+	}
 </script>
 <template>
 	<div>

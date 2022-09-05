@@ -21,23 +21,23 @@ export interface IFormField {
 	 * @memberof IFormField
 	 */
 	type?:
-	| 'text'
-	| 'number'
-	| 'email'
-	| 'datetime'
-	| 'password'
-	| 'select'
-	| 'textarea'
-	| 'checkbox'
-	| 'radio'
-	| 'file'
-	| 'url'
-	| 'image'
-	| 'search'
-	| 'url'
-	| 'hidden'
-	| 'range'
-	| 'group';
+		| 'text'
+		| 'number'
+		| 'email'
+		| 'datetime'
+		| 'password'
+		| 'select'
+		| 'textarea'
+		| 'checkbox'
+		| 'radio'
+		| 'file'
+		| 'url'
+		| 'image'
+		| 'search'
+		| 'url'
+		| 'hidden'
+		| 'range'
+		| 'group';
 
 	/**
 	 * Label
@@ -165,47 +165,47 @@ export interface IFormField {
 	 * @memberof IFormField
 	 */
 	autocomplete?:
-	| 'on'
-	| 'off'
-	| 'honorific-prefix'
-	| 'given-name'
-	| 'additional-name'
-	| 'family-name'
-	| 'honorific-suffix'
-	| 'nickname'
-	| 'email'
-	| 'username'
-	| 'new-password'
-	| 'current-password'
-	| 'organization'
-	| 'street-address'
-	| 'address-line1'
-	| 'address-line2'
-	| 'address-line3'
-	| 'country'
-	| 'postal-code'
-	| 'sex'
-	| 'tel'
-	| 'tel-country-code'
-	| 'tel-local'
-	| 'url'
-	| 'photo'
-	| 'bday'
-	| 'bday-day'
-	| 'bday-month'
-	| 'bday-year'
-	| 'cc-name'
-	| 'cc-given-name'
-	| 'cc-additional-name'
-	| 'cc-family-name'
-	| 'cc-number'
-	| 'cc-exp'
-	| 'cc-exp-month'
-	| 'cc-exp-year'
-	| 'cc-csc'
-	| 'cc-type'
-	| 'transaction-currency'
-	| 'transaction-amount';
+		| 'on'
+		| 'off'
+		| 'honorific-prefix'
+		| 'given-name'
+		| 'additional-name'
+		| 'family-name'
+		| 'honorific-suffix'
+		| 'nickname'
+		| 'email'
+		| 'username'
+		| 'new-password'
+		| 'current-password'
+		| 'organization'
+		| 'street-address'
+		| 'address-line1'
+		| 'address-line2'
+		| 'address-line3'
+		| 'country'
+		| 'postal-code'
+		| 'sex'
+		| 'tel'
+		| 'tel-country-code'
+		| 'tel-local'
+		| 'url'
+		| 'photo'
+		| 'bday'
+		| 'bday-day'
+		| 'bday-month'
+		| 'bday-year'
+		| 'cc-name'
+		| 'cc-given-name'
+		| 'cc-additional-name'
+		| 'cc-family-name'
+		| 'cc-number'
+		| 'cc-exp'
+		| 'cc-exp-month'
+		| 'cc-exp-year'
+		| 'cc-csc'
+		| 'cc-type'
+		| 'transaction-currency'
+		| 'transaction-amount';
 
 	/**
 	 * Zpusob, jakym se bude dynamicky upravovat jine fieldy na zaklade nastaveni
@@ -285,7 +285,7 @@ export interface IFormField {
 	 * @type {boolean}
 	 * @memberof IFormField
 	 */
-	clearable?: boolean
+	clearable?: boolean;
 }
 
 /**
@@ -366,7 +366,7 @@ export interface IFormFieldSelect extends IFormField {
 	 */
 	restOptions?: { url: string; value: string; label: string; valueUrl?: string };
 
-	chips?: boolean
+	chips?: boolean;
 }
 
 /**

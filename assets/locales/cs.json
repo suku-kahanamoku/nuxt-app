@@ -2,9 +2,6 @@
 	"empty": "",
 	"id": "ID",
 	"syscode": "Systémový kód",
-	"reset_pass": "Zapomenuté heslo?",
-	"not_account": "Nemáte účet?",
-	"write_us": "Napište nám",
 	"route": {
 		"home": "",
 		"radar": "Radar",
@@ -42,7 +39,8 @@
 		"lastname": "Přijmení",
 		"phone": "Telefon",
 		"msg": {
-			"wrong_email": "Špatně zadaný E-mail!"
+			"wrong_email": "Špatně zadaný E-mail!",
+			"wrong_json": "Wrong JSON format!"
 		},
 		"category": "Oblast",
 		"message": "Zpráva",
@@ -100,6 +98,13 @@
 		"cmp_success_deleted": "Komponenta byla úspěšně smazána."
 	},
 	"query": {
-		"delete": "Do you really want to delete the \"{name}\"?"
+		"delete": "Do you really want to delete the \"{name}\"?",
+		"reset_pass": "Zapomenuté heslo?",
+		"not_account": "Nemáte účet?"
+	},
+	"info": {
+		"write_us": "Napište nám",
+		"edit_detail": "Editace \"{name}\"",
+		"edit_detail_json": "Editace \"{name}\" - JSON"
 	}
 }

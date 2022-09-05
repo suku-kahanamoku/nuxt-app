@@ -1,20 +1,20 @@
 <script setup lang="ts">
-const profile = useState('profile');
+	const profile = useState('profile');
 
-const userprofile = ref([
-	{
-		title: 'My Profile',
-		desc: 'Account Settings',
-	},
-	{
-		title: 'My Inbox',
-		desc: 'Messages & Emails',
-	},
-	{
-		title: 'My Tasks',
-		desc: 'To-do and Daily Tasks',
-	},
-]);
+	const userprofile = ref([
+		{
+			title: 'My Profile',
+			desc: 'Account Settings',
+		},
+		{
+			title: 'My Inbox',
+			desc: 'Messages & Emails',
+		},
+		{
+			title: 'My Tasks',
+			desc: 'To-do and Daily Tasks',
+		},
+	]);
 </script>
 
 <template>

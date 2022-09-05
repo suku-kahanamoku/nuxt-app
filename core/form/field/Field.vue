@@ -1,31 +1,31 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+	import { ref } from 'vue';
 
-import {
-	IFormField,
-	IFormFieldNumber,
-	IFormFieldTextarea,
-	IFormFieldSelect,
-	IFormFieldRadio,
-	IFormFieldDatetime,
-} from '@/core/form/field/field.interface';
-import TextField from '@/core/form/field/TextField.vue';
-import TextareaField from '@/core/form/field/TextareaField.vue';
-import SelectField from '@/core/form/field/SelectField.vue';
-import SearchField from '@/core/form/field/SearchField.vue';
-import CheckboxField from '@/core/form/field/Checkbox.vue';
-import RadioField from '@/core/form/field/RadioField.vue';
+	import {
+		IFormField,
+		IFormFieldNumber,
+		IFormFieldTextarea,
+		IFormFieldSelect,
+		IFormFieldRadio,
+		IFormFieldDatetime,
+	} from '@/core/form/field/field.interface';
+	import TextField from '@/core/form/field/TextField.vue';
+	import TextareaField from '@/core/form/field/TextareaField.vue';
+	import SelectField from '@/core/form/field/SelectField.vue';
+	import SearchField from '@/core/form/field/SearchField.vue';
+	import CheckboxField from '@/core/form/field/Checkbox.vue';
+	import RadioField from '@/core/form/field/RadioField.vue';
 
-const props = defineProps<{
-	config:
-		| IFormField
-		| IFormFieldNumber
-		| IFormFieldTextarea
-		| IFormFieldSelect
-		| IFormFieldRadio
-		| IFormFieldDatetime;
-	value?: any;
-}>();
+	const props = defineProps<{
+		config:
+			| IFormField
+			| IFormFieldNumber
+			| IFormFieldTextarea
+			| IFormFieldSelect
+			| IFormFieldRadio
+			| IFormFieldDatetime;
+		value?: any;
+	}>();
 </script>
 
 <template>

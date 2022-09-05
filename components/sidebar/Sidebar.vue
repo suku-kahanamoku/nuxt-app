@@ -1,9 +1,9 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+	import { ref } from 'vue';
 
-import TreeItem from '@/core/tree/TreeItem.vue';
+	import TreeItem from '@/core/tree/TreeItem.vue';
 
-const routes: any = useState('routes');
+	const routes: any = useState('routes');
 </script>
 
 <template>
@@ -25,10 +25,16 @@ const routes: any = useState('routes');
 			<v-list class="pa-4">
 				<template v-for="route in routes">
 					<TreeItem v-if="route.children.length" :data="route" />
-					<v-list-item :to="route.path" rounded="lg" class="mb-1" v-else :value="route.title"
+					<v-list-item
+						:to="route.path"
+						rounded="lg"
+						class="mb-1"
+						v-else
+						:value="route.title"
 						:title="$t(route.title || 'empty')"
 						:prepend-icon="route.icon?.pos !== 'after' && route.icon?.value"
-						:after-icon="route.icon?.pos === 'after' && route.icon?.value"></v-list-item>
+						:after-icon="route.icon?.pos === 'after' && route.icon?.value"
+					></v-list-item>
 				</template>
 			</v-list>
 		</div>

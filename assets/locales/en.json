@@ -2,9 +2,6 @@
 	"empty": "",
 	"id": "ID",
 	"syscode": "Syscode",
-	"reset_pass": "Forgot password?",
-	"not_account": "Don't have an account?",
-	"write_us": "Write us",
 	"route": {
 		"home": "",
 		"radar": "Radar",
@@ -42,7 +39,8 @@
 		"lastname": "Last name",
 		"phone": "Phone",
 		"msg": {
-			"wrong_email": "Wrong E-mail format!"
+			"wrong_email": "Wrong E-mail format!",
+			"wrong_json": "Wrong JSON format!"
 		},
 		"category": "Category",
 		"message": "Message",
@@ -100,6 +98,13 @@
 		"cmp_success_deleted": "The component was successfully deleted."
 	},
 	"query": {
-		"delete": "Do you really want to delete the \"{name}\"?"
+		"delete": "Do you really want to delete the \"{name}\"?",
+		"reset_pass": "Forgot password?",
+		"not_account": "Don't have an account?"
+	},
+	"info": {
+		"write_us": "Write us",
+		"form": "Form",
+		"json": "JSON"
 	}
 }

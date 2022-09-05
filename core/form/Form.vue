@@ -1,26 +1,26 @@
 <script setup lang="ts">
-import Field from '@/core/form/field/Field.vue';
+	import Field from '@/core/form/field/Field.vue';
 
-const props = defineProps<{
-	config: any;
-	data?: any;
-}>();
+	const props = defineProps<{
+		config: any;
+		data?: any;
+	}>();
 
-const emit = defineEmits(['submit']);
+	const emits = defineEmits(['submit']);
 
-const form = ref();
-const loading = ref(false);
-const panels = ref([0]);
+	const form = ref();
+	const loading = ref(false);
+	const panels = ref([0]);
 
-// kdyz se nastavi data, nastavi se automaticky do fields
-watch(
-	() => props.data,
-	(data) => props.config.fields.forEach((field) => (field.value = data[field.name]))
-);
+	// kdyz se nastavi data, nastavi se automaticky do fields
+	watch(
+		() => props.data,
+		(data) => props.config.fields.forEach((field) => (field.value = data[field.name]))
+	);
 
-function onSubmit(e) {
-	emit('submit', props.config.submitUrl, form, props.config.fields, loading, props.config.method);
-}
+	function onSubmit(e) {
+		emits('submit', props.config.submitUrl, form, props.config.fields, loading, props.config.method);
+	}
 </script>
 <template>
 	<v-form ref="form" @submit.prevent="onSubmit">

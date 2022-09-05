@@ -6,7 +6,7 @@
  * @returns {boolean}
  */
 export function IS_DAY(value: any): boolean {
-  return /0?[1-9]|[12][0-9]|3[01]/.test(value);
+	return /0?[1-9]|[12][0-9]|3[01]/.test(value);
 }
 
 /**
@@ -17,7 +17,7 @@ export function IS_DAY(value: any): boolean {
  * @returns {boolean}
  */
 export function IS_MONTH(value: any): boolean {
-  return /0?[1-9]|1[0-2]/.test(value);
+	return /0?[1-9]|1[0-2]/.test(value);
 }
 
 /**
@@ -29,5 +29,5 @@ export function IS_MONTH(value: any): boolean {
  * @returns {boolean}
  */
 export function IS_YEAR(value: any): boolean {
-  return /(19|20)[0-9]{2}/.test(value);
+	return /(19|20)[0-9]{2}/.test(value);
 }

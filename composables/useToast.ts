@@ -2,34 +2,34 @@ import { useToast } from 'vue-toastification';
 import useI18n from './useI18n';
 
 function callToast(toast, item): void {
-    const $t = useI18n().global.t;
-    switch (item?.type) {
-        case 'success':
-            toast.success($t(item.message), item.options);
-            break;
-        case 'error':
-            toast.error($t(item.message), item.options);
-            break;
-        case 'warning':
-            toast.warning($t(item.message), item.options);
-            break;
-        default:
-            toast.info($t(item.message), item.options);
-            break;
-    }
+	const $t = useI18n().global.t;
+	switch (item?.type) {
+		case 'success':
+			toast.success($t(item.message), item.options);
+			break;
+		case 'error':
+			toast.error($t(item.message), item.options);
+			break;
+		case 'warning':
+			toast.warning($t(item.message), item.options);
+			break;
+		default:
+			toast.info($t(item.message), item.options);
+			break;
+	}
 }
 
 export default function (data?: any) {
-    const toast = useToast();
-    // pokud je to pole, projede jednotlive itemy a zavola na kazdem toast
+	const toast = useToast();
+	// pokud je to pole, projede jednotlive itemy a zavola na kazdem toast
 	if (Array.isArray(data)) {
-        if (data?.length) {
-            data.forEach((item) => callToast(toast, item));
-        }
-    } 
-    // zavola 1 toast
-    else if (data) {
-        callToast(toast, data)
-    }
-    return toast;
+		if (data?.length) {
+			data.forEach((item) => callToast(toast, item));
+		}
+	}
+	// zavola 1 toast
+	else if (data) {
+		callToast(toast, data);
+	}
+	return toast;
 }

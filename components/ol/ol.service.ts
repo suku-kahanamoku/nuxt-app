@@ -16,7 +16,6 @@ import Style from 'ol/style/Style';
 import { ITERATE } from '@/core/utils/modify-object.function';
 import { IDraggableResizable } from './ol.interface';
 
-
 export class OlService {
 	/**
 	 *

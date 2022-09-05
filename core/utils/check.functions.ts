@@ -7,7 +7,7 @@
  * @returns {boolean}
  */
 export function IS_NUMERIC(value: any): boolean {
-  return !isNaN(value);
+	return !isNaN(value);
 }
 
 /**
@@ -20,7 +20,7 @@ export function IS_NUMERIC(value: any): boolean {
  * @returns {boolean}
  */
 export function IS_ALPHABET(value: string): boolean {
-  return /^([A-Za-z\u00C0-\u024F\u1E00-\u1EFF\s]*)$/.test(value);
+	return /^([A-Za-z\u00C0-\u024F\u1E00-\u1EFF\s]*)$/.test(value);
 }
 
 /**
@@ -31,7 +31,7 @@ export function IS_ALPHABET(value: string): boolean {
  * @returns {boolean}
  */
 export function IS_DEFINED(value: any): boolean {
-  return typeof value !== 'undefined' && value !== null;
+	return typeof value !== 'undefined' && value !== null;
 }
 
 /**
@@ -42,7 +42,7 @@ export function IS_DEFINED(value: any): boolean {
  * @returns {boolean}
  */
 export function IS_OBJECT(item: any): boolean {
-  return IS_DEFINED(item) && typeof item === 'object' && !Array.isArray(item);
+	return IS_DEFINED(item) && typeof item === 'object' && !Array.isArray(item);
 }
 
 /**
@@ -55,7 +55,7 @@ export function IS_OBJECT(item: any): boolean {
  * @returns {boolean}
  */
 export function IS_IN_RANGE(value: number, min: number, max: number): boolean {
-  return min >= value && value < max;
+	return min >= value && value < max;
 }
 
 /**
@@ -65,8 +65,10 @@ export function IS_IN_RANGE(value: number, min: number, max: number): boolean {
  * @returns {boolean}
  */
 export function IS_PRERENDER(): boolean {
-  return window.navigator.userAgent.indexOf('Prerender|') >= 0
-    || window.navigator.userAgent.indexOf('HeadlessChrome') >= 0;
+	return (
+		window.navigator.userAgent.indexOf('Prerender|') >= 0 ||
+		window.navigator.userAgent.indexOf('HeadlessChrome') >= 0
+	);
 }
 
 /**
@@ -77,10 +79,12 @@ export function IS_PRERENDER(): boolean {
  * @returns
  */
 export function IS_OBJECT_ID(objectid: string) {
-  return (!objectid || (typeof objectid !== 'string' && (typeof objectid !== 'object' || Array.isArray(objectid) || typeof objectid !== 'function')))
-    ? false
-    : /^[0-9A-F]{24}$/i.test(objectid.toString());
-};
+	return !objectid ||
+		(typeof objectid !== 'string' &&
+			(typeof objectid !== 'object' || Array.isArray(objectid) || typeof objectid !== 'function'))
+		? false
+		: /^[0-9A-F]{24}$/i.test(objectid.toString());
+}
 
 /**
  * Kontrola, zda field byl doplnen automaticky prohlizecem
@@ -90,5 +94,5 @@ export function IS_OBJECT_ID(objectid: string) {
  * @return {*}  {boolean}
  */
 export function DETECT_AUTOFILL(field: HTMLElement): boolean {
-  return window.getComputedStyle(field, null).getPropertyValue('appearance') === 'menulist-button';
+	return window.getComputedStyle(field, null).getPropertyValue('appearance') === 'menulist-button';
 }

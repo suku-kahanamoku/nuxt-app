@@ -1,15 +1,12 @@
 <script setup lang="ts">
+	definePageMeta({
+		syscode: 'logout',
+	});
 
-definePageMeta({
-	syscode: 'logout',
-});
-
-onMounted(() => {
-	useApi('/api/signout');
-});
+	onMounted(() => {
+		useApi('/api/signout');
+	});
 </script>
 <template>
-	<div>
-		odhlaseni
-	</div>
+	<div>odhlaseni</div>
 </template>

@@ -1,14 +1,12 @@
 <script setup lang="ts">
-import { CLONE } from '@/core/utils/modify-object.function';
+	import { CLONE } from '@/core/utils/modify-object.function';
 
-definePageMeta({
-	syscode: 'home',
-});
+	definePageMeta({
+		syscode: 'home',
+	});
 
-const pageConfig = CLONE((useState('pages').value as any).reset_pass);
+	const pageConfig = CLONE((useState('pages').value as any).reset_pass);
 </script>
 <template>
-	<div>
-		home
-	</div>
+	<div>home</div>
 </template>

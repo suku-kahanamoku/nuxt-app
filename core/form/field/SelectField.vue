@@ -1,33 +1,33 @@
 <script setup lang="ts">
-import { ref } from 'vue';
+	import { ref } from 'vue';
 
-import { IFormFieldSelect } from '@/core/form/field/field.interface';
-import { IS_DEFINED } from '@/core/utils/check.functions';
+	import { IFormFieldSelect } from '@/core/form/field/field.interface';
+	import { IS_DEFINED } from '@/core/utils/check.functions';
 
-const props = defineProps<{
-	config: IFormFieldSelect;
-	value?: any;
-}>();
+	const props = defineProps<{
+		config: IFormFieldSelect;
+		value?: any;
+	}>();
 
-const el = ref();
-const rule = ref();
-const fieldValue = ref();
+	const el = ref();
+	const rule = ref();
+	const fieldValue = ref();
 
-onMounted(() => {
-	// inicializuje regex
-	if (props.config?.validation?.pattern) {
-		rule.value = new RegExp(props.config.validation.pattern);
-	}
-	// nastavi defaultni hodnotu
-	if (IS_DEFINED(props.config.value)) {
-		fieldValue.value = props.config.value;
-	}
-});
+	onMounted(() => {
+		// inicializuje regex
+		if (props.config?.validation?.pattern) {
+			rule.value = new RegExp(props.config.validation.pattern);
+		}
+		// nastavi defaultni hodnotu
+		if (IS_DEFINED(props.config.value)) {
+			fieldValue.value = props.config.value;
+		}
+	});
 
-watch(
-	() => props.value,
-	(value) => fieldValue.value = value
-);
+	watch(
+		() => props.value,
+		(value) => (fieldValue.value = value)
+	);
 </script>
 
 <template>

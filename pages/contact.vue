@@ -1,23 +1,23 @@
 <script setup lang="ts">
-import Form from '@/core/form/Form.vue';
-import { CLONE } from '@/core/utils/modify-object.function';
+	import Form from '@/core/form/Form.vue';
+	import { CLONE } from '@/core/utils/modify-object.function';
 
-definePageMeta({
-	syscode: 'contact',
-});
+	definePageMeta({
+		syscode: 'contact',
+	});
 
-const pageConfig = CLONE((useState('pages').value as any).contact);
-const configs = reactive(pageConfig?.configs);
+	const pageConfig = CLONE((useState('pages').value as any).contact);
+	const configs = reactive(pageConfig?.configs);
 
-onMounted(async () => {
-	if (pageConfig?.configs?.form) {
-		configs.form = (await useApi(pageConfig?.configs?.form))[0];
+	onMounted(async () => {
+		if (pageConfig?.configs?.form) {
+			configs.form = (await useApi(pageConfig?.configs?.form))[0];
+		}
+	});
+
+	async function onSubmit(url, form?, fieldConfigs?, loading?, method?: string) {
+		useSubmit(url, form, fieldConfigs, loading, method);
 	}
-});
-
-async function onSubmit(url, form?, fieldConfigs?, loading?, method?: string) {
-	useSubmit(url, form, fieldConfigs, loading, method);
-}
 </script>
 <template>
 	<div>

@@ -1,17 +1,17 @@
 <script setup lang="ts">
-import { ref, onMounted } from 'vue';
-import { useDisplay } from 'vuetify';
-import Sidebar from '@/components/sidebar/Sidebar.vue';
-import Header from '@/components/header/Header.vue';
+	import { ref, onMounted } from 'vue';
+	import { useDisplay } from 'vuetify';
+	import Sidebar from '@/components/sidebar/Sidebar.vue';
+	import Header from '@/components/header/Header.vue';
 
-const drawer = ref(undefined || true);
-/* const innerW = window.innerWidth; */
-const { mdAndUp, mdAndDown } = useDisplay();
-onMounted(() => {
-	/* if (innerW < 950) {
+	const drawer = ref(undefined || true);
+	/* const innerW = window.innerWidth; */
+	const { mdAndUp, mdAndDown } = useDisplay();
+	onMounted(() => {
+		/* if (innerW < 950) {
     drawer.value = !drawer.value;
   } */
-});
+	});
 </script>
 <template>
 	<div>

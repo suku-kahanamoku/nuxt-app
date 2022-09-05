@@ -8,12 +8,8 @@ import { TRIM } from './modify-string.functions';
  * @param {*} object
  * @returns
  */
-export function STRINGIFY(
-    object: any,
-    replacer?: (key: string, value: any) => any,
-    space?: string | number
-): string {
-    return JSON.stringify(object, replacer, space);
+export function STRINGIFY(object: any, replacer?: (key: string, value: any) => any, space?: string | number): string {
+	return JSON.stringify(object, replacer, space);
 }
 
 /**
@@ -24,7 +20,7 @@ export function STRINGIFY(
  * @returns
  */
 export function CLONE(object: any): any {
-    return JSON.parse(STRINGIFY(object) || '{}');
+	return JSON.parse(STRINGIFY(object) || '{}');
 }
 
 /**
@@ -34,10 +30,10 @@ export function CLONE(object: any): any {
  * @param {[any]} value
  */
 export function SHUFFLE(value: any[]): void {
-    for (let i = value.length - 1; i > 0; i--) {
-        const j = Math.floor(Math.random() * (i + 1));
-        [value[i], value[j]] = [value[j], value[i]];
-    }
+	for (let i = value.length - 1; i > 0; i--) {
+		const j = Math.floor(Math.random() * (i + 1));
+		[value[i], value[j]] = [value[j], value[i]];
+	}
 }
 
 /**
@@ -48,7 +44,7 @@ export function SHUFFLE(value: any[]): void {
  * @returns {*}
  */
 export function RANDOM(value: any[]): any {
-    return value[Math.floor(Math.random() * value.length)];
+	return value[Math.floor(Math.random() * value.length)];
 }
 
 /**
@@ -61,32 +57,32 @@ export function RANDOM(value: any[]): any {
  * @returns {(any[] | undefined)}
  */
 export function FILTER(items: any[], args: string[], additional: string = '_id'): any[] | undefined {
-    if (IS_OBJECT(items)) {
-        const resultArray = [];
+	if (IS_OBJECT(items)) {
+		const resultArray = [];
 
-        if (args?.length) {
-            // projede pole objektu
-            for (const item of items) {
-                // atribut objektu
-                const itemProperty = item[additional];
-                // pokud atribut je objekt
-                if (IS_OBJECT(itemProperty)) {
-                    // prevede objekt na string a porovna zda v nem neni hledany vyraz
-                    if (STRINGIFY(itemProperty).match(new RegExp('' + args, 'i'))) {
-                        resultArray.push(item);
-                    }
-                } else {
-                    if (IS_DEFINED(item[additional]) && item[additional].match(new RegExp('' + args, 'i'))) {
-                        resultArray.push(item);
-                    }
-                }
-            }
-            return resultArray;
-        } else {
-            return items;
-        }
-    }
-    return undefined;
+		if (args?.length) {
+			// projede pole objektu
+			for (const item of items) {
+				// atribut objektu
+				const itemProperty = item[additional];
+				// pokud atribut je objekt
+				if (IS_OBJECT(itemProperty)) {
+					// prevede objekt na string a porovna zda v nem neni hledany vyraz
+					if (STRINGIFY(itemProperty).match(new RegExp('' + args, 'i'))) {
+						resultArray.push(item);
+					}
+				} else {
+					if (IS_DEFINED(item[additional]) && item[additional].match(new RegExp('' + args, 'i'))) {
+						resultArray.push(item);
+					}
+				}
+			}
+			return resultArray;
+		} else {
+			return items;
+		}
+	}
+	return undefined;
 }
 
 /**
@@ -101,49 +97,53 @@ export function FILTER(items: any[], args: string[], additional: string = '_id')
  * @returns {any[]}
  */
 export function SORT(
-    obj: any, sortedBy: string | number, isNumericSort?: boolean, reverse?: boolean, subParamName?: string
+	obj: any,
+	sortedBy: string | number,
+	isNumericSort?: boolean,
+	reverse?: boolean,
+	subParamName?: string
 ): any[] {
-    sortedBy = sortedBy || 1; // by default first key
-    isNumericSort = isNumericSort || false; // by default text sort
+	sortedBy = sortedBy || 1; // by default first key
+	isNumericSort = isNumericSort || false; // by default text sort
 
-    const reversed = (reverse) ? -1 : 1;
+	const reversed = reverse ? -1 : 1;
 
-    const sortable: any = [];
-    ITERATE(obj, (value, key) => sortable.push([key, value]));
+	const sortable: any = [];
+	ITERATE(obj, (value, key) => sortable.push([key, value]));
 
-    if (isNumericSort) {
-        if (subParamName) {
-            sortable.sort((a: any, b: any) => {
-                if (a[1].hasOwnProperty(subParamName) && b[1].hasOwnProperty(subParamName)) {
-                    return reversed * (a[1][subParamName][sortedBy] - b[1][subParamName][sortedBy]);
-                }
-            });
-        } else {
-            sortable.sort((a: any, b: any) => reversed * (a[1][sortedBy] - b[1][sortedBy]));
-        }
-    } else {
-        if (subParamName) {
-            sortable.sort((a: any, b: any) => {
-                if (a[1].hasOwnProperty(subParamName) && b[1].hasOwnProperty(subParamName)) {
-                    if (a[1][subParamName][sortedBy] && b[1][subParamName][sortedBy]) {
-                        const x = a[1][subParamName][sortedBy].toLowerCase(),
-                            y = b[1][subParamName][sortedBy].toLowerCase();
-                        return x < y ? reversed * -1 : x > y ? reversed : 0;
-                    }
-                }
-            });
-        } else {
-            sortable.sort((a: any, b: any) => {
-                if (a[1][sortedBy] && b[1][sortedBy]) {
-                    const x = a[1][sortedBy].toLowerCase(),
-                        y = b[1][sortedBy].toLowerCase();
-                    return x < y ? reversed * -1 : x > y ? reversed : 0;
-                }
-            });
-        }
-    }
+	if (isNumericSort) {
+		if (subParamName) {
+			sortable.sort((a: any, b: any) => {
+				if (a[1].hasOwnProperty(subParamName) && b[1].hasOwnProperty(subParamName)) {
+					return reversed * (a[1][subParamName][sortedBy] - b[1][subParamName][sortedBy]);
+				}
+			});
+		} else {
+			sortable.sort((a: any, b: any) => reversed * (a[1][sortedBy] - b[1][sortedBy]));
+		}
+	} else {
+		if (subParamName) {
+			sortable.sort((a: any, b: any) => {
+				if (a[1].hasOwnProperty(subParamName) && b[1].hasOwnProperty(subParamName)) {
+					if (a[1][subParamName][sortedBy] && b[1][subParamName][sortedBy]) {
+						const x = a[1][subParamName][sortedBy].toLowerCase(),
+							y = b[1][subParamName][sortedBy].toLowerCase();
+						return x < y ? reversed * -1 : x > y ? reversed : 0;
+					}
+				}
+			});
+		} else {
+			sortable.sort((a: any, b: any) => {
+				if (a[1][sortedBy] && b[1][sortedBy]) {
+					const x = a[1][sortedBy].toLowerCase(),
+						y = b[1][sortedBy].toLowerCase();
+					return x < y ? reversed * -1 : x > y ? reversed : 0;
+				}
+			});
+		}
+	}
 
-    return sortable;
+	return sortable;
 }
 
 /**
@@ -155,7 +155,7 @@ export function SORT(
  * @returns {string[]}
  */
 export function INTERSECTION(arr1: string[], arr2: string[]): string[] {
-    return arr1.filter(value => arr2.indexOf(value) >= 0);
+	return arr1.filter((value) => arr2.indexOf(value) >= 0);
 }
 
 /**
@@ -167,7 +167,7 @@ export function INTERSECTION(arr1: string[], arr2: string[]): string[] {
  * @returns {string[]}
  */
 export function DIFFERENCE(arr1: string[], arr2: string[]): string[] {
-    return arr1.filter(value => arr2.indexOf(value) < 0);
+	return arr1.filter((value) => arr2.indexOf(value) < 0);
 }
 
 /**
@@ -177,19 +177,16 @@ export function DIFFERENCE(arr1: string[], arr2: string[]): string[] {
  * @param {*} obj
  * @param {(value: any, key: string, index?: number) => void} callback
  */
-export function ITERATE(
-    obj: any,
-    callback: (value: any, key: string, index?: number) => void
-): void {
-    if (obj && (IS_OBJECT(obj) || Array.isArray(obj))) {
-        let index = 0;
-        for (const key in obj) {
-            if (obj.hasOwnProperty(key)) {
-                callback(obj[key], key);
-                index++;
-            }
-        }
-    }
+export function ITERATE(obj: any, callback: (value: any, key: string, index?: number) => void): void {
+	if (obj && (IS_OBJECT(obj) || Array.isArray(obj))) {
+		let index = 0;
+		for (const key in obj) {
+			if (obj.hasOwnProperty(key)) {
+				callback(obj[key], key);
+				index++;
+			}
+		}
+	}
 }
 
 /**
@@ -211,18 +208,18 @@ export function ITERATE(
  * @returns {*}
  */
 export function GET_VALUE(data: any, name: string, path?: string, delimiter: string = '.'): any {
-    let value;
-    if (data && IS_DEFINED(name)) {
-        if (path) {
-            value = path.split(delimiter).reduce((accum, curr) => accum && accum[curr] || accum, data) || {};
-            value = value[name];
-        } else {
-            if (IS_DEFINED(data[name])) {
-                value = data[name];
-            }
-        }
-    }
-    return IS_DEFINED(value) && TRIM(value.toString()).length ? value : undefined;
+	let value;
+	if (data && IS_DEFINED(name)) {
+		if (path) {
+			value = path.split(delimiter).reduce((accum, curr) => (accum && accum[curr]) || accum, data) || {};
+			value = value[name];
+		} else {
+			if (IS_DEFINED(data[name])) {
+				value = data[name];
+			}
+		}
+	}
+	return IS_DEFINED(value) && TRIM(value.toString()).length ? value : undefined;
 }
 
 /**
@@ -234,12 +231,12 @@ export function GET_VALUE(data: any, name: string, path?: string, delimiter: str
  * @returns {*}
  */
 export function MERGE(target: any, source: any): any {
-    // Iterate through `source` properties and if an `Object` set property to merge of `target` and `source` properties
-    for (const key of Object.keys(source))
-        if (target && source[key] instanceof Object) {
-            Object.assign(source[key], MERGE(target[key], source[key]));
-        }
-    // Join `target` and modified `source`
-    Object.assign(target || {}, source);
-    return target
+	// Iterate through `source` properties and if an `Object` set property to merge of `target` and `source` properties
+	for (const key of Object.keys(source))
+		if (target && source[key] instanceof Object) {
+			Object.assign(source[key], MERGE(target[key], source[key]));
+		}
+	// Join `target` and modified `source`
+	Object.assign(target || {}, source);
+	return target;
 }

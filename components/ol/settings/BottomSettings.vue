@@ -1,35 +1,35 @@
 <script setup lang="ts">
-import { inject, onMounted, reactive } from 'vue';
+	import { inject, onMounted, reactive } from 'vue';
 
-import type { OlService } from '@/components/ol/ol.service';
-import CwpSetup from '@/components/ol/settings/CwpSetup.vue';
-import Maps from '@/components/ol/settings/Maps.vue';
-import Areas from '@/components/ol/settings/Areas.vue';
-import Brigthness from '@/components/ol/settings/Brigthness.vue';
-import Schemes from '@/components/ol/settings/Schemes.vue';
-import SecWindow from '@/components/ol/settings/SecWindow.vue';
-import FplWindow from '@/components/ol/settings/FplWindow.vue';
-import Errors from '@/components/ol/settings/Errors.vue';
-import Warn from '@/components/ol/settings/Warn.vue';
-import StripSetup from '@/components/ol/settings/StripSetup.vue';
-import Stats from '@/components/ol/settings/Stats.vue';
-import AllPlans from '@/components/ol/settings/AllPlans.vue';
-import DelPlans from '@/components/ol/settings/DelPlans.vue';
-import Lost from '@/components/ol/settings/Lost.vue';
-import PrimaryTrack from '@/components/ol/settings/PrimaryTrack.vue';
+	import type { OlService } from '@/components/ol/ol.service';
+	import CwpSetup from '@/components/ol/settings/CwpSetup.vue';
+	import Maps from '@/components/ol/settings/Maps.vue';
+	import Areas from '@/components/ol/settings/Areas.vue';
+	import Brigthness from '@/components/ol/settings/Brigthness.vue';
+	import Schemes from '@/components/ol/settings/Schemes.vue';
+	import SecWindow from '@/components/ol/settings/SecWindow.vue';
+	import FplWindow from '@/components/ol/settings/FplWindow.vue';
+	import Errors from '@/components/ol/settings/Errors.vue';
+	import Warn from '@/components/ol/settings/Warn.vue';
+	import StripSetup from '@/components/ol/settings/StripSetup.vue';
+	import Stats from '@/components/ol/settings/Stats.vue';
+	import AllPlans from '@/components/ol/settings/AllPlans.vue';
+	import DelPlans from '@/components/ol/settings/DelPlans.vue';
+	import Lost from '@/components/ol/settings/Lost.vue';
+	import PrimaryTrack from '@/components/ol/settings/PrimaryTrack.vue';
 
-const props = defineProps<{
-	wrapId: string;
-}>();
+	const props = defineProps<{
+		wrapId: string;
+	}>();
 
-const olService = inject('OlService') as OlService;
-const configs = reactive({} as any);
+	const olService = inject('OlService') as OlService;
+	const configs = reactive({} as any);
 
-onMounted(() => {});
+	onMounted(() => {});
 
-function saveConfig(e: any, key: string) {
-	configs[key] = olService.convertToDragResizeConfig(e);
-}
+	function saveConfig(e: any, key: string) {
+		configs[key] = olService.convertToDragResizeConfig(e);
+	}
 </script>
 
 <template>
