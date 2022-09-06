@@ -3,7 +3,7 @@
 	"id": "ID",
 	"syscode": "Syscode",
 	"route": {
-		"home": "",
+		"home": "Home",
 		"radar": "Radar",
 		"contact": "Contact",
 		"login": "Sign in",
@@ -15,10 +15,15 @@
 		"profile": "Profile",
 		"profile_detail": "Profile detail",
 		"role": "Role",
+		"role_detail": "Role detail",
 		"auth": "Authorization",
+		"auth_detail": "Authorization detail",
 		"address": "Address",
 		"pz": "Partner zone",
-		"cmp": "Component"
+		"cmp": "Component",
+		"cmp_detail": "Component detail",
+		"page": "Page",
+		"page_detail": "Page detail"
 	},
 	"btn": {
 		"login": "Login",
@@ -59,7 +64,9 @@
 		"latitude": "Latitude",
 		"submitUrl": "Submit URL",
 		"theme": "Theme",
-		"title": "Title"
+		"title": "Title",
+		"visible": "Visible",
+		"unvisible": "Unvisible"
 	},
 	"settings": {
 		"cwp_setup": "CWP setup",

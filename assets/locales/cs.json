@@ -3,7 +3,7 @@
 	"id": "ID",
 	"syscode": "Systémový kód",
 	"route": {
-		"home": "",
+		"home": "Home",
 		"radar": "Radar",
 		"contact": "Kontakt",
 		"login": "Přihlášení",
@@ -15,10 +15,15 @@
 		"profile": "Profil",
 		"profile_detail": "Profil detail",
 		"role": "Role",
+		"role_detail": "Role detail",
 		"auth": "Oprávnění",
+		"auth_detail": "Oprávnění detail",
 		"address": "Adresař",
 		"pz": "Partnerská zóna",
-		"cmp": "Komponenty"
+		"cmp": "Komponenty",
+		"cmp_detail": "Komponenty detail",
+		"page": "Menu",
+		"page_detail": "Menu detail"
 	},
 	"btn": {
 		"login": "Přihlásit",
@@ -59,7 +64,9 @@
 		"latitude": "Latitude",
 		"submitUrl": "Submit URL",
 		"theme": "Theme",
-		"title": "Titulek"
+		"title": "Titulek",
+		"visible": "Zobrazit",
+		"unvisible": "Zakázat"
 	},
 	"settings": {
 		"cwp_setup": "CWP setup",
