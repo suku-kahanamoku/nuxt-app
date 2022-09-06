@@ -3,12 +3,14 @@
 
 	definePageMeta({
 		syscode: 'page_reset_pass',
+		configSyscode: 'cmp_reset_pass',
 	});
 
 	const route = useRoute();
-	const syscode = route.meta?.syscode as string;
-	const pageConfig = useState('pages').value[syscode];
+	const meta = route.meta as any;
+	const pageConfig = useState('pages').value[meta?.syscode];
 	const configs = reactive({} as any);
+	const config = ref();
 
 	onMounted(async () => {
 		// nacte a inicializuje konfigurace pro vnitrni komponenty
@@ -21,7 +23,13 @@
 			const result = await useApi(
 				`/api/component?where={"syscode":{"value":["${syscodes}"],"operator":{"value":"in"}}}`
 			);
-			result.forEach((config) => (configs[config.syscode] = config));
+			result.forEach((tmpConfig) => {
+				// nastavi config hlavni komponente
+				if (meta?.configSyscode === tmpConfig.syscode) {
+					config.value = tmpConfig;
+				}
+				configs[tmpConfig.syscode] = tmpConfig;
+			});
 		}
 	}
 
@@ -31,6 +39,6 @@
 </script>
 <template>
 	<div>
-		<Form v-if="configs?.cmp_reset_pass" :config="configs?.cmp_reset_pass" @submit="onSubmit" />
+		<Form v-if="config" :config="config" @submit="onSubmit" />
 	</div>
 </template>

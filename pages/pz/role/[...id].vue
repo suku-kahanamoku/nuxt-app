@@ -4,12 +4,14 @@
 
 	definePageMeta({
 		syscode: 'page_role_detail',
+		configSyscode: 'cmp_role_form',
 	});
 
 	const route = useRoute();
-	const syscode = route.meta?.syscode as string;
-	const pageConfig = useState('pages').value[syscode];
+	const meta = route.meta as any;
+	const pageConfig = useState('pages').value[meta?.syscode];
 	const configs = reactive({} as any);
+	const config = ref();
 	const data = ref();
 	const tab = ref();
 
@@ -26,18 +28,21 @@
 			const result = await useApi(
 				`/api/component?where={"syscode":{"value":["${syscodes}"],"operator":{"value":"in"}}}`
 			);
-			result.forEach((config) => {
-				const tmpConfig = (configs[config.syscode] = config);
+			result.forEach((tmpConfig) => {
 				if (tmpConfig.submitUrl) {
 					tmpConfig.submitUrl = `${tmpConfig.submitUrl}?where={"id":"${route.params.id}"}`;
-					tmpConfig.method = 'PATCH';
 				}
+				// nastavi config hlavni komponente
+				if (meta?.configSyscode === tmpConfig.syscode) {
+					config.value = tmpConfig;
+				}
+				configs[tmpConfig.syscode] = tmpConfig;
 			});
 		}
 	}
 
 	async function load() {
-		if (configs?.cmp_role_form?.submitUrl) {
+		if (config.value?.submitUrl) {
 			const result = await useApi(configs.cmp_role_form.submitUrl);
 			data.value = result[0];
 		} else {
@@ -59,16 +64,11 @@
 
 		<v-window v-model="tab">
 			<v-window-item value="field">
-				<Form v-if="configs?.cmp_role_form" :config="configs?.cmp_role_form" :data="data" @submit="onSubmit" />
+				<Form v-if="config" :config="config" :data="data" @submit="onSubmit" />
 			</v-window-item>
 
 			<v-window-item value="json">
-				<JsonForm
-					v-if="configs?.cmp_role_form"
-					:config="configs?.cmp_role_form"
-					:data="data"
-					@submit="onSubmit"
-				/>
+				<JsonForm v-if="config" :config="config" :data="data" @submit="onSubmit" />
 			</v-window-item>
 		</v-window>
 	</div>

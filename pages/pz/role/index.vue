@@ -5,12 +5,14 @@
 
 	definePageMeta({
 		syscode: 'page_role',
+		configSyscode: 'cmp_role_search_form',
 	});
 
 	const route = useRoute();
-	const syscode = route.meta?.syscode as string;
-	const pageConfig = useState('pages').value[syscode];
+	const meta = route.meta as any;
+	const pageConfig = useState('pages').value[meta?.syscode];
 	const configs = reactive({} as any);
+	const config = ref();
 	const data = ref();
 	const tab = ref(pageConfig.configs[0]);
 
@@ -29,7 +31,13 @@
 			const result = await useApi(
 				`/api/component?where={"syscode":{"value":["${syscodes}"],"operator":{"value":"in"}}}`
 			);
-			result.forEach((config) => (configs[config.syscode] = config));
+			result.forEach((tmpConfig) => {
+				// nastavi config hlavni komponente
+				if (meta?.configSyscode === tmpConfig.syscode) {
+					config.value = tmpConfig;
+				}
+				configs[tmpConfig.syscode] = tmpConfig;
+			});
 		}
 	}
 
@@ -84,7 +92,7 @@
 				<DefaultCard
 					:data="item"
 					:path="pageConfig?.path"
-					@delete="onSubmit(configs?.cmp_role_search_form?.submitUrl, $event, null, null, 'DELETE')"
+					@delete="onSubmit(config?.submitUrl, $event, null, null, 'DELETE')"
 				/>
 			</v-col>
 		</v-row>

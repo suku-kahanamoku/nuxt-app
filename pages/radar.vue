@@ -10,8 +10,8 @@
 	});
 
 	const route = useRoute();
-	const syscode = route.meta?.syscode as string;
-	const pageConfig = useState('pages').value[syscode];
+	const meta = route.meta as any;
+	const pageConfig = useState('pages').value[meta?.syscode];
 
 	provide('OlService', new OlService());
 
