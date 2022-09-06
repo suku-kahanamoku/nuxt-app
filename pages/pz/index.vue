@@ -3,13 +3,14 @@
 	import MyContacts from '@/components/dashboard/contacts/MyContacts.vue';
 	import Timeline from '@/components/dashboard/timeline/Timeline.vue';
 	import Blog from '@/components/dashboard/blog/Blog.vue';
-	import { CLONE } from '@/core/utils/modify-object.function';
 
 	definePageMeta({
 		syscode: 'page_pz',
 	});
 
-	const pageConfig = CLONE((useState('pages').value as any).page_pz);
+	const route = useRoute();
+	const syscode = route.meta?.syscode as string;
+	const pageConfig = useState('pages').value[syscode];
 </script>
 
 <template>

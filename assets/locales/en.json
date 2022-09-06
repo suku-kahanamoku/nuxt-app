@@ -66,7 +66,8 @@
 		"theme": "Theme",
 		"title": "Title",
 		"visible": "Visible",
-		"unvisible": "Unvisible"
+		"unvisible": "Unvisible",
+		"color": "Color"
 	},
 	"settings": {
 		"cwp_setup": "CWP setup",
@@ -113,5 +114,11 @@
 		"write_us": "Write us",
 		"form": "Form",
 		"json": "JSON"
+	},
+	"color": {
+		"primary": "Primary",
+		"info": "Info",
+		"warning": "Warning",
+		"error": "Error"
 	}
 }

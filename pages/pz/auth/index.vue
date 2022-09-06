@@ -1,17 +1,18 @@
 <script setup lang="ts">
 	import Form from '@/core/form/Form.vue';
 	import DefaultCard from '@/components/card/DefaultCard.vue';
-	import { CLONE } from '@/core/utils/modify-object.function';
 	import { GET_MARK } from '@/core/utils/modify-string.functions';
 
 	definePageMeta({
 		syscode: 'page_auth',
 	});
 
-	const pageConfig = CLONE((useState('pages').value as any).page_auth);
+	const route = useRoute();
+	const syscode = route.meta?.syscode as string;
+	const pageConfig = useState('pages').value[syscode];
 	const configs = reactive({} as any);
 	const data = ref();
-	const tab = ref();
+	const tab = ref(pageConfig.configs[0]);
 
 	onMounted(async () => {
 		// nacte a inicializuje konfigurace pro vnitrni komponenty
@@ -20,7 +21,7 @@
 		load();
 	});
 
-	watch(useRoute(), load);
+	watch(route, load);
 
 	async function initConfigs() {
 		if (pageConfig?.configs?.length) {
@@ -33,7 +34,7 @@
 	}
 
 	async function load() {
-		const params = useRoute().query[pageConfig?.syscode] as string;
+		const params = route.query[pageConfig?.syscode] as string;
 		if (params && configs.cmp_auth_search_form.submitUrl) {
 			data.value = await useApi(configs.cmp_auth_search_form.submitUrl + '?where=' + params);
 		} else {
@@ -69,28 +70,23 @@
 <template>
 	<div>
 		<v-tabs v-model="tab" background-color="primary">
-			<v-tab value="search">{{ $t('btn.search') }}</v-tab>
-			<v-tab value="create">{{ $t('btn.create') }}</v-tab>
+			<v-tab v-for="config in configs" :value="config?.syscode">{{ $t(config?.title) }}</v-tab>
 		</v-tabs>
 
 		<v-window v-model="tab">
-			<v-window-item value="search">
-				<Form v-if="configs?.cmp_auth_search_form" :config="configs?.cmp_auth_search_form" @submit="onSubmit" />
-
-				<v-row v-if="data?.length" class="mt-5">
-					<v-col v-for="item in data" cols="12" sm="6" md="4" lg="3">
-						<DefaultCard
-							:data="item"
-							:path="pageConfig?.path"
-							@delete="onSubmit(configs?.cmp_auth_search_form?.submitUrl, $event, null, null, 'DELETE')"
-						/>
-					</v-col>
-				</v-row>
-			</v-window-item>
-
-			<v-window-item value="create">
-				<Form v-if="configs?.cmp_auth_create_form" :config="configs?.cmp_auth_create_form" @submit="onSubmit" />
+			<v-window-item v-for="config in configs" :value="config?.syscode">
+				<Form v-if="config" :config="config" @submit="onSubmit" />
 			</v-window-item>
 		</v-window>
+
+		<v-row v-if="data?.length" class="mt-5">
+			<v-col v-for="item in data" cols="12" sm="6" md="4" lg="3">
+				<DefaultCard
+					:data="item"
+					:path="pageConfig?.path"
+					@delete="onSubmit(configs?.cmp_auth_search_form?.submitUrl, $event, null, null, 'DELETE')"
+				/>
+			</v-col>
+		</v-row>
 	</div>
 </template>

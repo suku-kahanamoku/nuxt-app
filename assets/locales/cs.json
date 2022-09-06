@@ -66,7 +66,8 @@
 		"theme": "Theme",
 		"title": "Titulek",
 		"visible": "Zobrazit",
-		"unvisible": "Zakázat"
+		"unvisible": "Zakázat",
+		"color": "Barva"
 	},
 	"settings": {
 		"cwp_setup": "CWP setup",
@@ -113,5 +114,11 @@
 		"write_us": "Napište nám",
 		"edit_detail": "Editace \"{name}\"",
 		"edit_detail_json": "Editace \"{name}\" - JSON"
+	},
+	"color": {
+		"primary": "Primary",
+		"info": "Info",
+		"warning": "Warning",
+		"error": "Error"
 	}
 }

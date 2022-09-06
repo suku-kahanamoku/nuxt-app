@@ -26,7 +26,7 @@
 	<v-form ref="form" @submit.prevent="onSubmit">
 		<v-expansion-panels v-if="config.theme === 'accordion'" v-model="panels">
 			<v-expansion-panel>
-				<v-expansion-panel-title v-if="config.title">
+				<v-expansion-panel-title v-if="config.title" dark :color="config.color">
 					{{ $t(config.title) }}
 				</v-expansion-panel-title>
 				<v-expansion-panel-text class="py-5">
@@ -46,7 +46,7 @@
 		</v-expansion-panels>
 
 		<v-card v-else-if="config.theme === 'card'">
-			<v-toolbar  v-if="config.title" dark color="primary">
+			<v-toolbar v-if="config.title" dark :color="config.color">
 				<v-toolbar-title>{{ $t(config.title) }}</v-toolbar-title>
 			</v-toolbar>
 			<v-card-text>

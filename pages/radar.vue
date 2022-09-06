@@ -4,13 +4,14 @@
 	import TopSettings from '@/components/ol/settings/TopSettings.vue';
 	import BottomSettings from '@/components/ol/settings/BottomSettings.vue';
 	import MapContainer from '@/components/ol/MapContainer.vue';
-	import { CLONE } from '@/core/utils/modify-object.function';
 
 	definePageMeta({
 		syscode: 'page_radar',
 	});
 
-	const pageConfig = CLONE((useState('pages').value as any).page_radar);
+	const route = useRoute();
+	const syscode = route.meta?.syscode as string;
+	const pageConfig = useState('pages').value[syscode];
 
 	provide('OlService', new OlService());
 

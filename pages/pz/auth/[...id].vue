@@ -1,19 +1,22 @@
 <script setup lang="ts">
 	import Form from '@/core/form/Form.vue';
-	import { CLONE } from '@/core/utils/modify-object.function';
 	import JsonForm from '@/core/form/JsonForm.vue';
 
 	definePageMeta({
 		syscode: 'page_auth_detail',
 	});
 
-	const pageConfig = CLONE((useState('pages').value as any).page_auth_detail);
+	const route = useRoute();
+	const syscode = route.meta?.syscode as string;
+	const pageConfig = useState('pages').value[syscode];
 	const configs = reactive({} as any);
 	const data = ref();
 	const tab = ref();
 
 	onMounted(async () => {
+		// nacte a inicializuje konfigurace pro vnitrni komponenty
 		await initConfigs();
+		// nacte data
 		load();
 	});
 
@@ -26,7 +29,7 @@
 			result.forEach((config) => {
 				const tmpConfig = (configs[config.syscode] = config);
 				if (tmpConfig.submitUrl) {
-					tmpConfig.submitUrl = `${tmpConfig.submitUrl}?where={"id":"${useRoute().params.id}"}`;
+					tmpConfig.submitUrl = `${tmpConfig.submitUrl}?where={"id":"${route.params.id}"}`;
 					tmpConfig.method = 'PATCH';
 				}
 			});

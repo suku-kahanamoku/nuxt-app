@@ -1,12 +1,13 @@
 <script setup lang="ts">
 	import Form from '@/core/form/Form.vue';
-	import { CLONE } from '@/core/utils/modify-object.function';
 
 	definePageMeta({
 		syscode: 'page_reset_pass',
 	});
 
-	const pageConfig = CLONE((useState('pages').value as any).page_reset_pass);
+	const route = useRoute();
+	const syscode = route.meta?.syscode as string;
+	const pageConfig = useState('pages').value[syscode];
 	const configs = reactive({} as any);
 
 	onMounted(async () => {
