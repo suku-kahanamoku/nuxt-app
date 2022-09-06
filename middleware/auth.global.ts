@@ -4,7 +4,7 @@ export default async function (to, from) {
 		return await $fetch('/api/check')
 			// je prihlaseny
 			.then((data) => {
-				setStore('profile', data.result);
+				setStore('profile', data);
 				setStore('redirect', null);
 				return true;
 			})

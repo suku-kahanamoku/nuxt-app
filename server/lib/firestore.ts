@@ -24,7 +24,7 @@ export async function GET_DOCS(colName: string, params: any) {
 	ITERATE(params, (item, key) => {
 		const name = key === 'id' ? documentId() : key;
 		const value = IS_OBJECT(item) ? item.value : item;
-		paramsArr.push(where(name, '==', value));
+		paramsArr.push(where(name, item.operator?.value || '==', value));
 	});
 	const col = params ? query(colRef, ...paramsArr) : colRef;
 	const snapshot = await getDocs(col);

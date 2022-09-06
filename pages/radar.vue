@@ -7,10 +7,10 @@
 	import { CLONE } from '@/core/utils/modify-object.function';
 
 	definePageMeta({
-		syscode: 'radar',
+		syscode: 'page_radar',
 	});
 
-	const pageConfig = CLONE((useState('pages').value as any).radar);
+	const pageConfig = CLONE((useState('pages').value as any).page_radar);
 
 	provide('OlService', new OlService());
 

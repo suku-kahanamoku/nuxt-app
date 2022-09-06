@@ -6,10 +6,10 @@
 	import { CLONE } from '@/core/utils/modify-object.function';
 
 	definePageMeta({
-		syscode: 'pz',
+		syscode: 'page_pz',
 	});
 
-	const pageConfig = CLONE((useState('pages').value as any).pz);
+	const pageConfig = CLONE((useState('pages').value as any).page_pz);
 </script>
 
 <template>

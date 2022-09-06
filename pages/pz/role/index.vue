@@ -5,11 +5,11 @@
 	import { GET_MARK } from '@/core/utils/modify-string.functions';
 
 	definePageMeta({
-		syscode: 'role',
+		syscode: 'page_role',
 	});
 
-	const pageConfig = CLONE((useState('pages').value as any).role);
-	const configs = reactive(pageConfig?.configs);
+	const pageConfig = CLONE((useState('pages').value as any).page_role);
+	const configs = reactive({} as any);
 	const data = ref();
 	const tab = ref();
 
@@ -23,26 +23,19 @@
 	watch(useRoute(), load);
 
 	async function initConfigs() {
-		if (pageConfig?.configs?.form) {
-			// init create form
-			const result = await useApi(pageConfig?.configs?.form);
-			configs.form = result[0];
-			configs.form.fields.forEach((field) => {
-				field.readonly = false;
-				field.disabled = false;
-			});
-			configs.form.method = 'POST';
-			// init search form
-			configs.searchForm = CLONE(configs.form);
-			configs.searchForm.fields.forEach((field) => (field.required = false));
-			configs.searchForm.method = 'GET';
+		if (pageConfig?.configs?.length) {
+			const syscodes = pageConfig?.configs?.join('","');
+			const result = await useApi(
+				`/api/component?where={"syscode":{"value":["${syscodes}"],"operator":{"value":"in"}}}`
+			);
+			result.forEach((config) => (configs[config.syscode] = config));
 		}
 	}
 
 	async function load() {
 		const params = useRoute().query[pageConfig?.syscode] as string;
-		if (params && configs.searchForm.submitUrl) {
-			data.value = await useApi(configs.searchForm.submitUrl + '?where=' + params);
+		if (params && configs.cmp_role_search_form.submitUrl) {
+			data.value = await useApi(configs.cmp_role_search_form.submitUrl + '?where=' + params);
 		} else {
 			data.value = [];
 		}
@@ -53,7 +46,9 @@
 			case 'POST':
 			case 'PATCH':
 				const result = await useSubmit(url, form, fieldConfigs, loading, method);
-				navigateTo(`${pageConfig?.path}/${result.id}`);
+				if (result?.id) {
+					navigateTo(`${pageConfig?.path}/${result.id}`);
+				}
 				break;
 
 			case 'DELETE':
@@ -63,7 +58,9 @@
 
 			default:
 				const redirUrl = await useSubmit('', form, fieldConfigs, loading, method);
-				navigateTo(pageConfig?.path + GET_MARK(pageConfig?.path) + pageConfig?.syscode + '=' + redirUrl);
+				if (redirUrl) {
+					navigateTo(pageConfig?.path + GET_MARK(pageConfig?.path) + pageConfig?.syscode + '=' + redirUrl);
+				}
 				break;
 		}
 	}
@@ -78,21 +75,21 @@
 
 		<v-window v-model="tab">
 			<v-window-item value="search">
-				<Form v-if="configs?.searchForm" :config="configs?.searchForm" @submit="onSubmit" />
+				<Form v-if="configs?.cmp_role_search_form" :config="configs?.cmp_role_search_form" @submit="onSubmit" />
 
 				<v-row v-if="data?.length" class="mt-5">
 					<v-col v-for="item in data" cols="12" sm="6" md="4" lg="3">
 						<DefaultCard
 							:data="item"
 							:path="pageConfig?.path"
-							@delete="onSubmit(configs?.form?.submitUrl, $event, null, null, 'DELETE')"
+							@delete="onSubmit(configs?.cmp_role_search_form?.submitUrl, $event, null, null, 'DELETE')"
 						/>
 					</v-col>
 				</v-row>
 			</v-window-item>
 
 			<v-window-item value="create">
-				<Form v-if="configs?.form" :config="configs?.form" @submit="onSubmit" />
+				<Form v-if="configs?.cmp_role_create_form" :config="configs?.cmp_role_create_form" @submit="onSubmit" />
 			</v-window-item>
 		</v-window>
 	</div>

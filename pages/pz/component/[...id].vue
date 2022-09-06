@@ -4,30 +4,38 @@
 	import JsonForm from '@/core/form/JsonForm.vue';
 
 	definePageMeta({
-		syscode: 'cmp_detail',
+		syscode: 'page_cmp_detail',
 	});
 
-	const pageConfig = CLONE((useState('pages').value as any).cmp_detail);
-	const configs = reactive(pageConfig?.configs);
+	const pageConfig = CLONE((useState('pages').value as any).page_cmp_detail);
+	const configs = reactive({} as any);
 	const data = ref();
 	const tab = ref();
 
 	onMounted(async () => {
-		await initConfig();
+		await initConfigs();
 		load();
 	});
 
-	async function initConfig() {
-		if (pageConfig?.configs?.form) {
-			configs.form = (await useApi(pageConfig?.configs?.form))[0];
-			configs.form.submitUrl = `${configs.form.submitUrl}?where={"id":"${useRoute().params.id}"}`;
-			configs.form.method = 'PATCH';
+	async function initConfigs() {
+		if (pageConfig?.configs?.length) {
+			const syscodes = pageConfig?.configs?.join('","');
+			const result = await useApi(
+				`/api/component?where={"syscode":{"value":["${syscodes}"],"operator":{"value":"in"}}}`
+			);
+			result.forEach((config) => {
+				const tmpConfig = (configs[config.syscode] = config);
+				if (tmpConfig.submitUrl) {
+					tmpConfig.submitUrl = `${tmpConfig.submitUrl}?where={"id":"${useRoute().params.id}"}`;
+					tmpConfig.method = 'PATCH';
+				}
+			});
 		}
 	}
 
 	async function load() {
-		if (configs?.form?.submitUrl) {
-			const result = await useApi(configs.form.submitUrl);
+		if (configs?.cmp_form?.submitUrl) {
+			const result = await useApi(configs.cmp_form.submitUrl);
 			data.value = result[0];
 		} else {
 			data.value = {};
@@ -48,11 +56,11 @@
 
 		<v-window v-model="tab">
 			<v-window-item value="field">
-				<Form v-if="configs?.form" :config="configs?.form" :data="data" @submit="onSubmit" />
+				<Form v-if="configs?.cmp_form" :config="configs?.cmp_form" :data="data" @submit="onSubmit" />
 			</v-window-item>
 
 			<v-window-item value="json">
-				<JsonForm v-if="configs?.form" :config="configs?.form" :data="data" @submit="onSubmit" />
+				<JsonForm v-if="configs?.cmp_form" :config="configs?.cmp_form" :data="data" @submit="onSubmit" />
 			</v-window-item>
 		</v-window>
 	</div>
