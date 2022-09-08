@@ -3,7 +3,6 @@
 
 	const props = defineProps<{
 		data: any;
-		path: string;
 	}>();
 
 	const emits = defineEmits(['delete']);
@@ -24,7 +23,7 @@
 				><br />
 				<small>{{ data?.phone }}</small
 				><br />
-				<v-btn :to="path + '/' + data?.id" icon="mdi-account-edit" color="primary" />
+				<v-btn :to="data.url" icon="mdi-account-edit" color="primary" />
 
 				<ConfirmDialog @confirm="$event && emits('delete', data)">
 					<template v-slot:btn>

@@ -2,15 +2,13 @@
 	import Form from '@/core/form/Form.vue';
 
 	definePageMeta({
-		syscode: 'page_signup',
-		configSyscode: 'cmp_signup_form',
+		syscode: 'signup',
 	});
 
 	const route = useRoute();
 	const meta = route.meta as any;
 	const pageConfig = useState('pages').value[meta?.syscode];
 	const configs = reactive({} as any);
-	const config = ref();
 
 	onMounted(async () => {
 		// nacte a inicializuje konfigurace pro vnitrni komponenty
@@ -24,25 +22,14 @@
 				`/api/component?where={"syscode":{"value":["${syscodes}"],"operator":{"value":"in"}}}`
 			);
 			result.forEach((tmpConfig) => {
-				// nastavi config hlavni komponente
-				if (meta?.configSyscode === tmpConfig.syscode) {
-					config.value = tmpConfig;
-				}
+				tmpConfig.redirUrl = useState('redirect')?.value || '/pz';
 				configs[tmpConfig.syscode] = tmpConfig;
 			});
 		}
 	}
-
-	async function onSubmit(url, form?, fieldConfigs?, loading?, method?: string) {
-		useSubmit(url, form, fieldConfigs, loading, method).then((data) => {
-			if (data?.uid) {
-				navigateTo(useState('redirect')?.value || '/pz');
-			}
-		});
-	}
 </script>
 <template>
 	<div>
-		<Form v-if="config" :config="config" @submit="onSubmit" />
+		<Form v-for="config in configs" :config="config" />
 	</div>
 </template>

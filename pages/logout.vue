@@ -1,6 +1,6 @@
 <script setup lang="ts">
 	definePageMeta({
-		syscode: 'page_logout',
+		syscode: 'logout',
 	});
 
 	onMounted(() => {

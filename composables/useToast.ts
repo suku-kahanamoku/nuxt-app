@@ -5,16 +5,16 @@ function callToast(toast, item): void {
 	const $t = useI18n().global.t;
 	switch (item?.type) {
 		case 'success':
-			toast.success($t(item.message), item.options);
+			toast.success($t(item.message || 'empty'), item.options);
 			break;
 		case 'error':
-			toast.error($t(item.message), item.options);
+			toast.error($t(item.message || 'empty'), item.options);
 			break;
 		case 'warning':
-			toast.warning($t(item.message), item.options);
+			toast.warning($t(item.message || 'empty'), item.options);
 			break;
 		default:
-			toast.info($t(item.message), item.options);
+			toast.info($t(item.message || 'empty'), item.options);
 			break;
 	}
 }

@@ -1,4 +1,5 @@
 <script setup lang="ts">
+	import Form from '@/composables/Form';
 	import { CLONE, ITERATE } from '../utils/modify-object.function';
 
 	const props = defineProps<{
@@ -7,8 +8,8 @@
 	}>();
 
 	const emits = defineEmits(['submit']);
-
-	const result = ref('');
+	const FormControler = new Form(props.config);
+	const changedData = ref('');
 	const loading = ref(false);
 
 	const onError = (e) => {
@@ -23,9 +24,10 @@
 		console.log(e);
 	};
 
-	const onSubmit = () => {
+	const onSubmit = async () => {
 		try {
-			const tmpData = CLONE(result.value ? JSON.parse(result.value) : props.data || {});
+			// prevede data do json
+			const tmpData = CLONE(changedData.value ? JSON.parse(changedData.value) : props.data || {});
 			// simulace form struktury
 			ITERATE(tmpData, (value, key) => (tmpData[key] = { value: value }));
 			const form = {
@@ -35,7 +37,8 @@
 					validate: () => ({ valid: true }),
 				},
 			};
-			emits('submit', props.config.submitUrl, form, props.config.fields, loading, props.config.method);
+			const result = await FormControler.onSubmit(form, loading);
+			emits('submit', result);
 		} catch (error) {
 			useToast({ type: 'error', message: 'form.msg.wrong_json' });
 		}
@@ -47,7 +50,7 @@
 		:mainMenuBar="false"
 		:mode="config?.mode || 'text'"
 		v-model:json="data"
-		@change="result = $event.text"
+		@change="changedData = $event.text"
 		@error="onError"
 		@focus="onFocus"
 		@blur="onBlur"

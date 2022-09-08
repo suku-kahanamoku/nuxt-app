@@ -2,15 +2,13 @@
 	import Form from '@/core/form/Form.vue';
 
 	definePageMeta({
-		syscode: 'page_contact',
-		configSyscode: 'cmp_contact_form',
+		syscode: 'contact',
 	});
 
 	const route = useRoute();
 	const meta = route.meta as any;
 	const pageConfig = useState('pages').value[meta?.syscode];
 	const configs = reactive({} as any);
-	const config = ref();
 
 	onMounted(async () => {
 		// nacte a inicializuje konfigurace pro vnitrni komponenty
@@ -23,22 +21,12 @@
 			const result = await useApi(
 				`/api/component?where={"syscode":{"value":["${syscodes}"],"operator":{"value":"in"}}}`
 			);
-			result.forEach((tmpConfig) => {
-				// nastavi config hlavni komponente
-				if (meta?.configSyscode === tmpConfig.syscode) {
-					config.value = tmpConfig;
-				}
-				configs[tmpConfig.syscode] = tmpConfig;
-			});
+			result.forEach((tmpConfig) => (configs[tmpConfig.syscode] = tmpConfig));
 		}
-	}
-
-	async function onSubmit(url, form?, fieldConfigs?, loading?, method?: string) {
-		useSubmit(url, form, fieldConfigs, loading, method);
 	}
 </script>
 <template>
 	<div>
-		<Form v-if="config" :config="config" @submit="onSubmit" />
+		<Form v-for="config in configs" :config="config" />
 	</div>
 </template>

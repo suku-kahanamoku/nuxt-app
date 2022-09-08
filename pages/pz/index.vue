@@ -5,7 +5,7 @@
 	import Blog from '@/components/dashboard/blog/Blog.vue';
 
 	definePageMeta({
-		syscode: 'page_pz',
+		syscode: 'pz',
 	});
 
 	const route = useRoute();

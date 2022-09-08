@@ -6,7 +6,7 @@
 	import MapContainer from '@/components/ol/MapContainer.vue';
 
 	definePageMeta({
-		syscode: 'page_radar',
+		syscode: 'radar',
 	});
 
 	const route = useRoute();

@@ -1,11 +1,11 @@
 <script setup lang="ts">
+	import { CLONE } from '@/core/utils/modify-object.function';
+
 	definePageMeta({
-		syscode: 'page_home',
+		syscode: 'home',
 	});
 
-	const route = useRoute();
-	const meta = route.meta as any;
-	const pageConfig = useState('pages').value[meta?.syscode];
+	const pageConfig = CLONE((useState('pages').value as any).page_home);
 </script>
 <template>
 	<div>home</div>
