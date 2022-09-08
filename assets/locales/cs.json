@@ -68,7 +68,9 @@
 		"title": "Titulek",
 		"visible": "Zobrazit",
 		"unvisible": "Zakázat",
-		"color": "Barva"
+		"color": "Barva",
+		"type": "Typ",
+		"method": "Method"
 	},
 	"settings": {
 		"cwp_setup": "CWP setup",

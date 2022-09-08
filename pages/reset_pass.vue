@@ -5,25 +5,13 @@
 		syscode: 'reset_pass',
 	});
 
-	const route = useRoute();
-	const meta = route.meta as any;
-	const pageConfig = useState('pages').value[meta?.syscode];
+	const pageConfig = useState('pageConfig').value as any;
 	const configs = reactive({} as any);
 
 	onMounted(async () => {
 		// nacte a inicializuje konfigurace pro vnitrni komponenty
-		await initConfigs();
+		loadConfigs(pageConfig?.configs, configs);
 	});
-
-	async function initConfigs() {
-		if (pageConfig?.configs?.length) {
-			const syscodes = pageConfig?.configs?.join('","');
-			const result = await useApi(
-				`/api/component?where={"syscode":{"value":["${syscodes}"],"operator":{"value":"in"}}}`
-			);
-			result.forEach((tmpConfig) => (configs[tmpConfig.syscode] = tmpConfig));
-		}
-	}
 </script>
 <template>
 	<div>

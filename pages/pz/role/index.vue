@@ -1,53 +1,50 @@
 <script setup lang="ts">
 	import Form from '@/core/form/Form.vue';
 	import DefaultCard from '@/components/card/DefaultCard.vue';
+	import { GET_MARK } from '@/core/utils/modify-string.functions';
+	import { IS_OBJECT } from '@/core/utils/check.functions';
 
 	definePageMeta({
 		syscode: 'role',
 	});
 
-	const route = useRoute();
-	const meta = route.meta as any;
-	const pageConfig = useState('pages').value[meta?.syscode];
+	const pageConfig = useState('pageConfig').value as any;
 	const configs = reactive({} as any);
 	const data = ref();
-	const tab = ref(pageConfig.configs[0]);
+	const tab = ref(pageConfig?.configs[0]);
 
 	onMounted(async () => {
 		// nacte a inicializuje konfigurace pro vnitrni komponenty
-		await initConfigs();
+		loadConfigs(pageConfig?.configs, configs);
 	});
 
-	async function initConfigs(): Promise<void> {
-		if (pageConfig?.configs?.length) {
-			const syscodes = pageConfig?.configs?.join('","');
-			const result = await useApi(
-				`/api/component?where={"syscode":{"value":["${syscodes}"],"operator":{"value":"in"}}}`
-			);
-			result.forEach((tmpConfig) => {
-				tmpConfig.redirUrl = pageConfig.path;
-				configs[tmpConfig.syscode] = tmpConfig;
-			});
-		}
+	function onLoad(e): void {
+		e?.forEach((item) => (item.path = `${pageConfig?.path}/${item.id}`));
+		data.value = e;
 	}
 
-	function onLoad(e): void {
-		e?.forEach((item) => (item.path = `${pageConfig.path}/${item.id}`));
-		data.value = e;
+	function onSubmit(e): void {
+		if (e) {
+			if (IS_OBJECT(e)) {
+				navigateTo(`${pageConfig?.path}/${e.id}`);
+			} else {
+				navigateTo(pageConfig?.path + GET_MARK(pageConfig?.path) + e);
+			}
+		}
 	}
 </script>
 
 <template>
 	<div>
 		<v-tabs v-model="tab" background-color="primary">
-			<v-tab v-for="syscode in pageConfig.configs" :value="syscode">{{
+			<v-tab v-for="syscode in pageConfig?.configs" :value="syscode">{{
 				$t(configs[syscode]?.title || 'empty')
 			}}</v-tab>
 		</v-tabs>
 
 		<v-window v-model="tab">
-			<v-window-item v-for="syscode in pageConfig.configs" :value="syscode">
-				<Form v-if="configs[syscode]" :config="configs[syscode]" @load="onLoad" />
+			<v-window-item v-for="syscode in pageConfig?.configs" :value="syscode">
+				<Form v-if="configs[syscode]" :config="configs[syscode]" @load="onLoad" @submit="onSubmit" />
 			</v-window-item>
 		</v-window>
 

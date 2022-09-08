@@ -23,7 +23,7 @@
 				><br />
 				<small>{{ data?.phone }}</small
 				><br />
-				<v-btn :to="data.url" icon="mdi-account-edit" color="primary" />
+				<v-btn :to="data.path" icon="mdi-account-edit" color="primary" />
 
 				<ConfirmDialog @confirm="$event && emits('delete', data)">
 					<template v-slot:btn>

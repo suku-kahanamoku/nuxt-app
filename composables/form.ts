@@ -1,6 +1,6 @@
-import { IS_NUMERIC, IS_DEFINED, IS_OBJECT } from '~~/core/utils/check.functions';
-import { ITERATE } from '~~/core/utils/modify-object.function';
-import { GET_MARK, RESOLVE_MARKS, TRIM } from '~~/core/utils/modify-string.functions';
+import { IS_NUMERIC, IS_DEFINED, IS_OBJECT } from '@/core/utils/check.functions';
+import { ITERATE } from '@/core/utils/modify-object.function';
+import { GET_MARK, RESOLVE_MARKS, TRIM } from '@/core/utils/modify-string.functions';
 
 export default class Form {
 	/**
@@ -107,23 +107,14 @@ export default class Form {
 	 * @returns {*}  {Promise<void>}
 	 * @memberof Form
 	 */
-	public async onSubmit(form, loading): Promise<any> {
-		const result = await this._submit(
+	public async onSubmit(form, loading, method: string): Promise<any> {
+		return await this._submit(
 			RESOLVE_MARKS(this.config.submitUrl, this),
 			form,
 			this.config.fields,
 			loading,
-			this.config.method
+			method
 		);
-		// pokud je definovany redirect redirUrl, presmeruje
-		if (this.config.redirUrl) {
-			if (this.config.method === 'GET') {
-				navigateTo(this.config.redirUrl + GET_MARK(this.config.redirUrl) + this.config?.syscode + '=' + result);
-			} else {
-				navigateTo(result.id ? `${this.config.redirUrl}/${result.id}` : this.config.redirUrl);
-			}
-		}
-		return result;
 	}
 
 	/**
@@ -188,7 +179,7 @@ export default class Form {
 		ITERATE(vForm?.value?.elements, (input, key) => {
 			// projede jen pojmenovane fieldy, ne ocislovane
 			if (!IS_NUMERIC(key) && typeof input.value !== undefined) {
-				const field = fields.find((field) => field.name === key);
+				const field = fields?.find((field) => field.name === key);
 				const value = this._getValue(input.value, field);
 				if (!field?.ignore && field?.value !== value) {
 					result[key] = value;
@@ -227,7 +218,7 @@ export default class Form {
 		ITERATE(vForm?.value?.elements, (input, key) => {
 			// projede jen pojmenovane fieldy, ne ocislovane
 			if (!IS_NUMERIC(key) && IS_DEFINED(input.value) && input.value.toString().length) {
-				const field = fields.find((field) => field.name === key);
+				const field = fields?.find((field) => field.name === key);
 				let value = this._getValue(input.value, field);
 				value = typeof value === 'string' ? `"${value}"` : value;
 				result += `"${key}":{"value":${value}},`;
@@ -242,13 +233,13 @@ export default class Form {
 	 *
 	 * @protected
 	 * @param {*} value
-	 * @param {*} [config]
+	 * @param {*} [field]
 	 * @returns {*}  {*}
 	 * @memberof Form
 	 */
-	protected _getValue(value, config?): any {
+	protected _getValue(value, field?): any {
 		try {
-			switch (config?.db_type) {
+			switch (field?.db_type) {
 				case 'boolean':
 					return !!JSON.parse(value);
 

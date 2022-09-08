@@ -7,7 +7,7 @@
 		data?: any;
 	}>();
 
-	const emits = defineEmits(['load', 'select']);
+	const emits = defineEmits(['load', 'select', 'submit']);
 	const FormControler = new Form(props.config);
 	const form = ref();
 	const loading = ref(false);
@@ -24,8 +24,12 @@
 	});
 
 	async function onSubmit() {
-		const result = await FormControler.onSubmit(form, loading);
-		FormControler.load(null, result);
+		const result = await FormControler.onSubmit(form, loading, props.config.method);
+		if (props.config.method === 'GET') {
+			emits('submit', props.config?.syscode + '=' + result);
+		} else {
+			emits('submit', result);
+		}
 	}
 </script>
 <template>

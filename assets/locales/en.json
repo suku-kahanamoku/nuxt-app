@@ -68,7 +68,9 @@
 		"title": "Title",
 		"visible": "Visible",
 		"unvisible": "Unvisible",
-		"color": "Color"
+		"color": "Color",
+		"type": "Type",
+		"method": "Method"
 	},
 	"settings": {
 		"cwp_setup": "CWP setup",

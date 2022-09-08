@@ -1,5 +1,7 @@
 export default async function (to, from) {
 	if (useState('isClient')?.value) {
+		const pages: any = useState('pages').value;
+		setStore('pageConfig', pages[to.meta.syscode]);
 		// zkontroluje, zda je uzivatel prihlaseny
 		return await $fetch('/api/check')
 			// je prihlaseny
@@ -14,7 +16,6 @@ export default async function (to, from) {
 				// pokud je cilove url zabezpecena stranka, nastavi se redirect page a presmeruje na login
 				if (to.path.indexOf('/pz') >= 0) {
 					setStore('redirect', to.path);
-					const pages: any = useState('pages').value;
 					return navigateTo(pages?.login?.path);
 				}
 				return true;

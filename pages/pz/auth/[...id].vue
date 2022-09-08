@@ -6,46 +6,40 @@
 		syscode: 'auth_detail',
 	});
 
-	const route = useRoute();
-	const meta = route.meta as any;
-	const pageConfig = useState('pages').value[meta?.syscode];
+	const pageConfig = useState('pageConfig').value as any;
 	const configs = reactive({} as any);
 	const data = ref();
 	const tab = ref();
 
 	onMounted(async () => {
 		// nacte a inicializuje konfigurace pro vnitrni komponenty
-		await initConfigs();
+		loadConfigs(pageConfig?.configs, configs);
 	});
-
-	async function initConfigs() {
-		if (pageConfig?.configs?.length) {
-			const syscodes = pageConfig?.configs?.join('","');
-			const result = await useApi(
-				`/api/component?where={"syscode":{"value":["${syscodes}"],"operator":{"value":"in"}}}`
-			);
-			result.forEach((tmpConfig) => (configs[tmpConfig.syscode] = tmpConfig));
-		}
-	}
 </script>
 
 <template>
 	<div>
 		<v-tabs v-model="tab" background-color="primary">
-			<v-tab v-for="syscode in pageConfig.configs" :value="syscode">{{
+			<v-tab v-for="syscode in pageConfig?.configs" :value="syscode">{{
 				$t(configs[syscode]?.title || 'empty')
 			}}</v-tab>
 		</v-tabs>
 
 		<v-window v-model="tab">
-			<v-window-item v-for="syscode in pageConfig.configs" :value="syscode">
+			<v-window-item v-for="syscode in pageConfig?.configs" :value="syscode">
 				<JsonForm
 					v-if="configs[syscode]?.type === 'json'"
-					:config="configs.cmp_form"
+					:config="configs[syscode]"
 					:data="data"
 					@submit="data = $event"
 				/>
-				<Form v-else-if="configs[syscode]" :config="configs[syscode]" @load="data = $event" />
+				<Form
+					v-else-if="configs[syscode]"
+					:config="configs[syscode]"
+					:data="data"
+					@load="data = $event[0]"
+					@submit="data = [$event]"
+				/>
 			</v-window-item>
 		</v-window>
 	</div>
