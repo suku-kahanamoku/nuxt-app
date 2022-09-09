@@ -40,6 +40,7 @@
 			const result = await FormControler.onSubmit(form, loading, props.config.method);
 			emits('submit', result);
 		} catch (error) {
+			console.error(error);
 			useToast({ type: 'error', message: 'form.msg.wrong_json' });
 		}
 	};

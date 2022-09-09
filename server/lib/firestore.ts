@@ -10,6 +10,7 @@ import {
 	doc,
 	setDoc,
 	updateDoc,
+	deleteField,
 } from 'firebase/firestore';
 import { createUserWithEmailAndPassword, getAuth, signInWithEmailAndPassword } from 'firebase/auth';
 import { getDownloadURL, getStorage, listAll, ref } from 'firebase/storage';
@@ -31,10 +32,12 @@ export async function GET_DOCS(colName: string, params: any) {
 	return snapshot.docs.map((doc) => ({
 		...doc.data(),
 		id: doc.id,
+		ctype: colName,
 	}));
 }
 
 export async function CREATE_DOC(colName, params) {
+	delete params.ctype;
 	const docRef = await addDoc(collection(db, colName), params);
 	const docObj = await getDoc(docRef);
 	return {
@@ -44,7 +47,13 @@ export async function CREATE_DOC(colName, params) {
 }
 
 export async function UPDATE_DOC(colName, id, params) {
+	delete params.ctype;
 	const docRef = doc(collection(db, colName), id);
+	ITERATE(params, (value, key) => {
+		if (value === null) {
+			params[key] = deleteField();
+		}
+	});
 	await updateDoc(docRef, params);
 	const docObj = await getDoc(docRef);
 	return {
@@ -63,6 +72,7 @@ export async function CREATE_PROFILE(params) {
 	const credentials = await createUserWithEmailAndPassword(auth, params.email, params.password);
 	delete params.email;
 	delete params.password;
+	delete params.ctype;
 	params.uid = credentials.user?.uid;
 	return { ...(await CREATE_DOC('profile', params)), ...credentials.user?.providerData[0] };
 }

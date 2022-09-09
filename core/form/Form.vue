@@ -1,6 +1,7 @@
 <script setup lang="ts">
 	import Field from '@/core/form/field/Field.vue';
 	import Form from '@/composables/Form';
+	import List from '@/components/List.vue';
 
 	const props = defineProps<{
 		config: any;
@@ -29,6 +30,13 @@
 			emits('submit', props.config?.syscode + '=' + result);
 		} else {
 			emits('submit', result);
+		}
+	}
+
+	async function onDelete(e) {
+		const result = await FormControler.onSubmit(e, loading, 'DELETE');
+		if (result?.status === 'OK') {
+			FormControler.process();
 		}
 	}
 </script>
@@ -80,4 +88,11 @@
 			</v-col>
 		</v-row>
 	</v-form>
+
+	<List
+		v-if="!FormControler.route.params.id?.length && FormControler?.items?.value?.length"
+		:config="config"
+		:data="FormControler.items.value"
+		@delete="onDelete"
+	/>
 </template>

@@ -51,22 +51,26 @@ export default class Form {
 	 * @memberof Form
 	 */
 	public resolveUrl(): void {
-		const params = this.route.query[this.config?.syscode] as string;
-		if (params) {
-			ITERATE(JSON.parse(params), (param, name) => {
-				if (name === 'fields') {
-					ITERATE(param, (item, key) => {
-						const field = this.config.fields.find((field) => field.name === key);
-						if (field) {
-							field.value = item.value;
-						}
-					});
-				} else if (name === 'restUrl') {
-					this.config[name] = atob(param);
-				} else {
-					this.config[name] = param;
-				}
-			});
+		try {
+			const params = this.route.query[this.config?.syscode] as string;
+			if (params) {
+				ITERATE(JSON.parse(params), (param, name) => {
+					if (name === 'fields') {
+						ITERATE(param, (item, key) => {
+							const field = this.config.fields.find((field) => field.name === key);
+							if (field) {
+								field.value = item.value;
+							}
+						});
+					} else if (name === 'restUrl') {
+						this.config[name] = atob(param);
+					} else {
+						this.config[name] = param;
+					}
+				});
+			}
+		} catch (error) {
+			console.error(error);
 		}
 	}
 
@@ -79,23 +83,28 @@ export default class Form {
 	 * @memberof Form
 	 */
 	public async load(url?: string, data?: any): Promise<void> {
-		if (url) {
-			data = await useApi(url);
-		}
-		//
-		if (data) {
-			// pokud je to pole, ulozi prichozi data do items
-			if (Array.isArray(data)) {
-				this.items.value = data;
+		try {
+			if (url) {
+				data = await useApi(url);
 			}
-			// pokud je to objekt, vytvori z nej pole a ulozi prichozi data do items
-			else if (IS_OBJECT(data)) {
-				this.items.value = [data];
+			//
+			if (data) {
+				// pokud je to pole, ulozi prichozi data do items
+				if (Array.isArray(data)) {
+					this.items.value = data;
+				}
+				// pokud je to objekt, vytvori z nej pole a ulozi prichozi data do items
+				else if (IS_OBJECT(data)) {
+					this.items.value = [data];
+				}
+				// pokud je definovan, ze se ma vybrat objekt s danym id, ulozi do item
+				if (this.route.params.id?.length) {
+					this.item.value = this.items.value.find((item) => item?.id === this.route.params.id[0]);
+				}
 			}
-			// pokud je definovan, ze se ma vybrat objekt s danym id, ulozi do item
-			if (this.route.params.id?.length) {
-				this.item.value = this.items.value.find((item) => item.id === this.route.params.id[0]);
-			}
+		} catch (error) {
+			console.error(error);
+			useToast({ type: 'error', message: 'form.message.load_error' });
 		}
 	}
 
@@ -152,12 +161,14 @@ export default class Form {
 			// pokud je to delete => smaze
 			else if (method === 'DELETE') {
 				options.body = vForm;
+				options.all = true;
 				result = await useApi(url, options).catch((error) => {
 					throw new Error(error);
 				});
 			}
 		} catch (error) {
 			console.error(error);
+			useToast({ type: 'error', message: `form.message.${method.toLocaleLowerCase()}_error` });
 		}
 		if (loading) {
 			loading.value = false;
@@ -182,7 +193,7 @@ export default class Form {
 				const field = fields?.find((field) => field.name === key);
 				const value = this._getValue(input.value, field);
 				if (!field?.ignore && field?.value !== value) {
-					result[key] = value;
+					result[key] = (value as unknown).toString().length ? value : null;
 				}
 			}
 		});

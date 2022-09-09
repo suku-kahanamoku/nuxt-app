@@ -106,7 +106,11 @@
 		"auth_success_deleted": "The authorization was successfully deleted.",
 		"cmp_success_created": "The component was successfully created.",
 		"cmp_success_updated": "The component was successfully updated.",
-		"cmp_success_deleted": "The component was successfully deleted."
+		"cmp_success_deleted": "The component was successfully deleted.",
+		"load_error": "Can not load data.",
+		"post_error": "Can not create data.",
+		"patch_error": "Can not update data.",
+		"delete_error": "Can not delete data."
 	},
 	"query": {
 		"delete": "Do you really want to delete the \"{name}\"?",
@@ -116,7 +120,8 @@
 	"info": {
 		"write_us": "Write us",
 		"form": "Form",
-		"json": "JSON"
+		"json": "JSON",
+		"list": "List"
 	},
 	"color": {
 		"primary": "Primary",

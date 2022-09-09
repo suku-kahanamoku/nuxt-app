@@ -1,6 +1,5 @@
 <script setup lang="ts">
 	import Form from '@/core/form/Form.vue';
-	import DefaultCard from '@/components/card/DefaultCard.vue';
 	import { GET_MARK } from '@/core/utils/modify-string.functions';
 	import { IS_OBJECT } from '@/core/utils/check.functions';
 
@@ -47,11 +46,5 @@
 				<Form v-if="configs[syscode]" :config="configs[syscode]" @load="onLoad" @submit="onSubmit" />
 			</v-window-item>
 		</v-window>
-
-		<v-row v-if="data?.length" class="mt-5">
-			<v-col v-for="item in data" cols="12" sm="6" md="4" lg="3">
-				<DefaultCard :data="item" />
-			</v-col>
-		</v-row>
 	</div>
 </template>
