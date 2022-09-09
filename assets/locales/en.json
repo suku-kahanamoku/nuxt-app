@@ -110,7 +110,8 @@
 		"load_error": "Can not load data.",
 		"post_error": "Can not create data.",
 		"patch_error": "Can not update data.",
-		"delete_error": "Can not delete data."
+		"delete_error": "Can not delete data.",
+		"not_found": "No record found."
 	},
 	"query": {
 		"delete": "Do you really want to delete the \"{name}\"?",
@@ -121,7 +122,9 @@
 		"write_us": "Write us",
 		"form": "Form",
 		"json": "JSON",
-		"list": "List"
+		"list": "List",
+		"close": "Close",
+		"open": "Open"
 	},
 	"color": {
 		"primary": "Primary",

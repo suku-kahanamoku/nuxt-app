@@ -110,7 +110,8 @@
 		"load_error": "Nelze načíst data.",
 		"post_error": "Nelze odeslat záznam.",
 		"patch_error": "Nelze upravit záznam.",
-		"delete_error": "Nelze smazat záznam."
+		"delete_error": "Nelze smazat záznam.",
+		"not_found": "Nenalezen žádný záznam."
 	},
 	"query": {
 		"delete": "Do you really want to delete the \"{name}\"?",
@@ -121,7 +122,9 @@
 		"write_us": "Napište nám",
 		"form": "Form",
 		"json": "JSON",
-		"list": "List"
+		"list": "List",
+		"close": "Close",
+		"open": "Open"
 	},
 	"color": {
 		"primary": "Primary",

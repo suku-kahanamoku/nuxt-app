@@ -47,19 +47,26 @@
 </script>
 
 <template>
-	<vue-jsoneditor
-		:mainMenuBar="false"
-		:mode="config?.mode || 'text'"
-		v-model:json="data"
-		@change="changedData = $event.text"
-		@error="onError"
-		@focus="onFocus"
-		@blur="onBlur"
-	/>
-	<v-row class="pa-5">
-		<v-spacer></v-spacer>
-		<v-btn color="primary" :loading="loading" :disabled="!config.submitUrl" @click="onSubmit">
-			{{ $t('btn.send') }}
-		</v-btn>
-	</v-row>
+	<v-card>
+		<v-toolbar v-if="config?.title" dark :color="config?.color">
+			<v-toolbar-title>{{ $t(config?.title) }}</v-toolbar-title>
+		</v-toolbar>
+		<v-card-text>
+			<vue-jsoneditor
+				:mainMenuBar="false"
+				:mode="config?.mode || 'text'"
+				v-model:json="data"
+				@change="changedData = $event.text"
+				@error="onError"
+				@focus="onFocus"
+				@blur="onBlur"
+			/>
+		</v-card-text>
+		<v-card-actions>
+			<v-spacer></v-spacer>
+			<v-btn color="primary" :loading="loading" :disabled="!config.submitUrl" @click="onSubmit">
+				{{ $t('btn.send') }}
+			</v-btn>
+		</v-card-actions>
+	</v-card>
 </template>

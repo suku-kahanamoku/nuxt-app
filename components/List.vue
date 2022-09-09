@@ -1,5 +1,7 @@
 <script setup lang="ts">
 	import DefaultCard from '@/components/card/DefaultCard.vue';
+	import DefaultTable from './table/DefaultTable.vue';
+	import ProfileCard from './card/ProfileCard.vue';
 
 	const props = defineProps<{
 		config: any;
@@ -7,12 +9,21 @@
 	}>();
 
 	const emits = defineEmits(['delete']);
+	const switchValue = ref();
 </script>
 
 <template>
-	<v-row v-if="data?.length" class="mt-5">
-		<v-col v-for="item in data" cols="12" sm="6" md="4" lg="3">
-			<DefaultCard :data="item" @delete="emits('delete', $event)" />
-		</v-col>
-	</v-row>
+	<div v-if="data?.length">
+		<v-switch v-model="switchValue" :label="$t('form.theme')"></v-switch>
+		<v-row v-if="switchValue" class="w-100">
+			<DefaultTable :data="data" :cols="config?.cols" @delete="emits('delete', $event)" />
+		</v-row>
+		<v-row v-else>
+			<v-col v-for="item in data" cols="12" sm="6" md="4" lg="3">
+				<ProfileCard v-if="item.ctype === 'profile'" :data="item" @delete="emits('delete', $event)" />
+				<DefaultCard v-else :data="item" @delete="emits('delete', $event)" />
+			</v-col>
+		</v-row>
+	</div>
+	<v-alert v-else type="error">{{ $t('message.not_found') }}</v-alert>
 </template>

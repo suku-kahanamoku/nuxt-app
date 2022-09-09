@@ -41,6 +41,7 @@
 	}
 </script>
 <template>
+	<v-progress-linear v-if="loading" indeterminate></v-progress-linear>
 	<v-form ref="form" @submit.prevent="onSubmit">
 		<v-expansion-panels v-if="config?.theme === 'accordion'" v-model="panels">
 			<v-expansion-panel>
@@ -89,10 +90,12 @@
 		</v-row>
 	</v-form>
 
-	<List
-		v-if="!FormControler.route.params.id?.length && FormControler?.items?.value?.length"
-		:config="config"
-		:data="FormControler.items.value"
-		@delete="onDelete"
-	/>
+	<div class="mt-9">
+		<List
+			v-if="!FormControler.route.params.id?.length && FormControler?.items?.value"
+			:config="config"
+			:data="FormControler.items.value"
+			@delete="onDelete"
+		/>
+	</div>
 </template>
