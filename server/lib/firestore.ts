@@ -283,15 +283,85 @@ export async function GET_TOKEN_DATA(event): Promise<DecodedIdToken> {
 	return result;
 }
 
-export async function SET_TOKEN(event, token: string, uid?: string) {
+export async function SET_TOKEN(event, token: string, uid?: string, role?: string) {
 	if (token) {
 		setCookie(event, 'x-xsrf-token', token);
+		if (role) {
+			setCookie(event, 'x-role', role);
+		}
 	} else {
 		deleteCookie(event, 'x-xsrf-token');
+		deleteCookie(event, 'x-role');
 		if (uid) {
 			getAuth().revokeRefreshTokens(uid);
 		}
 	}
+}
+
+export async function GET_ROLES_WITH_AUTHS(roleIds: string[]): Promise<any> {
+	try {
+		if (roleIds.length) {
+			const roles = await GET_DOCS('role', { id: { value: roleIds, operator: { value: 'in' } } });
+			let authIds = [];
+			roles.forEach((role) => (authIds = [...new Set([...authIds, ...role.auth])]));
+			const auths = await GET_DOCS('auth', { id: { value: authIds, operator: { value: 'in' } } });
+			roles.forEach((role) => (role.auth = auths.filter((auth) => role.auth.indexOf(auth.id) >= 0)));
+			return roles;
+		}
+	} catch (error) {
+		console.error(error);
+	}
+}
+
+export function ENCODE(value: any): string {
+	if (value) {
+		try {
+			return btoa(JSON.stringify(value));
+		} catch (error) {
+			console.error(error);
+		}
+	}
+}
+
+export function DECODE(value: string): any {
+	if (value) {
+		try {
+			return JSON.parse(atob(value.replaceAll('%3D', '=')));
+		} catch (error) {
+			console.error(error);
+		}
+	}
+}
+
+export function CHECK_AUTH(event, url: string, operation: string, data): any {
+	try {
+		let roles = getCookie(event, 'x-role') as any;
+		if (roles) {
+			roles = DECODE(roles);
+			const auth = roles
+				.map((role) => role.auth)
+				.flat()
+				.find((auth) => auth.value === url && auth.operation === operation);
+			if (auth) {
+				if (Array.isArray(data)) {
+					data.forEach((item) => modifyData(item, auth));
+				} else {
+					modifyData(data, auth);
+				}
+			}
+		}
+	} catch (error) {
+		console.error(error);
+	}
+	return data;
+}
+
+function modifyData(data, auth): void {
+	ITERATE(data, (param, key) => {
+		if (auth?.params?.indexOf(key) >= 0) {
+			delete data[key];
+		}
+	});
 }
 
 export async function GET_STORAGE() {
