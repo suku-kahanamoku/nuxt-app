@@ -1,6 +1,7 @@
 import { IS_NUMERIC, IS_DEFINED, IS_OBJECT } from '@/core/utils/check.functions';
 import { ITERATE } from '@/core/utils/modify-object.function';
 import { GET_MARK, RESOLVE_MARKS, TRIM } from '@/core/utils/modify-string.functions';
+import { IFormField } from '~~/core/form/field/field.interface';
 
 export default class Form {
 	/**
@@ -181,15 +182,18 @@ export default class Form {
 	 *
 	 * @protected
 	 * @param {*} vForm
-	 * @param {*} fields
+	 * @param {IFormField[]} fields
 	 * @returns {*}  {*}
 	 * @memberof Form
 	 */
-	protected _getRestFields(vForm, fields): any {
+	protected _getRestFields(vForm, fields: IFormField[]): any {
 		const result = {};
 		ITERATE(vForm?.value?.elements, (input, key) => {
 			// projede jen pojmenovane fieldy, ne ocislovane
 			if (!IS_NUMERIC(key) && typeof input.value !== undefined) {
+				if (input.length) {
+					input = input.item((item) => item.name);
+				}
 				const field = fields?.find((field) => field.name === key);
 				const value = this._getValue(input.value, field);
 				if (!field?.ignore && field?.value !== value) {
@@ -204,13 +208,13 @@ export default class Form {
 	 * Vrati string config pro url
 	 *
 	 * @protected
-	 * @param {*} url
+	 * @param {string} url
 	 * @param {*} vForm
-	 * @param {*} fields
+	 * @param {IFormField[]} fields
 	 * @returns {*}  {string}
 	 * @memberof Form
 	 */
-	protected _getUrlParams(url, vForm, fields): string {
+	protected _getUrlParams(url: string, vForm, fields: IFormField[]): string {
 		let result = this._getUrlFields(vForm, fields);
 		url = btoa(`${url + GET_MARK(url)}where={${result}}`);
 		result = `{"fields":{${result}},"restUrl":"${url}"}`;
@@ -220,15 +224,20 @@ export default class Form {
 	/**
 	 * Vrati fields pro url
 	 *
+	 * @protected
 	 * @param {*} vForm
-	 * @param {*} fields
+	 * @param {IFormField[]} fields
 	 * @returns {*}  {string}
+	 * @memberof Form
 	 */
-	protected _getUrlFields(vForm, fields): string {
+	protected _getUrlFields(vForm, fields: IFormField[]): string {
 		let result = '';
 		ITERATE(vForm?.value?.elements, (input, key) => {
 			// projede jen pojmenovane fieldy, ne ocislovane
 			if (!IS_NUMERIC(key) && IS_DEFINED(input.value) && input.value.toString().length) {
+				if (input.length) {
+					input = input.item((item) => item.name);
+				}
 				const field = fields?.find((field) => field.name === key);
 				let value = this._getValue(input.value, field);
 				value = typeof value === 'string' ? `"${value}"` : value;
@@ -248,28 +257,40 @@ export default class Form {
 	 * @returns {*}  {*}
 	 * @memberof Form
 	 */
-	protected _getValue(value, field?): any {
+	protected _getValue(value, field?: IFormField): any {
+		let result = value;
 		try {
+			if (field.multiple && !Array.isArray(result)) {
+				result = IS_DEFINED(result)
+					? (result as string)
+							.toString()
+							.split(',')
+							.map((item) => TRIM(item))
+					: [];
+			}
 			switch (field?.db_type) {
 				case 'boolean':
-					return !!JSON.parse(value);
+					result = Array.isArray(result) ? result.map((item) => !!JSON.parse(item)) : !!JSON.parse(result);
+					break;
 
 				case 'number':
 				case 'decimal':
-					return JSON.parse(value);
+					result = Array.isArray(result) ? result.map((item) => JSON.parse(item)) : JSON.parse(result);
+					break;
 
 				case 'text':
-					return value.toString();
+					result = Array.isArray(result) ? result.map((item) => item.toString()) : result.toString();
+					break;
 
 				default:
-					if (IS_NUMERIC(value)) {
-						return JSON.parse(value);
-					} else {
-						return value;
+					if (IS_NUMERIC(result)) {
+						result = Array.isArray(result) ? result.map((item) => JSON.parse(item)) : JSON.parse(result);
 					}
+					break;
 			}
+			return result;
 		} catch (error) {
-			return value;
+			return result;
 		}
 	}
 }

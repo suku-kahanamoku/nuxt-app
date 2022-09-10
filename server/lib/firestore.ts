@@ -294,10 +294,6 @@ export async function SET_TOKEN(event, token: string, uid?: string) {
 	}
 }
 
-export async function GENERATE_TOKEN(uid: string): Promise<string> {
-	return await getAuth().createCustomToken(uid);
-}
-
 export async function GET_STORAGE() {
 	/*const storage = getStorage();
 	const storageRef = ref(storage, 'img');

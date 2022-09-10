@@ -22,12 +22,25 @@
 		if (IS_DEFINED(props.config.value)) {
 			fieldValue.value = props.config.value;
 		}
+		// nacte options
+		loadOptions(props.config.restOptions);
 	});
 
 	watch(
 		() => props.value,
 		(value) => (fieldValue.value = value)
 	);
+
+	async function loadOptions(restOptions?: any): Promise<void> {
+		if (restOptions?.url) {
+			const options = await useApi(restOptions.url);
+			props.config.options = options.map((option) => ({
+				value: option[restOptions.value],
+				label: option[restOptions.label],
+				item: option,
+			}));
+		}
+	}
 </script>
 
 <template>
@@ -58,6 +71,6 @@
 		:multiple="config.multiple"
 		:items="config.options"
 		:item-title="(item) => $t(item.label || 'empty')"
-		:item-value="config.restOptions?.value || 'value'"
+		item-value="value"
 	/>
 </template>

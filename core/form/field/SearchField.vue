@@ -22,20 +22,34 @@
 		if (IS_DEFINED(props.config.value)) {
 			fieldValue.value = props.config.value;
 		}
+		// nacte options
+		loadOptions(props.config.restOptions);
 	});
 
 	watch(
 		() => props.value,
 		(value) => (fieldValue.value = value)
 	);
+
+	watch(fieldValue, (e) => (el.value.value = e));
+
+	async function loadOptions(restOptions?: any): Promise<void> {
+		if (restOptions?.url) {
+			const options = await useApi(restOptions.url);
+			props.config.options = options.map((option) => ({
+				value: option[restOptions.value],
+				label: option[restOptions.label],
+				item: option,
+			}));
+		}
+	}
 </script>
 
 <template>
+	<input ref="el" type="hidden" :name="config.name" :multiple="config.multiple" />
 	<v-autocomplete
-		ref="el"
 		v-model="fieldValue"
 		:id="config.name"
-		:name="config.name"
 		:label="$t(config.label || 'empty') + (config.required ? ' *' : '')"
 		:disabled="config.disabled"
 		:readonly="config.readonly"
@@ -58,6 +72,6 @@
 		:multiple="config.multiple"
 		:items="config.options"
 		:item-title="(item) => $t(item.label || 'empty')"
-		:item-value="config.restOptions?.value || 'value'"
+		item-value="value"
 	/>
 </template>

@@ -1,4 +1,4 @@
-import { CREATE_PROFILE, GENERATE_TOKEN, LOGIN, SET_TOKEN } from '@/server/lib/firestore';
+import { CREATE_PROFILE, LOGIN, SET_TOKEN } from '@/server/lib/firestore';
 
 export default defineEventHandler(async (event) => {
 	try {

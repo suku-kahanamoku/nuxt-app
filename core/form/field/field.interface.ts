@@ -286,6 +286,14 @@ export interface IFormField {
 	 * @memberof IFormField
 	 */
 	clearable?: boolean;
+
+	/**
+	 * Typ v databazi
+	 *
+	 * @type {string}
+	 * @memberof IFormField
+	 */
+	db_type?: string;
 }
 
 /**
