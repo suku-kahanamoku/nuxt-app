@@ -193,7 +193,7 @@ export default class Form {
 				const field = fields?.find((field) => field.name === key);
 				const value = this._getValue(input.value, field);
 				if (!field?.ignore && field?.value !== value) {
-					result[key] = (value as unknown).toString().length ? value : null;
+					result[key] = value !== null && (value as unknown).toString().length ? value : null;
 				}
 			}
 		});
@@ -257,6 +257,9 @@ export default class Form {
 				case 'number':
 				case 'decimal':
 					return JSON.parse(value);
+
+				case 'text':
+					return value.toString();
 
 				default:
 					if (IS_NUMERIC(value)) {

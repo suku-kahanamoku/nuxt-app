@@ -1,11 +1,11 @@
-import { DELETE_DOC } from '@/server/lib/firestore';
+import { DELETE_DOC, DELETE_PROFILE } from '@/server/lib/firestore';
 
 export default defineEventHandler(async (event) => {
 	try {
 		const body = await useBody(event);
 		return {
 			status: 'OK',
-			result: await DELETE_DOC('profile', body.id),
+			result: await DELETE_PROFILE(body.id),
 			msgs: [{ type: 'success', message: 'message.profile_success_deleted' }],
 		};
 	} catch (error) {

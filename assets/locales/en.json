@@ -111,7 +111,8 @@
 		"post_error": "Can not create data.",
 		"patch_error": "Can not update data.",
 		"delete_error": "Can not delete data.",
-		"not_found": "No record found."
+		"not_found": "No record found.",
+		"unauthorized": "Unauthorized."
 	},
 	"query": {
 		"delete": "Do you really want to delete the \"{name}\"?",

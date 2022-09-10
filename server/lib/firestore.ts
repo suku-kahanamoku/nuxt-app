@@ -16,8 +16,9 @@ import { IS_DEFINED, IS_OBJECT } from '@/core/utils/check.functions';
 export async function GET_DOCS(colName: string, params): Promise<admin.firestore.DocumentData[]> {
 	let query = db.collection(colName);
 	ITERATE(params, (item, key) => {
+		const name = key === 'id' ? admin.firestore.FieldPath.documentId() : key;
 		const value = IS_OBJECT(item) ? item.value : item;
-		query = query.where(key, item.operator?.value || '==', value) as any;
+		query = query.where(name, item.operator?.value || '==', value) as any;
 	});
 	const snapshot = await query.get();
 	return snapshot.docs.map((doc) => ({
@@ -102,9 +103,15 @@ export async function DELETE_DOC(colName: string, id: string): Promise<admin.fir
  * @param {*} params
  * @returns {*}  {Promise<GetUsersResult>}
  */
-export async function GET_PROFILES(params): Promise<GetUsersResult> {
+export async function GET_PROFILES(params): Promise<admin.firestore.DocumentData> {
 	const auth = getAuth();
-	return await auth.getUsers(params);
+	const docRefs = await GET_DOCS('profile', params);
+	const userRefs = await auth.getUsers(docRefs.map((item) => ({ uid: item.uid })));
+	return docRefs.map((item) => ({
+		...item,
+		...userRefs.users.find((user) => user.uid === item.uid),
+		id: item.id,
+	}));
 }
 
 /**
@@ -140,12 +147,6 @@ export async function CREATE_PROFILE(params): Promise<admin.firestore.DocumentDa
 	const colName = 'profile';
 	const auth = getAuth();
 	const userRef = await auth.createUser(params);
-	// odstrani parametry, ktere byly ulozeny v uzivately
-	ITERATE(params, (value, key) => {
-		if (IS_DEFINED(userRef[key])) {
-			delete params[key];
-		}
-	});
 	delete params.password;
 	params.uid = userRef.uid;
 	const docRef = await CREATE_DOC(colName, params);
@@ -167,15 +168,9 @@ export async function CREATE_PROFILE(params): Promise<admin.firestore.DocumentDa
 export async function UPDATE_PROFILE(id: string, params): Promise<admin.firestore.DocumentData> {
 	const colName = 'profile';
 	const auth = getAuth();
+	delete params.password;
 	const docRef = await UPDATE_DOC(colName, id, params);
 	const userRef = await auth.updateUser(docRef.uid, params);
-	// odstrani parametry, ktere byly upraveny v uzivately
-	ITERATE(params, (value, key) => {
-		if (IS_DEFINED(userRef[key])) {
-			delete params[key];
-		}
-	});
-	delete params.password;
 	return {
 		...docRef,
 		...userRef,
@@ -252,7 +247,8 @@ export async function VERIFY(event): Promise<boolean> {
 	const data = await GET_TOKEN_DATA(event);
 	if (data) {
 		const date = new Date();
-		result = data.exp * 1000 > date.getTime();
+		const exp = data.exp * 1000;
+		result = exp > date.getTime();
 		// pokud je to expirovane, zrusi token
 		if (result) {
 			SET_TOKEN(event, data.idToken);
@@ -288,10 +284,18 @@ export async function GET_TOKEN_DATA(event): Promise<DecodedIdToken> {
 }
 
 export async function SET_TOKEN(event, token: string, uid?: string) {
-	setCookie(event, 'x-xsrf-token', token);
-	if (uid) {
-		getAuth().revokeRefreshTokens(uid);
+	if (token) {
+		setCookie(event, 'x-xsrf-token', token);
+	} else {
+		deleteCookie(event, 'x-xsrf-token');
+		if (uid) {
+			getAuth().revokeRefreshTokens(uid);
+		}
 	}
+}
+
+export async function GENERATE_TOKEN(uid: string): Promise<string> {
+	return await getAuth().createCustomToken(uid);
 }
 
 export async function GET_STORAGE() {

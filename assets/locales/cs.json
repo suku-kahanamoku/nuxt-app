@@ -111,7 +111,8 @@
 		"post_error": "Nelze odeslat záznam.",
 		"patch_error": "Nelze upravit záznam.",
 		"delete_error": "Nelze smazat záznam.",
-		"not_found": "Nenalezen žádný záznam."
+		"not_found": "Nenalezen žádný záznam.",
+		"unauthorized": "Unauthorized."
 	},
 	"query": {
 		"delete": "Do you really want to delete the \"{name}\"?",
