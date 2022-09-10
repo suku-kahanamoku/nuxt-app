@@ -43,7 +43,19 @@ export default defineNuxtPlugin(async (nuxtApp) => {
 	setStore('pages', pages);
 
 	// po prihlaseni nebo odhlaseni se aktualizuji routy
-	watch(useState('profile'), (event: boolean) =>
-		setStore('routes', getRoutes(routes.filter((route) => event || route.path.indexOf('/pz') < 0)))
-	);
+	watch(useState('isLogged'), (newState: boolean, oldState: boolean) => {
+		setStore('routes', getRoutes(routes.filter((route) => newState || route.path.indexOf('/pz') < 0)));
+		// pokud byl prihlaseny, ale uz se odhlasil, tak se vycisti localStorage
+		if (oldState && !newState) {
+			localStorage.clear();
+		}
+	});
+
+	watch(useState('profile'), (data) => {
+		if (data) {
+			localStorage.setItem('profile', JSON.stringify(data));
+		} else {
+			setStore('isLogged', false);
+		}
+	});
 });

@@ -8,12 +8,13 @@
 		"node": "node .output/server/index.mjs"
 	},
 	"devDependencies": {
-		"nuxt": "3.0.0-rc.8"
+		"nuxt": "3.0.0-rc.9"
 	},
 	"dependencies": {
 		"@mdi/font": "^7.0.96",
 		"@turf/turf": "^6.5.0",
 		"firebase": "^9.9.3",
+		"firebase-admin": "^11.0.1",
 		"nuxt-jsoneditor": "^1.4.1",
 		"ol": "^6.15.1",
 		"sass": "^1.54.4",

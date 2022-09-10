@@ -1,8 +1,10 @@
-import { CURRENT_USER } from '../lib/firestore';
+import { VERIFY } from '../lib/firestore';
 
 export default defineEventHandler(async (event) => {
 	try {
-		return CURRENT_USER();
+		return {
+			result: VERIFY(event),
+		};
 	} catch (error) {
 		return error;
 	}

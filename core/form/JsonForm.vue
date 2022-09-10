@@ -1,6 +1,7 @@
 <script setup lang="ts">
 	import Form from '@/composables/Form';
 	import { CLONE, ITERATE } from '../utils/modify-object.function';
+	import VueJsoneditor from 'vue3-ts-jsoneditor';
 
 	const props = defineProps<{
 		config: any;
@@ -52,7 +53,7 @@
 			<v-toolbar-title>{{ $t(config?.title) }}</v-toolbar-title>
 		</v-toolbar>
 		<v-card-text>
-			<vue-jsoneditor
+			<VueJsoneditor
 				:mainMenuBar="false"
 				:mode="config?.mode || 'text'"
 				v-model:json="data"

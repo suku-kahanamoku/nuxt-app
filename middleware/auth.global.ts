@@ -6,13 +6,13 @@ export default async function (to, from) {
 		return await $fetch('/api/check')
 			// je prihlaseny
 			.then((data) => {
-				setStore('profile', data);
+				setStore('isLogged', data.result);
 				setStore('redirect', null);
 				return true;
 			})
 			// neni prihlaseny
 			.catch((error): any => {
-				setStore('profile', null);
+				setStore('isLogged', null);
 				// pokud je cilove url zabezpecena stranka, nastavi se redirect page a presmeruje na login
 				if (to.path.indexOf('/pz') >= 0) {
 					setStore('redirect', to.path);

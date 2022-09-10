@@ -1,10 +1,10 @@
-import { CURRENT_USER } from "../lib/firestore";
+import { VERIFY } from '../lib/firestore';
 
 export default defineEventHandler(async (event) => {
-    if (event.req.url.indexOf('/pz') >= 0) {
-        const user = await CURRENT_USER();
-        if (!user) {
-            event.res.writeHead(301, { Location: '/login' });
-        }
-    }
-})
+	if (event.req.url.indexOf('/pz') >= 0) {
+		const state = await VERIFY(event);
+		if (!state) {
+			event.res.writeHead(301, { Location: '/login' });
+		}
+	}
+});
