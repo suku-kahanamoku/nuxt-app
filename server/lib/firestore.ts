@@ -1,9 +1,9 @@
 import admin from 'firebase-admin';
-import { DecodedIdToken, getAuth, GetUsersResult } from 'firebase-admin/auth';
+import { DecodedIdToken, getAuth } from 'firebase-admin/auth';
 
 import { db, apiKey } from './firebase';
 import { ITERATE } from '@/core/utils/modify-object.function';
-import { IS_DEFINED, IS_OBJECT } from '@/core/utils/check.functions';
+import { IS_OBJECT } from '@/core/utils/check.functions';
 import { REMOVE_LAST_STRING } from '~~/core/utils/modify-string.functions';
 
 /**
@@ -315,10 +315,12 @@ export async function SET_TOKEN(event, token: string, uid?: string, role?: strin
  * @param {string[]} roleIds
  * @returns {*}  {Promise<any>}
  */
-export async function GET_ROLES_WITH_AUTHS(roleIds: string[]): Promise<any> {
+export async function GET_ROLES_WITH_AUTHS(roleIds: string[], key: string = 'id'): Promise<any> {
 	try {
 		if (roleIds.length) {
-			const roles = await GET_DOCS('role', { id: { value: roleIds, operator: { value: 'in' } } });
+			const params = {} as any;
+			params[key] = { value: roleIds, operator: { value: 'in' } };
+			const roles = await GET_DOCS('role', params);
 			let authIds = [];
 			roles.forEach((role) => (authIds = [...new Set([...authIds, ...role.auth])]));
 			const auths = await GET_DOCS('auth', { id: { value: authIds, operator: { value: 'in' } } });
@@ -364,12 +366,30 @@ export function DECODE(value: string): any {
 	}
 }
 
-export function AUTH_USE_ROUTE(event): boolean {
+export async function GET_ENCODED_ROLES(event): Promise<string> {
+	let roles = getCookie(event, 'x-role');
+	// pokud v cookies nejsou role, z db stahne guest role
+	if (!roles) {
+		roles = ENCODE(await GET_ROLES_WITH_AUTHS(['role_guest'], 'syscode'));
+		setCookie(event, 'x-role', roles);
+	}
+	return roles;
+}
+
+export function AUTH_CHECK(event, roles, value?): boolean {
 	let result = false;
 	try {
-		let roles = getCookie(event, 'x-role') as any;
 		if (roles) {
-			result = getRoleAuth(DECODE(roles), 'url', event.req.method, REMOVE_LAST_STRING(event.req.url, '?', true));
+			const url = REMOVE_LAST_STRING(event.req.url, '?', true);
+			value = value || url;
+			const auths = getRoleAuths(DECODE(roles), 'url', event.req.method, url);
+			const isMatch = auths?.find(
+				(auth) =>
+					auth.value === '*' || (auth.method === 'disable' ? auth.value !== value : auth.value === value)
+			)
+				? true
+				: false;
+			result = isMatch;
 		}
 	} catch (error) {
 		console.error(error);
@@ -388,22 +408,17 @@ export function AUTH_USE_ROUTE(event): boolean {
  * @param {*} data
  * @returns {*}  {*}
  */
-export function AUTH_USE_PROJECTION(event, data): any {
+export function AUTH_USE_PROJECTION(event, roles, data): any {
 	try {
-		let roles = getCookie(event, 'x-role') as any;
 		if (roles) {
-			const auth = getRoleAuth(DECODE(roles), 'projection', event.req.method);
-			// * znamena ze muze vse
-			if (auth?.value !== '*') {
-				// pokud existuje autorizace, omezi podle ni
-				if (auth) {
-					modifyData(data, auth);
-				}
-				// jinak defaultne lze zobrazit jen id, syscode a nazvy
-				else {
-					modifyData(data, { value: ['id', 'syscode', 'name', 'title'] });
-				}
-			}
+			const auths = getRoleAuths(
+				DECODE(roles),
+				'projection',
+				event.req.method,
+				REMOVE_LAST_STRING(event.req.url, '?', true)
+			);
+			// na kazde autorizaci se spusti modifikace
+			auths.forEach((auth) => modifyData(data, auth));
 		}
 	} catch (error) {
 		console.error(error);
@@ -411,14 +426,11 @@ export function AUTH_USE_PROJECTION(event, data): any {
 	return data;
 }
 
-function getRoleAuth(roles: any[], type: string, operation: string, value?) {
+function getRoleAuths(roles: any[], type: string, operation: string, endpoint: string) {
 	return roles
 		.map((role) => role.auth)
 		.flat()
-		.find(
-			(auth) =>
-				auth.type === type && auth.operation === operation && (IS_DEFINED(value) ? auth.value === value : true)
-		);
+		.filter((auth) => auth.type === type && auth.operation === operation && auth.endpoint === endpoint);
 }
 
 /**
@@ -428,20 +440,36 @@ function getRoleAuth(roles: any[], type: string, operation: string, value?) {
  * @param {*} auth
  */
 function modifyData(data, auth): void {
+	const restrictedParams = ['id', 'syscode', 'name', 'title'];
 	if (Array.isArray(data)) {
 		data.forEach((item) => {
-			ITERATE(item, (param, key) => {
-				if (auth?.value?.indexOf(key) < 0) {
-					delete item[key];
-				}
-			});
+			modifyData(item, auth);
 		});
 	} else {
-		ITERATE(data, (param, key) => {
-			if (auth?.value?.indexOf(key) < 0) {
-				delete data[key];
-			}
-		});
+		// pokud je to disable => odstrani vsechny definovane parametry
+		if (auth.method === 'disable') {
+			ITERATE(data, (param, key) => {
+				const isMatch = auth.value === '*' || auth.value === key;
+				if (restrictedParams.indexOf(key) < 0 && isMatch) {
+					delete data[key];
+				}
+			});
+		}
+		// jinak ponecha vsechny definovane parametry a zbytek odstrani
+		else {
+			const params = [];
+			ITERATE(data, (param, key) => {
+				const isMatch = auth.value === '*' || auth.value === key;
+				if (restrictedParams.indexOf(key) >= 0 || isMatch) {
+					params.push(key);
+				}
+			});
+			ITERATE(data, (param, key) => {
+				if (params.indexOf(key) < 0) {
+					delete data[key];
+				}
+			});
+		}
 	}
 }
 

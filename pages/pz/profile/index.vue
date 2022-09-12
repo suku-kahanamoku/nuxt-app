@@ -10,17 +10,16 @@
 	const pageConfig = useState('pageConfig').value as any;
 	const configs = reactive({} as any);
 	const loading = ref(false);
-	const data = ref();
 	const tab = ref(pageConfig?.configs[0]);
 
 	onMounted(async () => {
 		// nacte a inicializuje konfigurace pro vnitrni komponenty
-		loadConfigs(pageConfig?.configs, configs, loading);
+		const result = await loadConfigs(pageConfig?.configs, loading);
+		result?.forEach((tmpConfig) => (configs[tmpConfig.syscode] = tmpConfig));
 	});
 
 	function onLoad(e): void {
 		e?.forEach((item) => (item.path = `${pageConfig?.path}/${item.id}`));
-		data.value = e;
 	}
 
 	function onSubmit(e): void {

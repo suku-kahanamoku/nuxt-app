@@ -1,6 +1,6 @@
 <script setup lang="ts">
 	import Field from '@/core/form/field/Field.vue';
-	import Form from '@/composables/Form';
+	import Form from '~~/core/form/Form';
 	import List from '@/components/List.vue';
 
 	const props = defineProps<{
@@ -42,7 +42,7 @@
 </script>
 <template>
 	<v-progress-linear v-if="loading" indeterminate></v-progress-linear>
-
+	
 	<v-form ref="form" @submit.prevent="onSubmit">
 		<v-expansion-panels v-if="config?.theme === 'accordion'" v-model="panels">
 			<v-expansion-panel>

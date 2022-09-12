@@ -67,11 +67,13 @@
 		"theme": "Theme",
 		"title": "Titulek",
 		"visible": "Zobrazit",
-		"unvisible": "Zakázat",
+		"unvisible": "Schovat",
 		"color": "Barva",
 		"type": "Typ",
-		"method": "Method",
-		"value": "Value"
+		"method": "Způsob",
+		"value": "Hodnota",
+		"enable": "Povolit",
+		"disable": "Zakázat"
 	},
 	"settings": {
 		"cwp_setup": "CWP setup",

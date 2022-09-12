@@ -1,5 +1,5 @@
 <script setup lang="ts">
-	import Form from '@/composables/Form';
+	import FormController from '~~/core/form/Form';
 	import { CLONE, ITERATE } from '../utils/modify-object.function';
 	import VueJsoneditor from 'vue3-ts-jsoneditor';
 
@@ -9,7 +9,7 @@
 	}>();
 
 	const emits = defineEmits(['submit']);
-	const FormControler = new Form(props.config);
+	const FormControler = new FormController(props.config);
 	const changedData = ref('');
 	const loading = ref(false);
 

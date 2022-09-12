@@ -2,7 +2,7 @@ import useToast from './useToast';
 
 export default async function (url: string, options?: any): Promise<any> {
 	if (url) {
-		return $fetch(url, options)
+		return await $fetch(url, options)
 			.then((data: any) => {
 				if (data?.msgs?.length) {
 					useToast(data?.msgs);

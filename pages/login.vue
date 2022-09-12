@@ -11,11 +11,12 @@
 
 	onMounted(async () => {
 		// nacte a inicializuje konfigurace pro vnitrni komponenty
-		loadConfigs(pageConfig?.configs, configs, loading);
+		const result = await loadConfigs(pageConfig?.configs, loading);
+		result?.forEach((tmpConfig) => (configs[tmpConfig.syscode] = tmpConfig));
 	});
 
 	function onSubmit(e): void {
-		if (e.uid) {
+		if (e?.uid) {
 			setStore('profile', e);
 			navigateTo(useState('redirect')?.value || '/pz');
 		}

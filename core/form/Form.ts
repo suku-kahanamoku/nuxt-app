@@ -169,7 +169,7 @@ export default class Form {
 			}
 		} catch (error) {
 			console.error(error);
-			useToast({ type: 'error', message: `form.message.${method.toLocaleLowerCase()}_error` });
+			useToast({ type: 'error', message: `form.${method.toLocaleLowerCase()}_error` });
 		}
 		if (loading) {
 			loading.value = false;

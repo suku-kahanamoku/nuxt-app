@@ -1,17 +1,24 @@
-import { AUTH_USE_PROJECTION, GET_DOCS, AUTH_USE_ROUTE } from '@/server/lib/firestore';
+import { AUTH_USE_PROJECTION, GET_DOCS, AUTH_CHECK, GET_ENCODED_ROLES } from '@/server/lib/firestore';
 
 export default defineEventHandler(async (event) => {
 	try {
-		if (!AUTH_USE_ROUTE(event)) {
-			throw new Error('message.permission_error');
+		const roles = await GET_ENCODED_ROLES(event);
+		if (!AUTH_CHECK(event, roles)) {
+			throw createError({ statusCode: 403, statusMessage: 'message.permission_error' });
 		}
 		const query = useQuery(event.req);
 		const where = query.where ? JSON.parse(query.where as any) : null;
-		const result = await GET_DOCS('component', where);
+		let result = await GET_DOCS('component', where);
+		result = result.filter((item) => AUTH_CHECK(event, roles, item.syscode));
 		return {
-			result: AUTH_USE_PROJECTION(event, result),
+			result: AUTH_USE_PROJECTION(event, roles, result),
 		};
 	} catch (error) {
-		return error;
+		const data =
+			error.statusCode === 500
+				? { statusCode: 404, statusMessage: 'message.not_found', message: 'message.not_found', error: error }
+				: error;
+		event.res.statusCode = data.statusCode;
+		return data;
 	}
 });

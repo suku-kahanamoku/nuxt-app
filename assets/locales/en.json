@@ -71,7 +71,9 @@
 		"color": "Color",
 		"type": "Type",
 		"method": "Method",
-		"value": "Value"
+		"value": "Value",
+		"enable":"Enable",
+		"disable":"Disable"
 	},
 	"settings": {
 		"cwp_setup": "CWP setup",

@@ -32,7 +32,7 @@ export default defineNuxtPlugin(async (nuxtApp) => {
 				path: route.path as string,
 				children: [],
 			},
-			...configs.find((config) => config.syscode === route.meta.syscode),
+			...configs?.find((config) => config.syscode === route.meta.syscode),
 		}));
 
 	// vytvori seznam route, aby se dalo s nema lepe pracovat
