@@ -9,12 +9,13 @@
 
 	const pageConfig = useState('pageConfig').value as any;
 	const configs = reactive({} as any);
+	const loading = ref(false);
 	const data = ref();
 	const tab = ref(pageConfig?.configs[0]);
 
 	onMounted(async () => {
 		// nacte a inicializuje konfigurace pro vnitrni komponenty
-		loadConfigs(pageConfig?.configs, configs);
+		loadConfigs(pageConfig?.configs, configs, loading);
 	});
 
 	function onLoad(e): void {
@@ -35,16 +36,20 @@
 
 <template>
 	<div>
-		<v-tabs v-model="tab" background-color="primary">
-			<v-tab v-for="syscode in pageConfig?.configs" :value="syscode">{{
-				$t(configs[syscode]?.title || 'empty')
-			}}</v-tab>
-		</v-tabs>
+		<template v-if="Object.keys(configs).length">
+			<v-tabs v-model="tab" background-color="primary">
+				<v-tab v-for="syscode in pageConfig?.configs" :value="syscode">{{
+					$t(configs[syscode]?.title || 'empty')
+				}}</v-tab>
+			</v-tabs>
 
-		<v-window v-model="tab">
-			<v-window-item v-for="syscode in pageConfig?.configs" :value="syscode">
-				<Form v-if="configs[syscode]" :config="configs[syscode]" @load="onLoad" @submit="onSubmit" />
-			</v-window-item>
-		</v-window>
+			<v-window v-model="tab">
+				<v-window-item v-for="syscode in pageConfig?.configs" :value="syscode">
+					<Form v-if="configs[syscode]" :config="configs[syscode]" @load="onLoad" @submit="onSubmit" />
+				</v-window-item>
+			</v-window>
+		</template>
+
+		<v-alert v-else-if="loading" type="error">{{ $t('message.not_found') }}</v-alert>
 	</div>
 </template>

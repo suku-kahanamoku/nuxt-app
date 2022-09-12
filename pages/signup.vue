@@ -7,10 +7,11 @@
 
 	const pageConfig = useState('pageConfig').value as any;
 	const configs = reactive({} as any);
+	const loading = ref(false);
 
 	onMounted(async () => {
 		// nacte a inicializuje konfigurace pro vnitrni komponenty
-		loadConfigs(pageConfig?.configs, configs);
+		loadConfigs(pageConfig?.configs, configs, loading);
 	});
 
 	function onSubmit(e): void {
@@ -21,6 +22,10 @@
 </script>
 <template>
 	<div>
-		<Form v-for="config in configs" :config="config" @submit="onSubmit" />
+		<template v-if="Object.keys(configs).length">
+			<Form v-for="config in configs" :config="config" @submit="onSubmit" />
+		</template>
+
+		<v-alert v-else-if="loading" type="error">{{ $t('message.not_found') }}</v-alert>
 	</div>
 </template>

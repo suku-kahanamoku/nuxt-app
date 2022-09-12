@@ -70,7 +70,8 @@
 		"unvisible": "Unvisible",
 		"color": "Color",
 		"type": "Type",
-		"method": "Method"
+		"method": "Method",
+		"value": "Value"
 	},
 	"settings": {
 		"cwp_setup": "CWP setup",
@@ -115,7 +116,8 @@
 		"patch_error": "Can not update data.",
 		"delete_error": "Can not delete data.",
 		"not_found": "No record found.",
-		"unauthorized": "Unauthorized."
+		"unauthorized": "Unauthorized.",
+		"permission_error": "You do not have the permission."
 	},
 	"query": {
 		"delete": "Do you really want to delete the \"{name}\"?",

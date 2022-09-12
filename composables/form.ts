@@ -105,7 +105,7 @@ export default class Form {
 			}
 		} catch (error) {
 			console.error(error);
-			useToast({ type: 'error', message: 'form.message.load_error' });
+			useToast({ type: 'error', message: 'message.load_error' });
 		}
 	}
 

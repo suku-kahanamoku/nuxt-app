@@ -70,7 +70,8 @@
 		"unvisible": "Zakázat",
 		"color": "Barva",
 		"type": "Typ",
-		"method": "Method"
+		"method": "Method",
+		"value": "Value"
 	},
 	"settings": {
 		"cwp_setup": "CWP setup",
@@ -115,7 +116,8 @@
 		"patch_error": "Nelze upravit záznam.",
 		"delete_error": "Nelze smazat záznam.",
 		"not_found": "Nenalezen žádný záznam.",
-		"unauthorized": "Unauthorized."
+		"unauthorized": "Unauthorized.",
+		"permission_error": "Nedostatečné oprávnění."
 	},
 	"query": {
 		"delete": "Do you really want to delete the \"{name}\"?",

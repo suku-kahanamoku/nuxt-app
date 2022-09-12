@@ -4,6 +4,7 @@ import { DecodedIdToken, getAuth, GetUsersResult } from 'firebase-admin/auth';
 import { db, apiKey } from './firebase';
 import { ITERATE } from '@/core/utils/modify-object.function';
 import { IS_DEFINED, IS_OBJECT } from '@/core/utils/check.functions';
+import { REMOVE_LAST_STRING } from '~~/core/utils/modify-string.functions';
 
 /**
  * Nacte a vrati data z dane kolekce
@@ -283,6 +284,15 @@ export async function GET_TOKEN_DATA(event): Promise<DecodedIdToken> {
 	return result;
 }
 
+/**
+ *
+ *
+ * @export
+ * @param {*} event
+ * @param {string} token
+ * @param {string} [uid]
+ * @param {string} [role]
+ */
 export async function SET_TOKEN(event, token: string, uid?: string, role?: string) {
 	if (token) {
 		setCookie(event, 'x-xsrf-token', token);
@@ -298,6 +308,13 @@ export async function SET_TOKEN(event, token: string, uid?: string, role?: strin
 	}
 }
 
+/**
+ *
+ *
+ * @export
+ * @param {string[]} roleIds
+ * @returns {*}  {Promise<any>}
+ */
 export async function GET_ROLES_WITH_AUTHS(roleIds: string[]): Promise<any> {
 	try {
 		if (roleIds.length) {
@@ -313,6 +330,13 @@ export async function GET_ROLES_WITH_AUTHS(roleIds: string[]): Promise<any> {
 	}
 }
 
+/**
+ *
+ *
+ * @export
+ * @param {*} value
+ * @returns {*}  {string}
+ */
 export function ENCODE(value: any): string {
 	if (value) {
 		try {
@@ -323,6 +347,13 @@ export function ENCODE(value: any): string {
 	}
 }
 
+/**
+ *
+ *
+ * @export
+ * @param {string} value
+ * @returns {*}  {*}
+ */
 export function DECODE(value: string): any {
 	if (value) {
 		try {
@@ -333,20 +364,44 @@ export function DECODE(value: string): any {
 	}
 }
 
-export function CHECK_AUTH(event, url: string, operation: string, data): any {
+export function AUTH_USE_ROUTE(event): boolean {
+	let result = false;
 	try {
 		let roles = getCookie(event, 'x-role') as any;
 		if (roles) {
-			roles = DECODE(roles);
-			const auth = roles
-				.map((role) => role.auth)
-				.flat()
-				.find((auth) => auth.value === url && auth.operation === operation);
-			if (auth) {
-				if (Array.isArray(data)) {
-					data.forEach((item) => modifyData(item, auth));
-				} else {
+			result = getRoleAuth(DECODE(roles), 'url', event.req.method, REMOVE_LAST_STRING(event.req.url, '?', true));
+		}
+	} catch (error) {
+		console.error(error);
+	}
+	return result;
+}
+
+/**
+ * Zkontroluje autorizaci a nastavi povolene parametry
+ *
+ * @export
+ * @param {*} event
+ * @param {string} type
+ * @param {string} operation
+ * @param {*} value
+ * @param {*} data
+ * @returns {*}  {*}
+ */
+export function AUTH_USE_PROJECTION(event, data): any {
+	try {
+		let roles = getCookie(event, 'x-role') as any;
+		if (roles) {
+			const auth = getRoleAuth(DECODE(roles), 'projection', event.req.method);
+			// * znamena ze muze vse
+			if (auth?.value !== '*') {
+				// pokud existuje autorizace, omezi podle ni
+				if (auth) {
 					modifyData(data, auth);
+				}
+				// jinak defaultne lze zobrazit jen id, syscode a nazvy
+				else {
+					modifyData(data, { value: ['id', 'syscode', 'name', 'title'] });
 				}
 			}
 		}
@@ -356,12 +411,38 @@ export function CHECK_AUTH(event, url: string, operation: string, data): any {
 	return data;
 }
 
+function getRoleAuth(roles: any[], type: string, operation: string, value?) {
+	return roles
+		.map((role) => role.auth)
+		.flat()
+		.find(
+			(auth) =>
+				auth.type === type && auth.operation === operation && (IS_DEFINED(value) ? auth.value === value : true)
+		);
+}
+
+/**
+ * Zrusi vsechny parametry, ktere nejsou definovane
+ *
+ * @param {*} data
+ * @param {*} auth
+ */
 function modifyData(data, auth): void {
-	ITERATE(data, (param, key) => {
-		if (auth?.params?.indexOf(key) >= 0) {
-			delete data[key];
-		}
-	});
+	if (Array.isArray(data)) {
+		data.forEach((item) => {
+			ITERATE(item, (param, key) => {
+				if (auth?.value?.indexOf(key) < 0) {
+					delete item[key];
+				}
+			});
+		});
+	} else {
+		ITERATE(data, (param, key) => {
+			if (auth?.value?.indexOf(key) < 0) {
+				delete data[key];
+			}
+		});
+	}
 }
 
 export async function GET_STORAGE() {

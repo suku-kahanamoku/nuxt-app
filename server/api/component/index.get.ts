@@ -1,13 +1,15 @@
-import { CHECK_AUTH, GET_DOCS } from '@/server/lib/firestore';
-import { REMOVE_LAST_STRING } from '~~/core/utils/modify-string.functions';
+import { AUTH_USE_PROJECTION, GET_DOCS, AUTH_USE_ROUTE } from '@/server/lib/firestore';
 
 export default defineEventHandler(async (event) => {
 	try {
+		if (!AUTH_USE_ROUTE(event)) {
+			throw new Error('message.permission_error');
+		}
 		const query = useQuery(event.req);
 		const where = query.where ? JSON.parse(query.where as any) : null;
 		const result = await GET_DOCS('component', where);
 		return {
-			result: CHECK_AUTH(event, REMOVE_LAST_STRING(event.req.url, '?', true), event.req.method, result),
+			result: AUTH_USE_PROJECTION(event, result),
 		};
 	} catch (error) {
 		return error;

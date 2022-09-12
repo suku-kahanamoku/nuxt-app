@@ -42,6 +42,7 @@
 </script>
 <template>
 	<v-progress-linear v-if="loading" indeterminate></v-progress-linear>
+
 	<v-form ref="form" @submit.prevent="onSubmit">
 		<v-expansion-panels v-if="config?.theme === 'accordion'" v-model="panels">
 			<v-expansion-panel>
