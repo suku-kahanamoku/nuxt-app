@@ -232,8 +232,7 @@ export async function LOGIN(email: string, password: string): Promise<admin.fire
  * @returns {*}  {Promise<void>}
  */
 export async function LOGOUT(event): Promise<void> {
-	const data = await GET_TOKEN_DATA(event);
-	SET_TOKEN(event, null, data?.uid);
+	SET_TOKEN(event, null);
 }
 
 /**
@@ -478,4 +477,28 @@ export async function GET_STORAGE() {
 	const storageRef = ref(storage, 'img');
 	const snapshot = await listAll(storageRef);
 	return await Promise.all(snapshot.items.map((item) => getDownloadURL(item)));*/
+}
+
+export async function GET_PAGES(event, colName: string, params) {
+	const roles = await GET_ENCODED_ROLES(event);
+	let pageRefs = await GET_DOCS(colName, params);
+	pageRefs = pageRefs.filter((item) => AUTH_CHECK(event, roles, item.syscode));
+	pageRefs = pageRefs
+		.map((page) => {
+			page.path = page.syscode;
+			return page;
+		})
+		.map((page) => {
+			const parent = pageRefs.find((parent) => parent.id === page.parentId);
+			if (parent) {
+				page.path = parent.path + '/' + page.path;
+			}
+			page.children = pageRefs
+				.filter((child) => child.parentId === page.id)
+				.sort((a, b) => (a.pos || 0) - (b.pos || 0));
+			return page;
+		})
+		.filter((page) => !page.parentId)
+		.sort((a, b) => (a.pos || 0) - (b.pos || 0));
+	return pageRefs;
 }

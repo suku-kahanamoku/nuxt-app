@@ -24,7 +24,7 @@
 			</div>
 			<v-list class="pa-4">
 				<template v-for="route in routes">
-					<TreeItem v-if="route.children.length" :data="route" />
+					<TreeItem v-if="route.children?.length" :data="route" />
 					<v-list-item
 						:to="route.path"
 						rounded="lg"
