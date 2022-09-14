@@ -382,16 +382,23 @@ export function AUTH_CHECK(event, roles, value?): boolean {
 			const url = REMOVE_LAST_STRING(event.req.url, '?', true);
 			value = value || url;
 			const auths = getRoleAuths(DECODE(roles), 'url', event.req.method, url);
-			const isMatch = auths?.find(
-				(auth) =>
-					auth.value === '*' || (auth.method === 'disable' ? auth.value !== value : auth.value === value)
-			)
-				? true
-				: false;
+			const isMatch = auths?.find((auth) => IS_MATCH(auth, value)) ? true : false;
 			result = isMatch;
 		}
 	} catch (error) {
 		console.error(error);
+	}
+	return result;
+}
+
+export function IS_MATCH(auth, value): boolean {
+	let result = false;
+	if (auth.value === '*') {
+		result = true;
+	} else if (auth.value.indexOf(',') >= 0) {
+		result = auth.method === 'disable' ? auth.value.indexOf(value) < 0 : auth.value.indexOf(value) >= 0;
+	} else {
+		result = auth.method === 'disable' ? auth.value !== value : auth.value === value;
 	}
 	return result;
 }
@@ -479,26 +486,29 @@ export async function GET_STORAGE() {
 	return await Promise.all(snapshot.items.map((item) => getDownloadURL(item)));*/
 }
 
+/**
+ * Zkontroluje autorizaci a vrati stromovou strukturu pages
+ *
+ * @export
+ * @param {*} event
+ * @param {string} colName
+ * @param {*} params
+ * @returns {*}
+ */
 export async function GET_PAGES(event, colName: string, params) {
 	const roles = await GET_ENCODED_ROLES(event);
 	let pageRefs = await GET_DOCS(colName, params);
+	// vrati jen ty pageConfig, ke kterym ma uzivatel opravneni a neni na nich nastaveno visible=false
 	pageRefs = pageRefs.filter((item) => AUTH_CHECK(event, roles, item.syscode));
+	// seradi dle pos a vytvori strom
 	pageRefs = pageRefs
-		.map((page) => {
-			page.path = page.syscode;
-			return page;
-		})
-		.map((page) => {
-			const parent = pageRefs.find((parent) => parent.id === page.parentId);
-			if (parent) {
-				page.path = parent.path + '/' + page.path;
-			}
-			page.children = pageRefs
-				.filter((child) => child.parentId === page.id)
+		.map((pageConfig) => {
+			pageConfig.children = pageRefs
+				.filter((child) => child.parentId === pageConfig.id)
 				.sort((a, b) => (a.pos || 0) - (b.pos || 0));
-			return page;
+			return pageConfig;
 		})
-		.filter((page) => !page.parentId)
+		.filter((pageConfig) => !pageConfig.parentId)
 		.sort((a, b) => (a.pos || 0) - (b.pos || 0));
 	return pageRefs;
 }
