@@ -83,7 +83,7 @@ export function IS_OBJECT_ID(objectid: string) {
 		(typeof objectid !== 'string' &&
 			(typeof objectid !== 'object' || Array.isArray(objectid) || typeof objectid !== 'function'))
 		? false
-		: /^[0-9A-F]{24}$/i.test(objectid.toString());
+		: /^[0-9A-Z]{20}$/i.test(objectid.toString());
 }
 
 /**

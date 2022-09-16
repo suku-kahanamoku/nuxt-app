@@ -2,9 +2,9 @@ import admin from 'firebase-admin';
 import { DecodedIdToken, getAuth } from 'firebase-admin/auth';
 
 import { db, apiKey } from './firebase';
-import { ITERATE } from '@/core/utils/modify-object.function';
-import { IS_OBJECT } from '@/core/utils/check.functions';
-import { REMOVE_LAST_STRING } from '~~/core/utils/modify-string.functions';
+import { INTERSECTION, ITERATE } from '@/core/utils/modify-object.function';
+import { IS_OBJECT, IS_OBJECT_ID } from '@/core/utils/check.functions';
+import { REMOVE_FIRST_STRING, REMOVE_LAST_STRING } from '~~/core/utils/modify-string.functions';
 
 /**
  * Nacte a vrati data z dane kolekce
@@ -380,7 +380,6 @@ export function AUTH_CHECK(event, roles, value?): boolean {
 	try {
 		if (roles) {
 			const url = REMOVE_LAST_STRING(event.req.url, '?', true);
-			value = value || url;
 			const auths = getRoleAuths(DECODE(roles), 'url', event.req.method, url);
 			const isMatch = auths?.find((auth) => IS_MATCH(auth, value)) ? true : false;
 			result = isMatch;
@@ -499,7 +498,7 @@ export async function GET_PAGES(event, colName: string, params) {
 	const roles = await GET_ENCODED_ROLES(event);
 	let pageRefs = await GET_DOCS(colName, params);
 	// vrati jen ty pageConfig, ke kterym ma uzivatel opravneni a neni na nich nastaveno visible=false
-	pageRefs = pageRefs.filter((item) => AUTH_CHECK(event, roles, item.syscode));
+	pageRefs = pageRefs.filter((pageConfig) => AUTH_CHECK(event, roles, pageConfig.syscode));
 	// seradi dle pos a vytvori strom
 	pageRefs = pageRefs
 		.map((pageConfig) => {
@@ -511,4 +510,37 @@ export async function GET_PAGES(event, colName: string, params) {
 		.filter((pageConfig) => !pageConfig.parentId)
 		.sort((a, b) => (a.pos || 0) - (b.pos || 0));
 	return pageRefs;
+}
+
+export async function AUTH_USE_PAGE(event, url: string): Promise<any> {
+	let result = false;
+	const roles = await GET_ENCODED_ROLES(event);
+	const pageRefs = await GET_DOCS('page', {});
+	const urls = {};
+	pageRefs
+		.filter((pageConfig) => AUTH_CHECK({ req: { url: '/api/page', method: 'GET' } }, roles, pageConfig.syscode))
+		.map((pageConfig) => {
+			pageConfig.url = `/${pageConfig.syscode}`;
+			return pageConfig;
+		})
+		.map((pageConfig) => {
+			if (pageConfig.parentId) {
+				const parent = pageRefs.find((parentConfig) => parentConfig.id === pageConfig.parentId);
+				if (parent) {
+					pageConfig.url = parent.url + pageConfig.url;
+				}
+			}
+			return pageConfig;
+		})
+		.forEach((pageConfig) => (urls[pageConfig.url] = true));
+	//
+	const urlArr = url.split('/');
+	if (IS_OBJECT_ID(urlArr.pop())) {
+		const key = urlArr.join('/');
+		result = urls[`${key}_detail`];
+	} else {
+		result = urls[url];
+	}
+
+	return result;
 }
